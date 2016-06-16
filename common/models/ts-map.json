@@ -1,0 +1,29 @@
+{
+  "name": "ts_map",
+  "base": "PersistedModel",
+  "properties": {
+    "mapid": {
+      "type": "number",
+      "id": true
+    },
+    "mapname": {
+      "type": "string"
+    },
+    "mapno": {
+      "type": "string"
+    },
+    "maplocation": {
+      "type": "string"
+    },
+    "maptype": {
+      "type": "number"
+    },
+    "source": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": []
+}

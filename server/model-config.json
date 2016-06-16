@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Todo": {
+    "dataSource": "db",
+    "public": true
+  },
+  "ts_devicesystype": {
+    "dataSource": "ibmsDB",
+    "public": true
+  },
+  "ts_devicetype": {
+    "dataSource": "ibmsDB",
+    "public": true
+  },
+  "ts_map": {
+    "dataSource": "ibmsDB",
+    "public": true
+  },
+  "ts_newmonitortypegroup": {
+    "dataSource": "ibmsDB",
+    "public": true
+  }
+}

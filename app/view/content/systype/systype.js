@@ -1,0 +1,180 @@
+angular.module('content.systype', ['ibuildweb.factorys', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+    .controller('systypeCtrl', systypeCtrl)
+
+function systypeCtrl($scope, $state, $log, $mdSidenav, $stateParams, DeviceField, DeviceTypeList, DeviceSysTypeList) {
+    $scope.$on('$stateChangeSuccess', function() {
+
+
+    });
+    // 自定义设备 取消按钮
+    $scope.cancelDeviceType = function() {
+        console.log($state);
+        $mdSidenav('right').close()
+            .then(function() {
+                $log.debug("close RIGHT is done");
+            });
+        if ($state.current.url === '/create') {
+            $scope.aa = 'clear';
+        } else {
+            $scope.deviceTypeFieldName = angular.copy($scope._deviceTypeFieldName);
+        };
+    };
+    $scope.$on("loadFromParrent", load);
+    load();
+
+    function load() {
+        $scope.page = null;
+        $scope.DeviceSysTypeList = DeviceSysTypeList;
+        DeviceSysTypeList.get();
+        $scope.DeviceSysTypeList.data.sysTypeData = null;
+        $scope.DeviceField = DeviceField;
+        getData();
+    }
+    $scope.getSelectedText = function() {
+        if ($scope.DeviceSysTypeList.data.sysTypeData) {
+            return $scope.DeviceSysTypeList.data.sysTypeData;
+        } else {
+            return "Please select an $scope.systemType";
+        }
+    };
+    function getData() {
+        var obj = {};
+        if ($scope.DeviceSysTypeList.data.sysTypeData) {
+            obj[DeviceField.SYS_TYPE_ID] = angular.copy($scope.DeviceSysTypeList.data.sysTypeData);
+        }
+
+        DeviceSysTypeList.filterCount(obj).then(function(data) {
+            var count = data.data.count;
+            $scope.deviceTypeCount = Math.floor(count / 10) * 10;
+            console.log($scope.deviceTypeCount)
+                //是否有上下页
+            count && count > 10 ? $scope.isPagination = true : $scope.isPagination = false;
+            if ($scope.page)
+                obj._skip = $scope.page;
+            sysTypeMap(obj);
+            $scope.isEditButton = false;
+            if ($scope.page == $scope.deviceTypeCount) {
+                $scope.isLoadEnd = true;
+                $scope.isLoadTop = false;
+                //  $scope.page -= 10;
+            } else {
+                $scope.isLoadEnd = false;
+                $scope.isLoadTop = true;
+            }
+        });
+    }
+
+    function sysTypeMap(obj) {
+        DeviceSysTypeList.filter(obj).then(function(data) {
+            var objList = data.data;
+            $scope.showDeviceTypeList = objList;
+        });
+    }
+    $scope.$watch('page', function() {
+        $scope.$broadcast('page', $scope.page);
+    });
+
+
+    $scope.toggleRight = function(obj) {
+        $mdSidenav('right').toggle();
+        if (obj) {
+            $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.SYS_TYPE_ID] });
+        } else {
+            $state.go("ibuildweb.category.content.create");
+        }
+        $scope.deviceTypeFieldName = angular.copy(obj);
+        $scope._deviceTypeFieldName = angular.copy(obj);
+    };
+
+    // 自定义设备 查看列表数据 
+    $scope.selectedDeviceType = function(index, obj) {
+        $scope.selectedIndex = index;
+        DeviceTypeList.filterCount(obj).then(function(data) {
+            if (data.data.count > 0) {
+                $scope.isDel = false;
+                console.log('存在子数据...');
+            } else {
+                $scope.isDel = true;
+            }
+        })
+    };
+    // 自定义设备 删除按钮
+    $scope.removeDeviceType = function(o) {
+        if (!o) return;
+        o._status = 'deleted';
+        DeviceSysTypeList.deleteOne(o).then(function() {
+            getData();
+        });
+    };
+
+    $scope.searchDevice = function() {
+        $scope.selectedIndex = null;
+        getData(DeviceSysTypeList)
+    };
+
+    $scope.previousPage = function() {
+        $scope.page -= 10;
+        $scope.selectedIndex = null;
+        var obj = {};
+        if ($scope.DeviceSysTypeList.data.sysTypeData) {
+            obj[DeviceField.SYS_TYPE_ID] = angular.copy($scope.DeviceSysTypeList.data.sysTypeData);
+        }
+        if ($scope.page == Math.abs($scope.page)) {
+            obj._skip = $scope.page;
+            sysTypeMap(obj, DeviceSysTypeList);
+            $scope.isLoadEnd = false;
+            if ($scope.page == 0) {
+                $scope.isLoadTop = true;
+            }
+        }
+    };
+
+
+    $scope.nextPage = function() {
+        $scope.page += 10;
+        $scope.selectedIndex = null;
+        var obj = {};
+        if ($scope.DeviceSysTypeList.data.sysTypeData) {
+            obj[DeviceField.SYS_TYPE_ID] = angular.copy($scope.DeviceSysTypeList.data.sysTypeData);
+        }
+        if ($scope.deviceTypeCount >= $scope.page) {
+            obj._skip = $scope.page;
+            sysTypeMap(obj, DeviceSysTypeList);
+            $scope.isLoadTop = false;
+            if ($scope.page == $scope.deviceTypeCount) {
+                $scope.isLoadEnd = true;
+            }
+        }
+    };
+
+    // 自定义设备 重新保存按钮
+    $scope.reSaveDeviceType = function(o) {
+        var _device = angular.copy(o);
+        _device._status = 'modify';
+        DeviceSysTypeList.saveOne('reSave', _device).then(function() {
+            getData();
+        });
+    };
+
+
+    // 自定义设备 保存按钮
+    $scope.saveDeviceType = function(o) {
+        var obj = angular.copy(o);
+        DeviceSysTypeList.isExists(obj).then(function(data) {
+            if (data.data.exists) {
+                $scope.exists = true;
+                $scope.isSave = true;
+                console.log('数据已存在...')
+            } else {
+                $scope.exists = false;
+                $scope.isSave = false;
+                console.log('saving...');
+                obj._status = 'modify';
+                DeviceSysTypeList.saveOne('save', obj).then(function() {
+                    getData();
+                });
+            }
+        })
+    };
+
+}

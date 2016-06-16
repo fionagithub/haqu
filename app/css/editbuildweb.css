@@ -1,0 +1,178 @@
+ul {
+    padding: 0;
+    cursor: pointer;
+    ;
+}
+
+li {
+    list-style: none;
+    margin: 10px
+}
+ 
+.container {
+    width: 50%;
+    margin-top: 20px;
+}
+
+.grid-left {
+    width: 150px;
+    float: left;
+    min-height: 100px;
+    padding: 20px;
+    border: 1px solid #DEDEDE;
+}
+
+.grid-right {
+    margin-left: 160px;
+}
+
+.device-nav {
+    padding: 0;
+    border: 0;
+    float: left;
+    width: 180px;
+    background: transparent;
+}
+
+.device-content {
+    float: left;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 650px;
+    background: transparent;
+}
+
+.modal-footer {
+    border-top: 0;
+}
+
+.modal-dialog {
+    display: block;
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 6px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+    width: 48%;
+}
+
+.list-group {
+    list-style: none !important;
+}
+
+.list-panel ul {
+    height: 320px;
+    width: 100%;
+    overflow: auto;
+}
+
+.panel .list-group-button {
+    height: 40px;
+}
+
+.panel {
+    border: 1px solid #ddd;
+}
+
+.table {
+    border: 1px solid #ddd;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: rgba(249, 249, 249, 0);
+}
+
+form {
+    margin: 15px 0 !important;
+}
+
+.panel button {
+    float: right !important;
+    margin: 5px 15px !important;
+}
+
+.nav ul {
+    cursor: default;
+    font-size: .8em;
+    list-style-type: none;
+    /*   list-style-type: decimal; */
+}
+
+table td {
+    text-align: center;
+    width: 230px;
+}
+
+.has-warning {
+    /* 为has-warning容器内部的form-control控件设置边框和阴影效果*/
+    border-color: #8a6d3b !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.has-warning:focus {
+    /* has-warning容器内部的控件在得到焦点时的效果颜色更深*/
+    border-color: #66512c !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #c0a16b;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #c0a16b;
+}
+
+.has-warning .input-group-addon {
+    /* addon的背景色和字体颜色也要同步设置*/
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #8a6d3b;
+}
+
+.dropdown-menu {
+    display: block !important;
+    position: static;
+    display: block;
+    margin-bottom: 5px;
+    clear: left;
+}
+
+.dropdown-menu>li>a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap
+}
+
+.dropdown-menu>li>a:focus,
+.dropdown-menu>li>a:hover {
+    color: #262626;
+    text-decoration: none;
+    background-color: #f5f5f5
+}
+
+.dropdown-menu>.active>a,
+.dropdown-menu>.active>a:focus,
+.dropdown-menu>.active>a:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #337ab7;
+    outline: 0
+}
+
+.dropdown-menu>.disabled>a,
+.dropdown-menu>.disabled>a:focus,
+.dropdown-menu>.disabled>a:hover {
+    color: #777
+}
+
+.dropdown-menu>.disabled>a:focus,
+.dropdown-menu>.disabled>a:hover {
+    text-decoration: none;
+    cursor: not-allowed;
+    background-color: transparent;
+    background-image: none;
+    filter: progid: DXImageTransform.Microsoft.gradient(enabled=false)
+}

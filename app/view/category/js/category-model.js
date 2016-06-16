@@ -1,0 +1,30 @@
+angular.module('ibuildweb.models.category', ['ibuildweb.factorys'])
+    .service('category', category);
+
+function category($http, DeviceSysTypeList, DeviceTypeList) {
+    var menuModel = this;
+    menuModel.getMenu = function() {
+        var data = [{
+            label: '上海中心大厦点位部署',
+            iconClasses: 'fa',
+            url: '#/dashboard'
+        }, {
+            label: "系统类别",
+            iconClasses: "fa",
+            children: [{
+                label: "大类",
+                iconClasses: "fa",
+                url: "systype",
+                fun: DeviceSysTypeList
+            }, {
+                label: "小类",
+                iconClasses: "fa",
+                url: "type",
+                fun: DeviceTypeList
+            }]
+        }];
+        return data;
+    };
+ 
+
+}

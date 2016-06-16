@@ -1,0 +1,19 @@
+{
+  "name": "ts_devicesystype",
+  "base": "PersistedModel",
+  "properties": {
+    "devicesystemtypeid": {
+      "type": "number",
+      "id": true
+    },
+    "devicesystemtypename": {
+      "type": "string",
+      "required": true,
+      "description": "设备大类名称"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

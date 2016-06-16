@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>editBuildWeb v0.4</title>
+    <link rel="stylesheet" type="text/css" href="client/vendor/angular-material/angular-material.css" />
+    <link rel="stylesheet" type="text/css" href="css/ibuildweb.css" />
+    <link rel="stylesheet" type="text/css" href="css/editbuildweb.css" />
+    <!-- 
+    -->
+    <script src="js/angular.js"></script>
+    <script src="js/svg-assets-cache.js"></script>
+    <script src="client/vendor/angular-ui-router/angular-ui-router.min.js"></script>
+    <script src="client/vendor/angular-aria/angular-aria.min.js"></script>
+    <script src="client/vendor/angular-animate/angular-animate.min.js"></script>
+    <script src="client/vendor/angular-messages/angular-messages.min.js"></script>
+    <script src="client/vendor/angular-material/angular-material.js"></script>
+    <!-- sys -->
+    <script type="text/javascript" src="js/factorys.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="view/category/js/category-model.js"></script>
+    <script type="text/javascript" src="view/category/js/nav.js"></script>
+    <script type="text/javascript" src="view/content/content.js"></script>
+    <script type="text/javascript" src="view/content/systype/systype.js"></script>
+    <!-- sys -->
+    <script type="text/javascript" src="view/content/type/type.js"></script>
+</head>
+
+<body ng-app="iBuildWeb" ng-controller="iBuildWebCtr">
+    <div class="docs-body layout-row" layout="row">
+        <ui-view name="category"></ui-view>
+        <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex">
+            <ui-view name="topnav"></ui-view>
+            <ui-view name="content"></ui-view>
+        </div>
+    </div>
+</body>
+
+</html>

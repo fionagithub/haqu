@@ -1,0 +1,22 @@
+{
+  "name": "ts_newmonitortypegroup",
+  "base": "PersistedModel", 
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "monitortypegroupid": {
+      "type": "number",
+      "id": true
+    },
+    "description": {
+      "type": "string",
+      "required": true,
+      "description": "监控点组类型名称"
+    }
+  }, 
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+} 

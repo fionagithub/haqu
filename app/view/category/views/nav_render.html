@@ -1,0 +1,8 @@
+<md-button ng-click="goCatory(obj.url)"><i ng-if="obj.iconClasses" class="{{obj.iconClasses}}"></i><span>{{obj.label}}</span>
+    <!-- ui-sref="ibuildweb.category.content({category: obj.url})" -->
+    <span ng-bind-html="obj.html"></span>
+</md-button>
+<md-list ng-if="obj.children.length" data-slide-out-nav="obj.open">
+    <md-list-item ng-repeat="obj in obj.children" ng-include="'view/category/views/nav_render.html'">
+    </md-list-item>
+</md-list>

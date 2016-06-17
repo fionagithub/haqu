@@ -45,5 +45,9 @@
   "ts_newmonitortypegroup": {
     "dataSource": "ibmsDB",
     "public": true
+  },
+  "ts_monitortypes": {
+    "dataSource": "ibmsDB",
+    "public": true
   }
 }

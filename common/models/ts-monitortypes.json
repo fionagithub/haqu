@@ -1,0 +1,31 @@
+{
+    "name": "ts_monitortypes",
+    "base": "PersistedModel",
+    "options": {
+        "validateUpsert": true
+    },
+    "properties": {
+        "monitortypeid": {
+            "type": "number",
+            "id": true
+        },
+        "monitortypegroupid": {
+            "type": "number",
+            "id": true
+        },
+        "devtypeid": {
+            "type": "number",
+            "id": true
+        },
+        "cmdname": {
+            "type": "string" 
+        },
+        "description": {
+            "type": "string" 
+        }
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
+}

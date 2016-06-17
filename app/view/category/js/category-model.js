@@ -1,7 +1,7 @@
-angular.module('ibuildweb.models.category', ['ibuildweb.factorys'])
+angular.module('ibuildweb.models.category', ['ibuildweb.monitor.factorys','ibuildweb.factorys'])
     .service('category', category);
 
-function category($http, DeviceSysTypeList, DeviceTypeList) {
+function category($http, DeviceSysTypeList, DeviceTypeList,MonitorGroup) {
     var menuModel = this;
     menuModel.getMenu = function() {
         var data = [{
@@ -22,9 +22,24 @@ function category($http, DeviceSysTypeList, DeviceTypeList) {
                 url: "type",
                 fun: DeviceTypeList
             }]
+        },{
+            label: "监控点位类型",
+            iconClasses: "fa",
+            children: [{
+                label: "组类型",
+                iconClasses: "fa",
+                url: "monitorgroup",
+                fun: MonitorGroup
+            }, {
+                label: "常规类型",
+                iconClasses: "fa",
+                url: "monitortype",
+                fun:    MonitorType
+
+            }]
         }];
         return data;
     };
- 
+
 
 }

@@ -1,6 +1,6 @@
 {
   "name": "ts_newmonitortypegroup",
-  "base": "PersistedModel", 
+  "base": "PersistedModel",
   "options": {
     "validateUpsert": true
   },
@@ -14,9 +14,9 @@
       "required": true,
       "description": "监控点组类型名称"
     }
-  }, 
+  },
   "validations": [],
   "relations": {},
   "acls": [],
   "methods": {}
-} 
+}

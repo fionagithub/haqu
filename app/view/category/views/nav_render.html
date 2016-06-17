@@ -1,8 +1,15 @@
-<md-button ng-click="goCatory(obj.url)"><i ng-if="obj.iconClasses" class="{{obj.iconClasses}}"></i><span>{{obj.label}}</span>
-    <!-- ui-sref="ibuildweb.category.content({category: obj.url})" -->
-    <span ng-bind-html="obj.html"></span>
-</md-button>
-<md-list ng-if="obj.children.length" data-slide-out-nav="obj.open">
-    <md-list-item ng-repeat="obj in obj.children" ng-include="'view/category/views/nav_render.html'">
-    </md-list-item>
-</md-list>
+<a ng-click="goCatory(obj)"><i ng-if="obj.iconClasses" class="{{obj.iconClasses}}"></i><span>{{obj.label}}</span>
+	<span ng-if="obj.children.length" aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : obj.open}">
+      <md-icon md-svg-icon="md-toggle-arrow" aria-hidden="true"><svg version="1.1" x="0px" y="0px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
+  <path d="M24 16l-12 12 2.83 2.83 9.17-9.17 9.17 9.17 2.83-2.83z"></path>
+  <path d="M0 0h48v48h-48z" fill="none"></path>
+</svg></md-icon>
+    </span>
+     <span ng-bind-html="obj.html"></span>
+</a>
+<ul ng-if="obj.children.length" data-slide-out-nav="obj.open">
+    <li ng-repeat="obj in obj.children" ng-class="{ hasChild:obj.children,
+                      active: obj.selected,
+                        open:obj.children && obj.open }" ng-include="'view/category/views/nav_render.html'">
+    </li>
+</ul>

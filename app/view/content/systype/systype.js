@@ -1,23 +1,30 @@
-angular.module('content.systype', ['ibuildweb.factorys', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+angular.module('content.systype', ['ibuildweb.factorys', 'ibuildweb.device.factorys', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
     .controller('systypeCtrl', systypeCtrl)
 
-function systypeCtrl($scope, $state, $log, $mdSidenav, $stateParams, DeviceField, DeviceTypeList, DeviceSysTypeList) {
+function systypeCtrl($scope, $state, $log, $mdSidenav, $mdComponentRegistry, DeviceField, DeviceTypeList, DeviceSysTypeList) {
     $scope.$on('$stateChangeSuccess', function() {
 
-
     });
+    $scope.toggleRight = function(obj) {
+        if (obj) {
+            $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.SYS_TYPE_ID] });
+        } else {
+            $state.go("ibuildweb.category.content.create");
+        }
+        // 'No instance found for handle'
+        $mdComponentRegistry.when('right').then(function(it) {
+            it.toggle();
+        });
+        $scope.deviceTypeFieldName = angular.copy(obj);
+        $scope._deviceTypeFieldName = angular.copy(obj);
+    };
+
     // 自定义设备 取消按钮
-    $scope.cancelDeviceType = function() {
-        console.log($state);
+    $scope.cancelDeviceType = function() { 
         $mdSidenav('right').close()
             .then(function() {
                 $log.debug("close RIGHT is done");
             });
-        if ($state.current.url === '/create') {
-            $scope.aa = 'clear';
-        } else {
-            $scope.deviceTypeFieldName = angular.copy($scope._deviceTypeFieldName);
-        };
     };
     $scope.$on("loadFromParrent", load);
     load();
@@ -37,6 +44,7 @@ function systypeCtrl($scope, $state, $log, $mdSidenav, $stateParams, DeviceField
             return "Please select an $scope.systemType";
         }
     };
+
     function getData() {
         var obj = {};
         if ($scope.DeviceSysTypeList.data.sysTypeData) {
@@ -73,18 +81,6 @@ function systypeCtrl($scope, $state, $log, $mdSidenav, $stateParams, DeviceField
     $scope.$watch('page', function() {
         $scope.$broadcast('page', $scope.page);
     });
-
-
-    $scope.toggleRight = function(obj) {
-        $mdSidenav('right').toggle();
-        if (obj) {
-            $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.SYS_TYPE_ID] });
-        } else {
-            $state.go("ibuildweb.category.content.create");
-        }
-        $scope.deviceTypeFieldName = angular.copy(obj);
-        $scope._deviceTypeFieldName = angular.copy(obj);
-    };
 
     // 自定义设备 查看列表数据 
     $scope.selectedDeviceType = function(index, obj) {

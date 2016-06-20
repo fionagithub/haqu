@@ -1,9 +1,9 @@
-angular.module('content.type', ['ibuildweb.factorys', 'ibuildweb.device.factorys',
-        'ui.router', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'
+angular.module('content.type', ['ibuildweb.factorys',  'ibuildweb.factorys.services'
     ])
     .controller('typeCtrl', typeCtrl)
-
-function typeCtrl($scope, $state, $log, $mdSidenav, $mdComponentRegistry, DeviceField, DeviceTypeList, DeviceSysTypeList) {
+/*, DeviceTypeList, DeviceSysTypeList, 
+        'ui.router', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'*/
+function typeCtrl($scope,deviceSysTypeList,deviceTypeList, $state, $log, $mdSidenav, $mdComponentRegistry, DeviceField) {
     $scope.$on('$stateChangeSuccess', function() {});
     $scope.$on("loadFromParrent", load);
     load();
@@ -15,8 +15,8 @@ function typeCtrl($scope, $state, $log, $mdSidenav, $mdComponentRegistry, Device
         $scope.page = null;
         $scope.searchDeviceType = null;
 
-        $scope.DeviceSysTypeList = DeviceSysTypeList;
-        DeviceSysTypeList.get();
+        $scope.DeviceSysTypeList = deviceSysTypeList;
+        deviceSysTypeList.filter();
         $scope.DeviceSysTypeList.data.sysTypeData = null;
         $scope.DeviceField = DeviceField;
         getData();
@@ -32,7 +32,7 @@ function typeCtrl($scope, $state, $log, $mdSidenav, $mdComponentRegistry, Device
         }
 
 
-        DeviceTypeList.filterCount(obj).then(function(data) {
+        deviceTypeList.filterCount(obj).then(function(data) {
             var count = data.data.count;
             $scope.deviceTypeCount = Math.floor(count / 10) * 10;
             console.log($scope.deviceTypeCount)
@@ -54,7 +54,7 @@ function typeCtrl($scope, $state, $log, $mdSidenav, $mdComponentRegistry, Device
     }
 
     function sysTypeMap(obj) {
-        DeviceTypeList.filter(obj).then(function(data) {
+        deviceTypeList.filter(obj).then(function(data) {
             var objList = data.data;
             var objMap = angular.copy($scope.DeviceSysTypeList.data);
             for (var s in objList) {
@@ -104,7 +104,7 @@ function typeCtrl($scope, $state, $log, $mdSidenav, $mdComponentRegistry, Device
     $scope.removeDeviceType = function(o) {
         if (!o) return;
         o._status = 'deleted';
-        DeviceTypeList.deleteOne(o).then(function() {
+        deviceTypeList.deleteOne(o).then(function() {
             getData();
         });
     };
@@ -162,7 +162,7 @@ function typeCtrl($scope, $state, $log, $mdSidenav, $mdComponentRegistry, Device
         var obj = angular.copy(o);
         obj[DeviceField.SYS_TYPE_ID] = $scope.DeviceSysTypeList.data.editSysTypeData;
         obj._status = 'modify';
-        DeviceTypeList.saveOne('reSave', obj).then(function() {
+        deviceTypeList.saveOne('reSave', obj).then(function() {
             getData();
         });
     };
@@ -172,7 +172,7 @@ function typeCtrl($scope, $state, $log, $mdSidenav, $mdComponentRegistry, Device
     $scope.saveDeviceType = function(o) {
         var obj = angular.copy(o);
         obj[DeviceField.SYS_TYPE_ID] = $scope.DeviceSysTypeList.data.editSysTypeData;
-        DeviceTypeList.isExists(obj).then(function(data) {
+        deviceTypeList.isExists(obj).then(function(data) {
             if (data.data.exists) {
                 $scope.exists = true;
                 $scope.isSave = true;
@@ -182,7 +182,7 @@ function typeCtrl($scope, $state, $log, $mdSidenav, $mdComponentRegistry, Device
                 $scope.isSave = false;
                 console.log('saving...');
                 obj._status = 'modify';
-                DeviceTypeList.saveOne('save', obj).then(function() {
+                deviceTypeList.saveOne('save', obj).then(function() {
                     getData();
                 });
             }

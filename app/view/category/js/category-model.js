@@ -1,7 +1,7 @@
-angular.module('ibuildweb.models.category', ['ibuildweb.monitor.factorys','ibuildweb.factorys'])
+angular.module('ibuildweb.models.category', [])
     .service('category', category);
 
-function category($http, DeviceSysTypeList, DeviceTypeList,MonitorGroup) {
+function category() {
     var menuModel = this;
     menuModel.getMenu = function() {
         var data = [{

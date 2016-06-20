@@ -1,5 +1,5 @@
 angular.module('iBuildWeb', [
-        'ngAnimate',  'ui.router','ibuildweb.factorys.services',
+        'ngAnimate',  'ui.router',
         'category',
         'content', 'content.systype', 'content.type',
       'content.monitortype', 'content.monitorgroup'

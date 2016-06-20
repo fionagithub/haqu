@@ -1,8 +1,8 @@
-angular.module('category', ['ibuildweb.models.category', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+angular.module('category', ['ibuildweb.models.category'])
     .controller('navCtrl', navCtrl)
 ;
 
-function navCtrl($scope, $mdSidenav, $location, $state, category) {
+function navCtrl($scope, $mdSidenav, $state, category) {
     $scope.toggleLeft = function() {
         $mdSidenav('left').toggle();
     };

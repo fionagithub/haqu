@@ -1,7 +1,7 @@
-   angular.module('content.monitortype', ['ibuildweb.monitor.factorys', 'ibuildweb.device.factorys', 'ibuildweb.factorys', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+   angular.module('content.monitortype', ['ibuildweb.monitor.factorys', 'ibuildweb.factorys.services', 'ibuildweb.factorys', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
        .controller('monitortypeCtrl', monitortypeCtrl)
-
-   function monitortypeCtrl($scope, $log, $mdSidenav, $state, DeviceTypeList, $mdComponentRegistry, DeviceField, MonitorGroup, MonitorType) {
+       /*'ibuildweb.device.factorys', */
+   function monitortypeCtrl($scope, $log, $mdSidenav, $state, deviceSysTypeList, $mdComponentRegistry, DeviceField, MonitorGroup, MonitorType) {
        $scope.$on('$stateChangeSuccess', function() {});
 
        $scope.$on("loadFromParrent", load);
@@ -11,8 +11,8 @@
            $scope.page = null;
            $scope.MonitorGroupList = MonitorGroup;
            $scope.MonitorGroupList.data.groupData = null;
-           $scope.DeviceTypeList = DeviceTypeList;
-           DeviceTypeList.get();
+           $scope.DeviceTypeList = deviceSysTypeList;
+           deviceSysTypeList.filter();
 
            $scope.monitorType = null;
            MonitorGroup.get();
@@ -61,9 +61,9 @@
                            objList[s][DeviceField.MNT_GROUP_ID] = objMap[o];
                    }
                }
-                   for (var m in objList) {
+               for (var m in objList) {
                    for (var n in device) {
-                       if (objList[m][DeviceField.DEV_TYPE_ID] &&objList[m][DeviceField.DEV_TYPE_ID] == device[n][DeviceField.TYPE_ID])
+                       if (objList[m][DeviceField.DEV_TYPE_ID] && objList[m][DeviceField.DEV_TYPE_ID] == device[n][DeviceField.TYPE_ID])
                            objList[m][DeviceField.DEV_TYPE_ID] = device[n];
                    }
                }

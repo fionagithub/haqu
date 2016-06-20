@@ -1,44 +1,24 @@
 angular.module('ibuildweb.device.factorys', ['ibuildweb.factorys'])
     .factory('DeviceSysTypeList', DeviceSysTypeList)
-    .factory('DeviceTypeList', DeviceTypeList); 
- 
+    .factory('DeviceTypeList', DeviceTypeList);
 
-function DeviceSysTypeList($http, API_URI, DeviceField, $q) {
+function DeviceSysTypeList($http, API_URI, DeviceField) {
     var deviceSysTypeList = {
-        data: [{
-            "deviceSystemTypeId": 1,
-            "deviceSystemTypeName": "综合"
-        }],
-        customData: [{
-            "deviceSystemTypeId": 1,
-            "deviceSystemTypeName": "综合"
-        }],
+        data: [],
+        customData: [],
         count: null,
         exists: null,
-/*        getCount: function(obj) {
-            var uri = API_URI.DEVICE_SYS_TYPE + '/count';
-            var w = {},
-                o = {};
-            if (obj && obj._status == 'isExistsChild') {
-                for (var i in obj) {
-                    if (i == DeviceField.SYS_TYPE_ID) {
-                      w[i] = obj[i]
-                        o = { params: { "where": w } };
-                    }
-                }
-            }
-            return $http.get(uri, o).success(function(_data) {
-                deviceSysTypeList.count = _data.count;
-            });
-        },*/
         filterCount: function(obj) {
-           var o = {},
+            var _obj = {},
+                o = {},
                 uri = API_URI.DEVICE_SYS_TYPE + '/count';
             for (var i in obj) {
-                if (i == "devicesystemtypeid") {
-                    o = { params: { "where": { "devicesystemtypeid": obj[i] } } };
+                if (i == DeviceField.SYS_TYPE_ID) {
+                    _obj[i] = obj[i];
+                    i = "\"" + i + "\"";
                 }
             }
+            o = { params: { "where": _obj } };
             return $http.get(uri, o).success(function(_data) {
                 deviceSysTypeList.count = _data.count;
             });
@@ -75,7 +55,7 @@ function DeviceSysTypeList($http, API_URI, DeviceField, $q) {
         isExists: function(obj) {
             var uri = API_URI.DEVICE_SYS_TYPE;
             for (var key in obj) {
-                if (key == "devicesystemtypeid") {
+                if (key== DeviceField.SYS_TYPE_ID) {
                     uri += '/' + obj[key] + '/exists';
                 }
             }
@@ -114,18 +94,8 @@ function DeviceSysTypeList($http, API_URI, DeviceField, $q) {
 
 function DeviceTypeList($http, API_URI, DeviceField) {
     var deviceTypeList = {
-        data: [{
-            "deviceTypeId": 101,
-            "deviceTypeName": "视频监控",
-            "deviceSystemTypeId": 1,
-            "iconSrc": null
-        }],
-        customData: [{
-            "deviceTypeId": 101,
-            "deviceTypeName": "视频监控",
-            "deviceSystemTypeId": 1,
-            "iconSrc": null
-        }],
+        data: [],
+        customData: [],
         count: null,
         exists: null,
         filterCount: function(obj) {
@@ -172,24 +142,10 @@ function DeviceTypeList($http, API_URI, DeviceField) {
                 deviceTypeList.customData = _data;
             });
         },
- /*       getCount: function(obj) {
-            var uri = API_URI.DEVICE_TYPE + '/count';
-            if (obj && obj._status == 'isExistsChild') {
-                for (var key in obj) {
-                    if (key == "devicesystemtypeid") {
-                        // api/ts_devicetypes?filter[where][key]=value
-                        uri += '?[where][' + key + ']=' + obj[key];
-                    }
-                }
-            }
-            return $http.get(uri).success(function(_data) {
-                deviceTypeList.count = _data.count;
-            });
-        },*/
         isExists: function(obj) {
             var uri = API_URI.DEVICE_TYPE;
             for (var key in obj) {
-                if (key == "devicetypeid") {
+                if (key == DeviceField.TYPE_ID) {
                     uri += '/' + obj[key] + '/exists';
                 }
             }
@@ -199,8 +155,8 @@ function DeviceTypeList($http, API_URI, DeviceField) {
             });
 
         },
-        get: function() {
-            var _obj = { params: { filter: { limit: 10 } } };
+        get: function(obj) {
+            var _obj = { params: { filter: { limit: obj } } };
             return $http.get(API_URI.DEVICE_TYPE).success(function(_data) {
                 deviceTypeList.data = _data;
             });

@@ -3,26 +3,15 @@ angular.module('ibuildweb.factorys', [])
     .factory('AppInfo', AppInfo)
     .factory('API_URI', ApiUri)
     .constant('DeviceField', {
-        ID: "autoid",
-        DEVICE_ID: "deviceid",
-        DEVICE_NO: "deviceno", // 回路号
-        NAME: "devicename",
-        X: "axisx",
-        Y: "axisy",
         TYPE_ID: "devicetypeid",
         TYPE_NAME: "devicetypename",
         SYS_TYPE_ID: "devicesystemtypeid",
         SYS_TYPE_NAME: "devicesystemtypename",
-        MAP_ID: "mapid",
-        MAP_NO: "mapno",
-        MAP_NAME: "mapname",
-        MAP_TYPE: "maptype",
-        MNT_TYPE_ID: "monitortypeid",
-        DESC: "description",
-        MNT_GROUP_ID: "monitortypegroupid",
-        MAP: "map",
-        SOURCE: "source",
         ICON_SRC: "iconsrc",
+        MNT_GROUP_ID: "monitortypegroupid",
+        MNT_TYPE_ID: "monitortypeid",
+        DEV_TYPE_ID: "devtypeid",
+        CMD_NAME: "cmdname",
         DESC: "description",
 
         MONITOR: "monitor"
@@ -45,3 +34,17 @@ function ApiUri(API_BASE) {
         DEVICE_SYS_TYPE: API_BASE + 'ts_devicesystypes'
     };
 };
+
+/*
+        ID: "autoid",
+        DEVICE_ID: "deviceid",
+        DEVICE_NO: "deviceno", // 回路号
+        NAME: "devicename",
+        X: "axisx",
+        Y: "axisy",
+        MAP_ID: "mapid",
+        MAP_NO: "mapno",
+        MAP_NAME: "mapname",
+        MAP_TYPE: "maptype",
+        MAP: "map",
+        SOURCE: "source",*/

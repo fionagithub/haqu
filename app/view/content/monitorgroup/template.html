@@ -1,13 +1,13 @@
 <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="monitorgroupCtrl">
-<md-input-container flex class="md-block">
-    <label>系统</label>
-    <md-select ng-model="MonitorGroupList.data.groupData" md-selected-text="getSelectedText(MonitorGroupList.data.groupData)">
-        <md-option ng-value="groupData[DeviceField.MNT_GROUP_ID]" ng-repeat="groupData in MonitorGroupList.data">{{ groupData[DeviceField.MNT_GROUP_ID] + ':' + groupData[DeviceField.DESC]}}</md-option>
-    </md-select>
+    <md-input-container flex class="md-block">
+        <label>监控类</label>
+        <md-select ng-model="MonitorGroupList.data.groupData" md-selected-text="getSelectedText(MonitorGroupList.data.groupData)">
+            <md-option ng-value="groupData[DeviceField.MNT_GROUP_ID]" ng-repeat="groupData in MonitorGroupList.data">{{ groupData[DeviceField.MNT_GROUP_ID] + ':' + groupData[DeviceField.DESC]}}</md-option>
+        </md-select>
     </md-input-container>
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
         <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="searchMonitorGroup()">搜索
-        </md-button> 
+        </md-button>
         <md-button ng-click="toggleRight()" class="md-primary md-raised demo-dialog-open-button">新增
         </md-button>
     </section>
@@ -15,7 +15,7 @@
         <table class="md-api-table">
             <thead>
                 <tr>
-                    <th> 监控组ID</th> 
+                    <th> 监控组ID</th>
                     <th> 描述</th>
                     <th> 操作 </th>
                 </tr>

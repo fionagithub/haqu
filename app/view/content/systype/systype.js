@@ -1,7 +1,7 @@
-angular.module('content.systype', ['ibuildweb.factorys', 'ibuildweb.device.factorys', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
-    .controller('systypeCtrl', systypeCtrl)
+angular.module('content.systype', ['ibuildweb.factorys', 'ibuildweb.factorys.services','ibuildweb.device.factorys', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+  .controller('systypeCtrl', systypeCtrl)
 
-function systypeCtrl($scope, $state, $log, $mdSidenav, $mdComponentRegistry, DeviceField, DeviceTypeList, DeviceSysTypeList) {
+function systypeCtrl($scope, $state, $log, $mdSidenav,deviceSysTypeList, $mdComponentRegistry, DeviceField, DeviceTypeList, DeviceSysTypeList) {
     $scope.$on('$stateChangeSuccess', function() {
 
     });

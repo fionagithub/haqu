@@ -7,20 +7,18 @@ function category($http, DeviceSysTypeList, DeviceTypeList,MonitorGroup) {
         var data = [{
             label: '上海中心大厦点位部署',
             iconClasses: 'fa',
-            url: '#/dashboard'
+            url: '#/'
         }, {
             label: "系统类别",
             iconClasses: "fa",
             children: [{
                 label: "大类",
                 iconClasses: "fa",
-                url: "systype",
-                fun: DeviceSysTypeList
+                url: "systype"
             }, {
                 label: "小类",
                 iconClasses: "fa",
-                url: "type",
-                fun: DeviceTypeList
+                url: "type"
             }]
         },{
             label: "监控点位类型",
@@ -28,13 +26,11 @@ function category($http, DeviceSysTypeList, DeviceTypeList,MonitorGroup) {
             children: [{
                 label: "组类型",
                 iconClasses: "fa",
-                url: "monitorgroup",
-                fun: MonitorGroup
+                url: "monitorgroup"
             }, {
                 label: "常规类型",
                 iconClasses: "fa",
-                url: "monitortype",
-                fun:    MonitorType
+                url: "monitortype"
 
             }]
         }];

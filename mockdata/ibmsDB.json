@@ -11,7 +11,7 @@
     "ts_devicetype": 1103333133350,
     "ts_devicesystype": 87655578,
     "V_DevicePointList": 240316,
-    "ts_newmonitortypegroup": 9010,
+    "ts_newmonitortypegroup": 90011,
     "ts_monitortypes": 901002
   },
   "models": {
@@ -3800,7 +3800,9 @@
       "7005": "{\"monitortypegroupid\":7005,\"description\":\"连接线\"}",
       "7006": "{\"monitortypegroupid\":7006,\"description\":\"地刀\"}",
       "7007": "{\"monitortypegroupid\":7007,\"description\":\"隔离开关\"}",
-      "9001": "{\"monitortypegroupid\":9001,\"description\":\"LED屏\"}"
+      "9001": "{\"monitortypegroupid\":9001,\"description\":\"LED屏\"}",
+      "32423": "{\"monitortypegroupid\":32423,\"description\":\"-==-==\"}",
+      "90009": "{\"monitortypegroupid\":90009,\"description\":\"=--=2323-===\"}"
     }
   }
 }

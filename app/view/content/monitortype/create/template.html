@@ -6,18 +6,36 @@
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
-                <label>大类ID</label>
-                <input ng-model="systypeFieldName[DeviceField.SYS_TYPE_ID] ">
+                <label for="form-group ">监测ID </label>
+                <input ng-show='!isEditButton' ng-model="data[DeviceField.MNT_TYPE_ID]">
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label> 大类名称</label>
-                <input ng-model=" systypeFieldName[DeviceField.SYS_TYPE_NAME]">
+                <label>命令名称</label>
+                <input ng-model="data[DeviceField.CMD_NAME]">
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>设备类型ID</label>
+                <md-select ng-model="DeviceTypeList.data" md-selected-text="getSelectedText(DeviceTypeList.data)">
+                    <md-optgroup>
+                        <md-option ng-value="data[DeviceField.TYPE_ID]" ng-repeat="data in DeviceTypeList"> {{ data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>监测点组ID</label>
+                <md-select ng-model="MonitorGroupList.data._data" md-selected-text="getSelectedText(MonitorGroupList.data._data)">
+                    <md-option ng-value="_data[DeviceField.MNT_GROUP_ID]" ng-repeat="_data in MonitorGroupList.data">{{ _data[DeviceField.MNT_GROUP_ID] + ':' + _data[DeviceField.DESC]}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>描述 </label>
+                <input ng-model="data[DeviceField.DESC]">
             </md-input-container>
         </md-list>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="saveDeviceType(systypeFieldName)">
+        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="save(data)">
             保存
         </md-button>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="cancelDeviceType()">
+        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="cancel()">
             取消
         </md-button>
     </md-content>

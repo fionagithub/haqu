@@ -1,27 +1,17 @@
 {
-  "name": "ts_monitortypes",
+  "name": "ts_devicetypemonitortypegroup",
   "base": "PersistedModel",
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "monitortypeid": {
+    "devicetypeid": {
       "type": "number",
       "id": true
     },
     "monitortypegroupid": {
       "type": "number",
       "id": true
-    },
-    "devtypeid": {
-      "type": "number",
-      "id": true
-    },
-    "cmdname": {
-      "type": "string"
-    },
-    "description": {
-      "type": "string"
     }
   },
   "validations": [],

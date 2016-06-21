@@ -6,7 +6,11 @@ angular.module('content', [])
                 views: {
                     'content@': {
                         templateUrl: function(param) {
-                            return 'view/content/' + param.category + '/template.html'
+                            if (param.category) {
+                                return 'view/content/' + param.category + '/template.html'
+                            } else {
+                                return 'view/content/template.html'
+                            }
                         }
                     }
                 }
@@ -14,7 +18,7 @@ angular.module('content', [])
             .state('ibuildweb.category.content.create', {
                 url: '/create',
                 views: {
-                    '@ibuildweb.category.content': { 
+                    '@ibuildweb.category.content': {
                         templateUrl: function(param) {
                             return 'view/content/' + param.category + '/create/template.html'
                         }
@@ -25,7 +29,7 @@ angular.module('content', [])
             .state('ibuildweb.category.content.edit', {
                 url: '/edit/:systype',
                 views: {
-                    '@ibuildweb.category.content': { 
+                    '@ibuildweb.category.content': {
                         templateUrl: function(param) {
                             return 'view/content/' + param.category + '/edit/template.html'
                         }

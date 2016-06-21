@@ -28,11 +28,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat='data in showMonitorType' ng-class="{'selected':$index == selectedIndex}" ng-click="selectedDeviceType($index,data)">
+                <tr ng-repeat='data in showMonitorType' ng-class="{'selected':$index == selectedIndex}" ng-click="selectedMonitorType($index,data)">
                     <td>{{data[DeviceField.MNT_TYPE_ID]}} </td>
-                    <td>{{data[DeviceField.DEV_TYPE_ID]}} </td>
+                    <td>{{data[DeviceField.TYPE_ID][DeviceField.TYPE_NAME]}} </td>
                     <td>{{data[DeviceField.CMD_NAME]}} </td>
-                    <td> {{data[DeviceField.DESC]}}
+                    <td> {{data[DeviceField.MNT_GROUP_ID][DeviceField.DESC]}}
                     </td>
                     <td> {{data[DeviceField.DESC]}}
                     </td>

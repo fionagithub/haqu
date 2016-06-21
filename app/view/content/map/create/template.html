@@ -6,18 +6,30 @@
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
-                <label>大类ID</label>
-                <input ng-model="systypeFieldName[DeviceField.SYS_TYPE_ID] ">
+                <label> MAP_ID</label>
+                <input ng-model="addData[DeviceField.MAP_ID] ">
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label> 大类名称</label>
-                <input ng-model=" systypeFieldName[DeviceField.SYS_TYPE_NAME]">
+                <label> mapName</label>
+                <input ng-model="addData[DeviceField.MAP_NAME] ">
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label> mapNo </label>
+                <input ng-model=" addData[DeviceField.MAP_NO]">
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>Source </label>
+                <input ng-model="addData[DeviceField.SOURCE] ">
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label> mapType </label>
+                <input ng-model=" addData[DeviceField.MAP_TYPE]">
             </md-input-container>
         </md-list>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="saveDeviceType(systypeFieldName)">
+        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="save(addData)">
             保存
         </md-button>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="cancelDeviceType()">
+        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="cancel()">
             取消
         </md-button>
     </md-content>

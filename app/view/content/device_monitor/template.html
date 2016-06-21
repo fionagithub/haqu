@@ -1,10 +1,12 @@
-<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="mapCtrl">
+<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="deviceMonitorCtrl">
     <md-input-container flex class="md-block">
-        <label>名称</label>
-        <input ng-model="mapno">
+        <label>监控类</label>
+        <md-select ng-model="mdSelectedData.selectedData" md-selected-text="getSelectedText(mdSelectedData.selectedData)">
+            <md-option ng-value="selectedData[DeviceField.MNT_GROUP_ID]" ng-repeat="selectedData in mdSelectedData.data">{{ selectedData[DeviceField.MNT_GROUP_ID] + ':' + selectedData[DeviceField.DESC]}}</md-option>
+        </md-select>
     </md-input-container>
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="search()">搜索
+        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="searchMonitorGroup()">搜索
         </md-button>
         <md-button ng-click="toggleRight()" class="md-primary md-raised demo-dialog-open-button">新增
         </md-button>
@@ -13,28 +15,22 @@
         <table class="md-api-table">
             <thead>
                 <tr>
-                    <th> MAP_ID </th>
-                    <th> mapName </th>
-                    <th> mapNo </th>
-                    <th>Source </th>
-                    <th> mapType </th>
+                    <th>设备</th>
+                    <th> 监控组ID </th>
                     <th> 操作 </th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat='data in showData' ng-class="{'selected':$index == selectedIndex}" ng-click="selectedRow($index,data)">
-                    <td>{{data[DeviceField. MAP_ID]}}</td>
-                    <td> {{data[DeviceField. MAP_NAME]}}</td>
-                    <td>{{data[DeviceField. MAP_NO]}} </td>
-                    <td>{{data[DeviceField.SOURCE]}} </td>
-                    <td> {{data[DeviceField.MAP_TYPE]}}
+                <tr ng-repeat='data in showDataList' ng-class="{'selected':$index == selectedIndex}" ng-click="selectedRow($index,data)">
+                    <td>{{data[DeviceField.TYPE_ID][DeviceField.TYPE_NAME]}} </td>
+                    <td> {{data[DeviceField.MNT_GROUP_ID][DeviceField.DESC]}}
                     </td>
                     <td>
                         <span ng-class="{'inline-tools':$index == selectedIndex}" ng-show='$index == selectedIndex'>
                              <md-button ng-click="toggleRight(data)" class="md-fab md-mini" aria-label="Eat cake">
                              <md-icon  class="glyphicon glyphicon-pencil" ></md-icon>
                              </md-button>
-                                 <md-button class="md-fab md-mini" ng-show='isDel && $index == selectedIndex' class="btn btn-danger btn-xs" ng-click="remove(data)">
+                                 <md-button class="md-fab md-mini" ng-show='isDel && $index == selectedIndex' class="btn btn-danger btn-xs" ng-click="removeMonitorGroup(data)">
                                            <md-icon class="glyphicon glyphicon-remove" ></md-icon>
                                    </md-button>
                              </span>

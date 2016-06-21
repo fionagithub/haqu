@@ -20,7 +20,7 @@ function category() {
                 iconClasses: "fa",
                 url: "type"
             }]
-        },{
+        }, {
             label: "监控点位类型",
             iconClasses: "fa",
             children: [{
@@ -31,6 +31,29 @@ function category() {
                 label: "常规类型",
                 iconClasses: "fa",
                 url: "monitortype"
+
+            }, {
+                label: "关联设备类型与监控点组类型",
+                iconClasses: "fa",
+                url: "device_monitor"
+
+            }]
+        }, {
+            label: "电子地图",
+            iconClasses: "fa",
+            url: "map"
+        }, {
+            label: "电子地图",
+            iconClasses: "fa",
+            children: [{
+                label: "TS_DeviceInfo ｜ 设备表",
+                iconClasses: "fa",
+                url: "deviceinfo"
+
+            }, {
+                label: " 点位表",
+                iconClasses: "fa",
+                url: "devicepoint"
 
             }]
         }];

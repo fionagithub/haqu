@@ -1,8 +1,13 @@
 angular.module('iBuildWeb', [
-        'ngAnimate',  'ui.router',
+        'ngAnimate', 'ui.router',
         'category',
-        'content', 'content.systype', 'content.type',
-      'content.monitortype', 'content.monitorgroup'
+        'content',
+        'content.systype',
+        'content.type',
+        'content.deviceMonitor', 'content.deviceInfo',
+        /* 'content.devicePoint',
+         */
+        'content.monitortype', 'content.map', 'content.monitorgroup'
     ])
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider

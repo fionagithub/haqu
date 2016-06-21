@@ -1,0 +1,41 @@
+{
+    "name": "ts_device_define",
+    "base": "PersistedModel",
+    "options": {
+        "validateUpsert": true
+    },
+    "properties": {
+        "devicetypeid": {
+            "type": "number",
+            "id": true
+        },
+        "monitortypeid": {
+            "type": "number"
+        },
+        "statusvalue": {
+            "type": "string"
+        },
+        "alarmflg": {
+            "type": "number"
+        },
+        "alarmlevel": {
+            "type": "number"
+        },
+        "isdefault": {
+            "type": "number"
+        },
+        "isanalogio": {
+            "type": "number"
+        },
+        "valuecompareoprator": {
+            "type": "string"
+        },
+        "description": {
+            "type": "string"
+        }
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
+}

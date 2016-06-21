@@ -17,8 +17,17 @@ function Resources($http) {
                     uri = uri + '/count';
                 for (var i in obj) {
                     for (var n in options.field.filter_param) {
-                        if (i == options.field.filter_param[n] && obj[i]) {
-                            _obj[i] = obj[i];
+                        if (typeof options.field.filter_param[n] !== 'object') {
+                            if (i == options.field.filter_param[n] && obj[i]) {
+                                _obj[i] = obj[i];
+                            }
+                        } else {
+                            for (var key in options.field.filter_param[n]) {
+                                if (i == options.field.filter_param[n][key]) {
+                                    _obj[i] = { "like": "%" + obj[i] + "%" };
+                                    i = "\"" + i + "\"";
+                                }
+                            }
                         }
                     }
                 }
@@ -33,8 +42,17 @@ function Resources($http) {
                 if (obj) {
                     for (var i in obj) {
                         for (var n in options.field.filter_param) {
-                            if (i == options.field.filter_param[n] && obj[i]) {
-                                _obj[i] = obj[i];
+                            if (typeof options.field.filter_param[n] !== 'object') {
+                                if (i == options.field.filter_param[n] && obj[i]) {
+                                    _obj[i] = obj[i];
+                                }
+                            } else {
+                                for (var key in options.field.filter_param[n]) {
+                                    if (i == options.field.filter_param[n][key]) {
+                                        _obj[i] = { "like": "%" + obj[i] + "%" };
+                                        i = "\"" + i + "\"";
+                                    }
+                                }
                             }
                         }
                         if (i == '_skip') {

@@ -1,26 +1,25 @@
 {
-  "name": "ts_monitortypes",
+  "name": "ts_devicepoint",
   "base": "PersistedModel",
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "monitortypeid": {
+    "deviceid": {
       "type": "number",
-      "id": true
-    },
-    "monitortypegroupid": {
-      "type": "number",
-      "id": true
-    },
-    "devtypeid": {
-      "type": "number",
-      "id": true
+      "id": true,
+      "required": true
     },
     "cmdname": {
       "type": "string"
     },
-    "description": {
+    "monitortypeid": {
+      "type": "number"
+    },
+    "datasource": {
+      "type": "string"
+    },
+    "monitor": {
       "type": "string"
     }
   },

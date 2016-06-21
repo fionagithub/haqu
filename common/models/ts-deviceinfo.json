@@ -1,26 +1,29 @@
 {
-  "name": "ts_monitortypes",
+  "name": "ts_deviceinfo",
   "base": "PersistedModel",
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "monitortypeid": {
+    "deviceid": {
       "type": "number",
-      "id": true
+      "id": true,
+      "required": true
     },
-    "monitortypegroupid": {
-      "type": "number",
-      "id": true
-    },
-    "devtypeid": {
-      "type": "number",
-      "id": true
-    },
-    "cmdname": {
+    "devicename": {
       "type": "string"
     },
-    "description": {
+    "devicetypeid": {
+      "type": "number",
+      "id": true
+    },
+    "mapid": {
+      "type": "number"
+    },
+    "maptype": {
+      "type": "string"
+    },
+    "deviceno": {
       "type": "string"
     }
   },

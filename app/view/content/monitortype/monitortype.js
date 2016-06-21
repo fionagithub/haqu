@@ -1,7 +1,7 @@
-   angular.module('content.monitortype', ['ibuildweb.monitor.factorys', 'ibuildweb.factorys.services', 'ibuildweb.factorys', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+   angular.module('content.monitortype', ['ibuildweb.factorys.services', 'ibuildweb.factorys', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
        .controller('monitortypeCtrl', monitortypeCtrl)
        /*'ibuildweb.device.factorys', */
-   function monitortypeCtrl($scope, $log, $mdSidenav, $state, deviceSysTypeList, $mdComponentRegistry, DeviceField, MonitorGroup, MonitorType) {
+   function monitortypeCtrl($scope, $log, $mdSidenav, $state, monitorGroup, monitorType, deviceTypeList, $mdComponentRegistry, DeviceField) {
        $scope.$on('$stateChangeSuccess', function() {});
 
        $scope.$on("loadFromParrent", load);
@@ -9,13 +9,16 @@
 
        function load() {
            $scope.page = null;
-           $scope.MonitorGroupList = MonitorGroup;
-           $scope.MonitorGroupList.data.groupData = null;
-           $scope.DeviceTypeList = deviceSysTypeList;
-           deviceSysTypeList.filter();
+           $scope.MonitorGroupList = monitorGroup;
+           // $scope.editMonitorGroupList = monitorGroup;
+           monitorGroup.filter();
 
            $scope.monitorType = null;
-           MonitorGroup.get();
+           $scope.MonitorGroupList.data.groupData = null;
+
+           deviceTypeList.filter().then(function(data) {
+               $scope.DeviceTypeList = data.data;
+           });
            $scope.DeviceField = DeviceField;
            getData();
        }
@@ -27,10 +30,10 @@
            }
 
            if ($scope.monitorType) {
-               obj[DeviceField.CMD_NAME] = angular.copy($scope.monitorType);
+               obj[DeviceField.DESC] = angular.copy($scope.monitorType);
            }
 
-           MonitorType.filterCount(obj).then(function(data) {
+           monitorType.filterCount(obj).then(function(data) {
                var count = data.data.count;
                $scope.monitorTypeCount = Math.floor(count / 10) * 10;
                //是否有上下页
@@ -51,20 +54,22 @@
        }
 
        function sysTypeMap(obj) {
-           MonitorType.filter(obj).then(function(data) {
+           monitorType.filter(obj).then(function(data) {
                var objList = data.data;
                var device = angular.copy($scope.DeviceTypeList);
                var objMap = angular.copy($scope.MonitorGroupList.data);
                for (var s in objList) {
                    for (var o in objMap) {
-                       if (objList[s][DeviceField.TYPE_ID] == objMap[o][DeviceField.MNT_GROUP_ID])
+                       if (objList[s][DeviceField.MNT_GROUP_ID] == objMap[o][DeviceField.MNT_GROUP_ID])
+                       //   objList[s][DeviceField.MNT_GROUP_ID] = objMap[o][DeviceField.DESC];
                            objList[s][DeviceField.MNT_GROUP_ID] = objMap[o];
                    }
                }
                for (var m in objList) {
                    for (var n in device) {
-                       if (objList[m][DeviceField.DEV_TYPE_ID] && objList[m][DeviceField.DEV_TYPE_ID] == device[n][DeviceField.TYPE_ID])
-                           objList[m][DeviceField.DEV_TYPE_ID] = device[n];
+                       if (objList[m][DeviceField.TYPE_ID] && objList[m][DeviceField.TYPE_ID] == device[n][DeviceField.TYPE_ID])
+                       //   objList[m][DeviceField.TYPE_ID] = device[n][DeviceField.TYPE_NAME];
+                           objList[m][DeviceField.TYPE_ID] = device[n];
                    }
                }
                $scope.showMonitorType = objList;
@@ -75,7 +80,7 @@
        $scope.removeMonitorType = function(o) {
            if (!o) return;
            o._status = 'deleted';
-           MonitorType.deleteOne(o).then(function() {
+           monitorType.deleteOne(o).then(function() {
                getData();
            });
        };
@@ -83,15 +88,16 @@
        // 自定义设备 查看列表数据
        $scope.selectedMonitorType = function(index, obj) {
            $scope.selectedIndex = index;
-           /*   */
-           MonitorType.filterCount(obj).then(function(data) {
+           $scope.isDel = true;
+           /*  
+           monitorType.filterCount(obj).then(function(data) {
                if (data.data.count > 0) {
                    $scope.isDel = false;
                    console.log('存在子数据...');
                } else {
                    $scope.isDel = true;
                }
-           })
+           }) */
        };
        $scope.getSelectedText = function(obj) {
            if (obj !== undefined) {
@@ -111,7 +117,9 @@
        };
        $scope.toggleRight = function(obj) {
            if (obj) {
-               $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MNT_GROUP_ID] });
+               $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MNT_GROUP_ID][DeviceField.MNT_GROUP_ID] });
+               $scope.MonitorGroupList.data.editData = obj[DeviceField.MNT_GROUP_ID][DeviceField.MNT_GROUP_ID];
+               $scope.DeviceTypeList.editData = obj[DeviceField.TYPE_ID][DeviceField.TYPE_ID];
 
            } else {
                $state.go("ibuildweb.category.content.create");
@@ -126,18 +134,22 @@
        };
 
        // 自定义设备 重新保存按钮
-       $scope.reSaveGroupType = function(o) {
+       $scope.resave = function(o) {
            var obj = angular.copy(o);
+           obj[DeviceField.MNT_GROUP_ID] = $scope.MonitorGroupList.data.editData;
+           obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.editData;
            obj._status = 'modify';
-           MonitorType.saveOne('reSave', obj).then(function() {
+           monitorType.saveOne('reSave', obj).then(function() {
                getData();
            });
        };
 
        // 自定义设备 保存按钮
-       $scope.saveGroupType = function(o) {
+       $scope.save = function(o) {
            var obj = angular.copy(o);
-           MonitorType.isExists(obj).then(function(data) {
+           obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.data;
+           obj[DeviceField.MNT_GROUP_ID] = $scope.MonitorGroupList.data._data;
+           monitorType.isExists(obj).then(function(data) {
                if (data.data.exists) {
                    $scope.exists = true;
                    $scope.isSave = true;
@@ -147,7 +159,7 @@
                    $scope.isSave = false;
                    console.log('saving...');
                    obj._status = 'modify';
-                   MonitorType.saveOne('save', obj).then(function() {
+                   monitorType.saveOne('save', obj).then(function() {
                        getData();
                    });
                }
@@ -160,6 +172,7 @@
 
        $scope.searchMonitorType = function() {
            $scope.selectedIndex = null;
+           $scope.page = null;
            getData()
        };
 
@@ -172,7 +185,7 @@
            }
 
            if ($scope.monitorType) {
-               obj[DeviceField.CMD_NAME] = angular.copy($scope.monitorType);
+               obj[DeviceField.DESC] = angular.copy($scope.monitorType);
            }
 
            if ($scope.page == Math.abs($scope.page)) {
@@ -194,7 +207,7 @@
                obj[DeviceField.MNT_GROUP_ID] = angular.copy($scope.MonitorGroupList.data.groupData);
            }
            if ($scope.monitorType) {
-               obj[DeviceField.CMD_NAME] = angular.copy($scope.monitorType);
+               obj[DeviceField.DESC] = angular.copy($scope.monitorType);
            }
 
 

@@ -1,6 +1,6 @@
 angular.module('content.systype', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('systypeCtrl', systypeCtrl)
-    /*'ibuildweb.device.factorys',, DeviceTypeList, DeviceSysTypeList, 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'*/
+
 function systypeCtrl($scope, $state, $log, deviceSysTypeList,deviceTypeList, $mdSidenav, $mdComponentRegistry, DeviceField) {
 
     $scope.$on("loadFromParrent", load);

@@ -7,9 +7,6 @@
       "./models"
     ]
   },
-  "User": {
-    "dataSource": "db"
-  },
   "AccessToken": {
     "dataSource": "db",
     "public": false
@@ -25,10 +22,6 @@
   "Role": {
     "dataSource": "db",
     "public": false
-  },
-  "Todo": {
-    "dataSource": "db",
-    "public": true
   },
   "ts_devicesystype": {
     "dataSource": "ibmsDB",
@@ -47,6 +40,30 @@
     "public": true
   },
   "ts_monitortypes": {
+    "dataSource": "ibmsDB",
+    "public": true
+  },
+  "ts_devicetypemonitortypegroup": {
+    "dataSource": "ibmsDB",
+    "public": true
+  },
+  "ts_deviceinfo": {
+    "dataSource": "ibmsDB",
+    "public": true
+  },
+  "ts_devicepoint": {
+    "dataSource": "ibmsDB",
+    "public": true
+  },
+  "ts_deviceinfogroupdefine": {
+    "dataSource": "ibmsDB",
+    "public": true
+  },
+  "ts_earmarkdevice": {
+    "dataSource": "ibmsDB",
+    "public": true
+  },
+  "ts_device_define": {
     "dataSource": "ibmsDB",
     "public": true
   }

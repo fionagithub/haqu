@@ -2,29 +2,30 @@
     <md-toolbar class="md-theme-indigo">
         <h1 class="md-toolbar-tools">系统设备</h1>
     </md-toolbar>
-    <!-- ng-controller="editSysCtrl" -->
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
-                <label> MAP_ID</label>
+                <label> 地图ID </label>
                 <p>
                     {{groupFieldName[DeviceField.MAP_ID]}}
                 </p>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label> mapName</label>
+                <label> 地图名称 </label>
                 <input ng-model="groupFieldName[DeviceField.MAP_NAME] ">
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label> mapNo </label>
-                <input ng-model=" groupFieldName[DeviceField.MAP_NO]">
+                <label> 区域 </label>
+                <md-select ng-model="showData.null.data" md-selected-text="getSelectedText(showData.null.data)">
+                    <md-option ng-value="data[DeviceField.MAP_ID]" ng-repeat='data in showData.null'>{{data[DeviceField.MAP_NAME]}}</md-option>
+                </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label>Source </label>
+                <label>地图文件 </label>
                 <input ng-model="groupFieldName[DeviceField.SOURCE] ">
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label> mapType </label>
+                <label> 地图类别 </label>
                 <input ng-model=" groupFieldName[DeviceField.MAP_TYPE]">
             </md-input-container>
         </md-list>

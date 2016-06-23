@@ -2,7 +2,19 @@
     padding-top: 96px;
     padding-left: 500px;
 }
- 
+
+.deviceinfo {
+    border: 1px solid #00BCD4;
+}
+
+.deviceinfo li  {
+    padding: 20px;
+}
+
+.deviceinfo li span {
+    width: 200px;
+}
+
 .selected {
     border: 1px solid #ff0;
     z-index: 99;
@@ -89,11 +101,12 @@ table.md-api-table tr td:first-child {
     display: inline-block;
     /*   margin-top: -5px; */
 }
-.md-theme-indigo{
+
+.md-theme-indigo {
     background-color: #00bcd4!important;
     z-index: 3;
-    
 }
+
 .site-content-toolbar {
     background-color: #00bcd4!important;
     z-index: 3;

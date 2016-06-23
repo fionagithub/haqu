@@ -5,7 +5,7 @@
     "ACL": 1,
     "RoleMapping": 1,
     "Role": 1,
-    "ts_map": 921,
+    "ts_map": 922,
     "ts_deviceinfo": 369906,
     "ts_devicetype": 1103333133350,
     "ts_devicesystype": 87655580,
@@ -1314,7 +1314,7 @@
       "476": "{\"mapid\":476,\"mapname\":\"127F\",\"mapno\":\"342\",\"maplocation\":\"8区(塔冠区)\",\"maptype\":1,\"source\":\"maps/127F.png\"}",
       "478": "{\"mapid\":478,\"mapname\":\"baxitong\",\"mapno\":null,\"maplocation\":null,\"maptype\":2,\"source\":null}",
       "479": "{\"mapid\":479,\"mapname\":\"b1F\",\"mapno\":\"478\",\"maplocation\":\"ba\",\"maptype\":2,\"source\":\"maps/b1f.png\"}",
-      "480": "{\"mapid\":480,\"mapname\":\"cpms\",\"mapno\":null,\"maplocation\":null,\"maptype\":3,\"source\":null}",
+      "480": "{\"mapid\":480,\"mapname\":\"-=--=\",\"mapno\":null,\"maplocation\":null,\"maptype\":3,\"source\":null}",
       "481": "{\"mapid\":481,\"mapname\":\"dianneg\",\"mapno\":\"480\",\"maplocation\":\"cpms\",\"maptype\":3,\"source\":\"maps/b1f.png\"}",
       "482": "{\"mapid\":482,\"mapname\":null,\"mapno\":null,\"maplocation\":null,\"maptype\":null,\"source\":null}"
     },

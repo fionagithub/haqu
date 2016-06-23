@@ -6,23 +6,25 @@
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
-                <label> MAP_ID</label>
+                <label> 地图ID</label>
                 <input ng-model="addData[DeviceField.MAP_ID] ">
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label> mapName</label>
+                <label>地图名称 </label>
                 <input ng-model="addData[DeviceField.MAP_NAME] ">
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label> mapNo </label>
-                <input ng-model=" addData[DeviceField.MAP_NO]">
+                <label>区域</label>
+                <md-select ng-model="showData.null.data" md-selected-text="getSelectedText(showData.null.data)">
+                    <md-option ng-value="data[DeviceField.MAP_ID]" ng-repeat='data in showData.null'>{{data[DeviceField.MAP_NAME]}}</md-option>
+                </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label>Source </label>
+                <label>地图文件 </label>
                 <input ng-model="addData[DeviceField.SOURCE] ">
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label> mapType </label>
+                <label> 地图类别 </label>
                 <input ng-model=" addData[DeviceField.MAP_TYPE]">
             </md-input-container>
         </md-list>

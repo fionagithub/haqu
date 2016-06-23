@@ -18,13 +18,13 @@ function map(Resources, API_URI, DeviceField) {
         }
     })
 }
-
+/*DeviceField.MAP_TYPE,*/
 function deviceInfo(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.DEVICE_INFO,
         field: {
-            'uri_param': DeviceField.DEVICE_ID,
-            'filter_param': [DeviceField.DEVICE_NO]
+            'uri_param': DeviceField.MAP_ID,
+            'filter_param': [DeviceField.MAP_ID]
         }
     })
 }

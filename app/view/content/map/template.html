@@ -1,52 +1,17 @@
 <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="mapCtrl">
-    <md-input-container flex class="md-block">
-        <label>名称</label>
-        <input ng-model="mapno">
-    </md-input-container>
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="search()">搜索
-        </md-button>
         <md-button ng-click="toggleRight()" class="md-primary md-raised demo-dialog-open-button">新增
         </md-button>
     </section>
     <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
-        <table class="md-api-table">
-            <thead>
-                <tr>
-                    <th> MAP_ID </th>
-                    <th> mapName </th>
-                    <th> mapNo </th>
-                    <th>Source </th>
-                    <th> mapType </th>
-                    <th> 操作 </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat='data in showData' ng-class="{'selected':$index == selectedIndex}" ng-click="selectedRow($index,data)">
-                    <td>{{data[DeviceField. MAP_ID]}}</td>
-                    <td> {{data[DeviceField. MAP_NAME]}}</td>
-                    <td>{{data[DeviceField. MAP_NO]}} </td>
-                    <td>{{data[DeviceField.SOURCE]}} </td>
-                    <td> {{data[DeviceField.MAP_TYPE]}}
-                    </td>
-                    <td>
-                        <span ng-class="{'inline-tools':$index == selectedIndex}" ng-show='$index == selectedIndex'>
-                             <md-button ng-click="toggleRight(data)" class="md-fab md-mini" aria-label="Eat cake">
-                             <md-icon  class="glyphicon glyphicon-pencil" ></md-icon>
-                             </md-button>
-                                 <md-button class="md-fab md-mini" ng-show='isDel && $index == selectedIndex' class="btn btn-danger btn-xs" ng-click="remove(data)">
-                                           <md-icon class="glyphicon glyphicon-remove" ></md-icon>
-                                   </md-button>
-                             </span>
-                    </td>
-            </tbody>
-        </table>
         <div layout="row">
-            <md-button class="md-primary md-raised demo-dialog-open-button" ng-disabled='isLoadTop' ng-show='isPagination' class="btn btn-default" ng-click="previousPage()">
-                上页
-            </md-button>
-            <md-button class="md-primary md-raised demo-dialog-open-button" ng-disabled='isLoadEnd' ng-show='isPagination' class="btn btn-default" ng-click="nextPage()">下页
-            </md-button>
+            <ul class='map' flex="33">
+                <li flex-gt-xs="50" ng-repeat='data in showData.null' ng-class="{ hasChild:showData[data[DeviceField.MAP_ID]], 
+        open: showData[data[DeviceField.MAP_ID]]&& data.open }" ng-include="'view/content/map/floordata.html'">
+                </li>
+            </ul>
+            <div class='deviceinfo' flex="33" flex-gt-xs="50" style="height: 810px" bind="{'jsp-scroll-y':onJspScrollY}" ng-include="'view/content/map/device/template.html'">
+            </div>
         </div>
     </md-content>
     <ui-view>

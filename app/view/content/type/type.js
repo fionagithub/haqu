@@ -1,9 +1,8 @@
-angular.module('content.type', ['ibuildweb.factorys',  'ibuildweb.factorys.services'
-    ])
+angular.module('content.type', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('typeCtrl', typeCtrl)
-/*, DeviceTypeList, DeviceSysTypeList, 
-        'ui.router', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'*/
-function typeCtrl($scope,deviceSysTypeList,deviceTypeList, $state, $log, $mdSidenav, $mdComponentRegistry, DeviceField) {
+    /*, DeviceTypeList, DeviceSysTypeList, 
+            'ui.router', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'*/
+function typeCtrl($scope, deviceSysTypeList, deviceTypeList, $state, $log, $mdSidenav, $mdComponentRegistry, DeviceField) {
     $scope.$on('$stateChangeSuccess', function() {});
     $scope.$on("loadFromParrent", load);
     load();
@@ -38,8 +37,10 @@ function typeCtrl($scope,deviceSysTypeList,deviceTypeList, $state, $log, $mdSide
             console.log($scope.deviceTypeCount)
                 //是否有上下页
             count && count > 10 ? $scope.isPagination = true : $scope.isPagination = false;
-            if ($scope.page)
+            if ($scope.page) {
                 obj._skip = $scope.page;
+            }
+            obj.limit = 10;
             sysTypeMap(obj);
             $scope.isEditButton = false;
             if ($scope.page == $scope.deviceTypeCount) {
@@ -76,7 +77,7 @@ function typeCtrl($scope,deviceSysTypeList,deviceTypeList, $state, $log, $mdSide
     };
 
     // 自定义设备 取消按钮
-    $scope.cancelDeviceType = function() { 
+    $scope.cancelDeviceType = function() {
         $mdSidenav('right').close()
             .then(function() {
                 $log.debug("close RIGHT is done");

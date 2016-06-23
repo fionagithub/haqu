@@ -18,7 +18,7 @@ function Resources($http) {
                 for (var i in obj) {
                     for (var n in options.field.filter_param) {
                         if (typeof options.field.filter_param[n] !== 'object') {
-                            if (i == options.field.filter_param[n] && obj[i]) {
+                            if (i == options.field.filter_param[n]) { // && obj[i]
                                 _obj[i] = obj[i];
                             }
                         } else {
@@ -38,12 +38,14 @@ function Resources($http) {
             },
             filter: function(obj) {
                 var _obj = {},
+                    lmt = {},
                     skip = {};
+                var _params = {};
                 if (obj) {
                     for (var i in obj) {
                         for (var n in options.field.filter_param) {
                             if (typeof options.field.filter_param[n] !== 'object') {
-                                if (i == options.field.filter_param[n] && obj[i]) {
+                                if (i == options.field.filter_param[n]) { // && obj[i]
                                     _obj[i] = obj[i];
                                 }
                             } else {
@@ -55,16 +57,16 @@ function Resources($http) {
                                 }
                             }
                         }
+                        _params.where = _obj;
                         if (i == '_skip') {
-                            skip[i] = obj[i];
+                            _params.skip = obj[i];
+                        }
+                        if (i == 'limit') {
+                            _params.limit = obj[i];
                         }
                     }
-                    console.log(_obj);
-                    if (skip["_skip"]) {
-                        _obj = { params: { filter: { "limit": 10, "where": _obj, "skip": skip["_skip"] } } };
-                    } else {
-                        _obj = { params: { filter: { "limit": 10, "where": _obj } } };
-                    }
+                    console.log('_obj==--');
+                    _obj = { params: { filter: _params } };
                     return $http.get(options.uri, _obj).success(function(_data) {
                         dataInfo.customData = _data;
                     });
@@ -95,7 +97,7 @@ function Resources($http) {
                         'reSave': options.uri + '/' + _deviceSysType[options.field.uri_param]
                     };
 
-                    console.log('--save--' + saveObj[obj]);
+                    console.log('--save--');
                     return $http.put(saveObj[obj], _result).success(function(_data) {
                         console.log('save one success!');
                         _deviceSysType._status = 'saved';

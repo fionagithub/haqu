@@ -35,5 +35,16 @@ angular.module('content', [])
                         }
                     }
                 }
+            }) 
+               .state('ibuildweb.category.content.child', {
+                url: '/:mapid',
+                views: {
+                    '@ibuildweb.category.content': {
+                        templateUrl: function(param) {
+                            return 'view/content/' + param.category + '/device/template.html'
+                        }
+
+                    }
+                }
             });
     })

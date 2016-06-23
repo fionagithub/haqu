@@ -27,8 +27,10 @@ function monitorgroupCtrl($scope, $log, DeviceField, monitorGroup, monitorType, 
             $scope.monitorGroupCount = Math.floor(count / 10) * 10;
             //是否有上下页
             count && count > 10 ? $scope.isPagination = true : $scope.isPagination = false;
-            if ($scope.page)
+            if ($scope.page) {
                 obj._skip = $scope.page;
+            }
+            obj.limit = 10;
             sysTypeMap(obj);
             $scope.isEditButton = false;
             if ($scope.page == $scope.monitorGroupCount) {

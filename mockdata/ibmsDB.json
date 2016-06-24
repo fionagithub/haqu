@@ -8,7 +8,7 @@
     "ts_map": 922,
     "ts_deviceinfo": 369906,
     "ts_devicetype": 1103333133350,
-    "ts_devicesystype": 87655580,
+    "ts_devicesystype": 87655591,
     "V_DevicePointList": 240316,
     "ts_newmonitortypegroup": 90012,
     "ts_monitortypes": 901005,
@@ -1169,7 +1169,7 @@
       "9": "{\"devicesystemtypeid\":9,\"devicesystemtypename\":\"电梯系统\"}",
       "10": "{\"devicesystemtypeid\":10,\"devicesystemtypename\":\"车库管理系统\"}",
       "11": "{\"devicesystemtypeid\":11,\"devicesystemtypename\":\"eleven--\"}",
-      "12": "{\"devicesystemtypeid\":12,\"devicesystemtypename\":\"--==---\"}"
+      "346": "{\"devicesystemtypeid\":346,\"devicesystemtypename\":\"string\"}"
     },
     "ts_map": {
       "334": "{\"mapid\":334,\"mapname\":\"B区\",\"mapno\":null,\"maplocation\":null,\"maptype\":1,\"source\":null}",

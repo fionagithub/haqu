@@ -1,7 +1,7 @@
-angular.module('ibuildweb.factorys.resources', [])
+angular.module('ibuildweb.factorys.resources', ['ibuildweb.factorys'])
     .factory('Resources', Resources);
 
-function Resources($http) {
+function Resources($http, DeviceField, $rootScope) {
     // body...
     function ResourceConstructor(options) {
 
@@ -10,71 +10,40 @@ function Resources($http) {
             customData: [],
             count: null,
             exists: null,
-            filterCount: function(obj) {
+            filterCount: function(callback) {
                 var uri = options.uri;
                 var _obj = {},
                     o = {},
                     uri = uri + '/count';
-                for (var i in obj) {
-                    for (var n in options.field.filter_param) {
-                        if (typeof options.field.filter_param[n] !== 'object') {
-                            if (i == options.field.filter_param[n]) { // && obj[i]
-                                _obj[i] = obj[i];
-                            }
-                        } else {
-                            for (var key in options.field.filter_param[n]) {
-                                if (i == options.field.filter_param[n][key]) {
-                                    _obj[i] = { "like": "%" + obj[i] + "%" };
-                                    i = "\"" + i + "\"";
-                                }
-                            }
-                        }
+                for (var i in $rootScope.query) {
+                    if ($rootScope.query[i]) {
+                        _obj[i] = $rootScope.query[i];
                     }
                 }
                 o = { params: { "where": _obj } };
-                return $http.get(uri, o).success(function(_data) {
-                    dataInfo.count = _data.count;
-                });
+                $http.get(uri, o).success(callback);
             },
-            filter: function(obj) {
+            filter: function(obj, callback) {
                 var _obj = {},
-                    lmt = {},
-                    skip = {};
-                var _params = {};
-                if (obj) {
-                    for (var i in obj) {
-                        for (var n in options.field.filter_param) {
-                            if (typeof options.field.filter_param[n] !== 'object') {
-                                if (i == options.field.filter_param[n]) { // && obj[i]
-                                    _obj[i] = obj[i];
-                                }
-                            } else {
-                                for (var key in options.field.filter_param[n]) {
-                                    if (i == options.field.filter_param[n][key]) {
-                                        _obj[i] = { "like": "%" + obj[i] + "%" };
-                                        i = "\"" + i + "\"";
-                                    }
-                                }
-                            }
-                        }
-                        _params.where = _obj;
-                        if (i == '_skip') {
-                            _params.skip = obj[i];
-                        }
-                        if (i == 'limit') {
-                            _params.limit = obj[i];
-                        }
+                    _where = {},
+                    _params = {};
+                for (var i in $rootScope.query) {
+                    if ($rootScope.query[i]) {
+                        _where[i] = $rootScope.query[i];
                     }
-                    console.log('_obj==--');
-                    _obj = { params: { filter: _params } };
-                    return $http.get(options.uri, _obj).success(function(_data) {
-                        dataInfo.customData = _data;
-                    });
-                } else {
-                    return $http.get(options.uri).success(function(_data) {
-                        dataInfo.data = _data;
-                    });
                 }
+                _params.where = _where;
+                for (var i in obj) {
+                    if (i == 'skip') {
+                        _params.skip = obj[i];
+                    }
+                    if (i == 'limit') {
+                        _params.limit = obj[i];
+                    }
+                }
+
+                _obj = { params: { filter: _params } };
+                $http.get(options.uri, _obj).success(callback);
             },
             isExists: function(obj) {
                 var uri = options.uri;

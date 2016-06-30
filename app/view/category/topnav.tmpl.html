@@ -1,8 +1,15 @@
-<md-toolbar class="site-content-toolbar" ng-controller="navCtrl">
-    <div class="md-toolbar-tools">
-        <!--    <p>24424</p>  -->
+<md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar _md" ng-controller="navCtrl">
+    <div class="md-toolbar-tools docs-toolbar-tools" tabindex="-1">
         <md-button ng-click="toggleLeft()" class="md-icon-button" hide-gt-md="">
             <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
         </md-button>
+        <div layout="row" flex="" class="fill-height layout-row flex">
+            <h2 class="md-toolbar-item md-breadcrumb md-headline"> 
+              <span>{{bbb.label}} </span> 
+              <span>
+              	{{aaa}}
+              </span>
+               </h2>
+        </div>
     </div>
 </md-toolbar>

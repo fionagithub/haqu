@@ -7,10 +7,10 @@
     "Role": 1,
     "ts_map": 922,
     "ts_deviceinfo": 369906,
-    "ts_devicetype": 1103333133350,
-    "ts_devicesystype": 87655591,
+    "ts_devicetype": 1103333133361,
+    "ts_devicesystype": 87655617,
     "V_DevicePointList": 240316,
-    "ts_newmonitortypegroup": 90012,
+    "ts_newmonitortypegroup": 90014,
     "ts_monitortypes": 901005,
     "ts_deviceinfogroupdefine": 50401011024013900,
     "ts_devicepoint": 10101010901002080,
@@ -1022,7 +1022,7 @@
     "ts_devicetype": {
       "2": "{\"devicetypeid\":2,\"devicetypename\":\"232\",\"devicesystemtypeid\":11}",
       "6": "{\"devicetypeid\":6,\"devicetypename\":\"放\",\"devicesystemtypeid\":11}",
-      "66": "{\"devicetypeid\":66,\"devicetypename\":\"777===--\",\"devicesystemtypeid\":11}",
+      "66": "{\"devicetypeid\":66,\"devicetypename\":\"-==77===--\",\"devicesystemtypeid\":11}",
       "89": "{\"devicetypeid\":89,\"devicetypename\":\"=--77\",\"devicesystemtypeid\":11}",
       "101": "{\"devicetypeid\":101,\"devicetypename\":\"视频监控\",\"devicesystemtypeid\":1,\"iconsrc\":null}",
       "111": "{\"devicetypeid\":111,\"devicetypename\":\"323\",\"devicesystemtypeid\":11}",
@@ -1123,6 +1123,7 @@
       "548": "{\"devicetypeid\":548,\"devicetypename\":\"中庭翅流加热控制\",\"devicesystemtypeid\":5,\"iconsrc\":null}",
       "549": "{\"devicetypeid\":549,\"devicetypename\":\"中庭翅片散热器用换热器\",\"devicesystemtypeid\":5,\"iconsrc\":null}",
       "646": "{\"devicetypeid\":646,\"devicetypename\":\"466\",\"devicesystemtypeid\":11}",
+      "666": "{\"devicetypeid\":666,\"devicetypename\":\"66\",\"devicesystemtypeid\":null}",
       "801": "{\"devicetypeid\":801,\"devicetypename\":\"温湿度\",\"devicesystemtypeid\":8,\"iconsrc\":null}",
       "802": "{\"devicetypeid\":802,\"devicetypename\":\"配电开关\",\"devicesystemtypeid\":8,\"iconsrc\":null}",
       "803": "{\"devicetypeid\":803,\"devicetypename\":\"配电柜\",\"devicesystemtypeid\":8,\"iconsrc\":null}",
@@ -1147,14 +1148,16 @@
       "1301": "{\"devicetypeid\":1301,\"devicetypename\":\"test--=--==-\",\"iconsrc\":null}",
       "1311": "{\"devicetypeid\":1311,\"devicetypename\":\"222\",\"iconsrc\":null}",
       "3333": "{\"devicetypeid\":3333,\"devicetypename\":\"===11s999dd===\",\"devicesystemtypeid\":11,\"iconsrc\":null,\"devicesystemtype\":null}",
-      "6757": "{\"devicetypeid\":6757,\"devicetypename\":\"655\",\"devicesystemtypeid\":11}",
-      "9988": "{\"devicetypeid\":9988,\"devicetypename\":\"655\",\"devicesystemtypeid\":11}",
+      "3435": "{\"devicetypeid\":3435,\"devicetypename\":\"676\",\"devicesystemtypeid\":null}",
+      "9988": "{\"devicetypeid\":9988,\"devicetypename\":\"===9999====\",\"devicesystemtypeid\":11}",
       "11222": "{\"devicetypeid\":11222,\"devicetypename\":\"2222\"}",
-      "12577": "{\"devicetypeid\":12577,\"devicetypename\":\"11111110--====--\",\"devicesystemtypeid\":11}",
-      "23242": "{\"devicetypeid\":23242,\"devicetypename\":\"232--=-\",\"devicesystemtypeid\":11}",
+      "34353": "{\"devicetypeid\":34353,\"devicetypename\":\"34\",\"devicesystemtypeid\":null}",
+      "999999": "{\"devicetypeid\":999999,\"devicetypename\":\"--==---=\",\"devicesystemtypeid\":null}",
       "1103333133339": "{\"devicetypeid\":1103333133339,\"devicetypename\":\"股份制\"}",
       "1103333133341": "{\"devicetypeid\":1103333133341,\"devicetypename\":\"奇才\"}",
-      "1103333133342": "{\"devicetypeid\":1103333133342,\"devicetypename\":\"奇才\"}"
+      "1103333133342": "{\"devicetypeid\":1103333133342,\"devicetypename\":\"奇才\"}",
+      "9999999999": "{\"devicetypeid\":9999999999,\"devicetypename\":\"89009\",\"devicesystemtypeid\":null}",
+      "1103333133360": "{\"devicetypeid\":1103333133360,\"devicetypename\":\"er\",\"devicesystemtypeid\":11}"
     },
     "ts_devicesystype": {
       "0": "{\"devicesystemtypeid\":0,\"devicesystemtypename\":\"综合\"}",
@@ -1169,7 +1172,7 @@
       "9": "{\"devicesystemtypeid\":9,\"devicesystemtypename\":\"电梯系统\"}",
       "10": "{\"devicesystemtypeid\":10,\"devicesystemtypename\":\"车库管理系统\"}",
       "11": "{\"devicesystemtypeid\":11,\"devicesystemtypename\":\"eleven--\"}",
-      "346": "{\"devicesystemtypeid\":346,\"devicesystemtypename\":\"string\"}"
+      "12": "{\"devicesystemtypeid\":12,\"devicesystemtypename\":\"-009990==\"}"
     },
     "ts_map": {
       "334": "{\"mapid\":334,\"mapname\":\"B区\",\"mapno\":null,\"maplocation\":null,\"maptype\":1,\"source\":null}",
@@ -1314,7 +1317,7 @@
       "476": "{\"mapid\":476,\"mapname\":\"127F\",\"mapno\":\"342\",\"maplocation\":\"8区(塔冠区)\",\"maptype\":1,\"source\":\"maps/127F.png\"}",
       "478": "{\"mapid\":478,\"mapname\":\"baxitong\",\"mapno\":null,\"maplocation\":null,\"maptype\":2,\"source\":null}",
       "479": "{\"mapid\":479,\"mapname\":\"b1F\",\"mapno\":\"478\",\"maplocation\":\"ba\",\"maptype\":2,\"source\":\"maps/b1f.png\"}",
-      "480": "{\"mapid\":480,\"mapname\":\"-=--=\",\"mapno\":null,\"maplocation\":null,\"maptype\":3,\"source\":null}",
+      "480": "{\"mapid\":480,\"mapname\":\"-=-000-=\",\"mapno\":null,\"maplocation\":null,\"maptype\":3,\"source\":null,\"open\":true}",
       "481": "{\"mapid\":481,\"mapname\":\"dianneg\",\"mapno\":\"480\",\"maplocation\":\"cpms\",\"maptype\":3,\"source\":\"maps/b1f.png\"}",
       "482": "{\"mapid\":482,\"mapname\":null,\"mapno\":null,\"maplocation\":null,\"maptype\":null,\"source\":null}"
     },
@@ -3787,6 +3790,7 @@
       "33": "{\"monitortypegroupid\":33,\"description\":\"\\r\\n配电柜\"}",
       "34": "{\"monitortypegroupid\":34,\"description\":\"\\r\\nUPS\"}",
       "35": "{\"monitortypegroupid\":35,\"description\":\"BOSCH防盗报警\"}",
+      "333": "{\"monitortypegroupid\":333,\"description\":\"213\"}",
       "6001": "{\"monitortypegroupid\":6001,\"description\":\"水表\"}",
       "7001": "{\"monitortypegroupid\":7001,\"description\":\"遥测\"}",
       "7002": "{\"monitortypegroupid\":7002,\"description\":\"遥信\"}",
@@ -3796,7 +3800,7 @@
       "7006": "{\"monitortypegroupid\":7006,\"description\":\"地刀\"}",
       "7007": "{\"monitortypegroupid\":7007,\"description\":\"隔离开关\"}",
       "9001": "{\"monitortypegroupid\":9001,\"description\":\"LED屏\"}",
-      "32423": "{\"monitortypegroupid\":32423,\"description\":\"-==-==\"}"
+      "32423": "{\"monitortypegroupid\":32423,\"description\":\"-==999==\"}"
     },
     "ts_deviceinfogroupdefine": {
       "50101011024012400": "{\"deviceid\":50101011024012400,\"subdeviceid\":null,\"templatename\":null}",

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="iBuildWeb" ng-controller="iBuildWebCtr">
 
 <head>
     <meta charset="UTF-8">
     <title>editBuildWeb v0.4</title>
-    <link rel="stylesheet" type="text/css" href="client/vendor/angular-material/angular-material.css" />
-    <link rel="stylesheet" type="text/css" href="css/ibuildweb.css" />
+    <link rel="stylesheet" type="text/css" href="client/vendor/angular-material/angular-material.min.css" />
     <link rel="stylesheet" type="text/css" href="css/editbuildweb.css" />
     <link rel="stylesheet" type="text/css" href="css/jquery.jscrollpane.css" />
     <!--
@@ -22,7 +21,6 @@
     $('#ca-container').contentcarousel();
 </script>latest jQuery direct from google's CDN -->
     <script src="//cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
- 
     <!-- the mousewheel plugin -->
     <script type="text/javascript" src="js/script/jquery.mousewheel.js"></script>
     <!-- the jScrollPane script -->
@@ -48,13 +46,13 @@
     <script type="text/javascript" src="view/content/deviceinfo/deviceinfo.js"></script>
 </head>
 
-<body ng-app="iBuildWeb" ng-controller="iBuildWebCtr">
-    <div class="docs-body layout-row" layout="row">
-        <ui-view name="category"></ui-view>
-        <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex">
-            <ui-view name="topnav"></ui-view>
-            <ui-view name="content"></ui-view>
-        </div>
+<body class="docs-body layout-row" layout="row">
+    <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2 hide-print _md-closed ng-isolate-scope _md _md-locked-open" md-component-id="left" hide-print="" md-is-locked-open="$mdMedia('gt-sm')" tabindex="-1">
+        <div ui-view="category"></div>
+    </md-sidenav>
+    <div layout="column" tabindex="-1" role="main" flex class="layout-column flex">
+        <ui-view name="topnav"></ui-view>
+        <ui-view name="content"></ui-view>
     </div>
 </body>
 

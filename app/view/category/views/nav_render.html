@@ -1,4 +1,4 @@
-<a ng-click="goCatory(obj)">
+<a ng-click="goCatory(obj)" ng-href='{{obj.url}}' ><!-- -->
     <i ng-if="obj.iconClasses" class="{{obj.iconClasses}}"></i>
     <span>{{obj.label}}</span>
     <span ng-if="obj.children.length" aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : obj.open}">

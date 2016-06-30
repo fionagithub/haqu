@@ -49,41 +49,51 @@ angular.module('content', ['ibuildweb.factorys.services', 'ibuildweb.factorys'])
             });
     })
     .factory('Paginator', Paginator)
+    .directive('pagination', pagination)
+    .directive('inlineTools', inlineTools)
 
-function Paginator($mdDialog, DeviceField) {
+function inlineTools() {
+    return {
+        restrict: 'EA',
+        replace: true,
+        transclude: true,
+        scope: true,
+        templateUrl: 'view/inline-tools/template.html'
+    }
+}
 
-    return function(func, fetchFunction, obj) {
+function pagination() {
+    return {
+        restrict: 'EA',
+        replace: true,
+        transclude: true,
+        scope: true,
+        templateUrl: 'view/pagination/template.html'
+
+    }
+}
+
+function Paginator() {
+
+    return function(func, obj) {
         var paginator = {
-            field: obj,
-            count: null,
+            offset: 0,
+            currentPage: 1, 
+            size: obj + 1,
             isLoadTop: true, //下页
             isLoadEnd: true, //下页
-            isPagination: false, //fen页self.count == null &&
+            isPagination: true,
             _load: function(o) {
                 var self = this;
-                if (o == 0) {
-                    self.field['skip'] = o;
+                if (typeof o !== "undefined") {
+                    self.offset = o;
+                     self.currentPage =1;
                 }
-                if (typeof func === 'function') {
-                    func(function(data) {
-                        var c = Math.floor(data.count / obj['limit']);
-                        self.count = c * obj['limit']; //start from page:0
-                        self.isPagination = c > 0;
-
-                    })
-                }
-                fetchFunction(this.field, function(data) {
-                    self.data = data;
-                    //是否有上下页
-                    if (self.count > self.field['skip']) {
-                        self.isLoadEnd = false;
-                        self.isLoadTop = true;
-                    } else {
-                        self.isLoadEnd = true;
-                        self.isLoadTop = false;
-                    }
+                func(self.offset, self.size, function(data) {
+                    self.data = data.slice(0, obj); 
+                    self.isLoadEnd = data.length < self.size;
+                    self.isLoadTop = self.currentPage <= 1;
                 })
-
             },
             checkPaginator: function() {
                 return this.isPagination;
@@ -96,14 +106,16 @@ function Paginator($mdDialog, DeviceField) {
             },
             previousPage: function() {
                 var self = this;
-                self.field['skip'] -= 10;
+                self.offset -= 10;
+                self.currentPage -= 1;
                 self._load();
             },
             nextPage: function() {
                 var self = this;
-                self.field['skip'] += 10;
+                self.currentPage += 1;
+                self.offset += 10;
                 self._load();
-            },
+            }, 
             data: []
         };
         //load
@@ -111,5 +123,3 @@ function Paginator($mdDialog, DeviceField) {
         return paginator;
     };
 }
-
-Paginator.$inject = ['$mdDialog'];

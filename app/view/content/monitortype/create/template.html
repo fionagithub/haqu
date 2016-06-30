@@ -22,9 +22,9 @@
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label>监测点组ID</label>
-                <md-select ng-model="MonitorGroupList.data._data" md-selected-text="getSelectedText(MonitorGroupList.data._data)">
-                    <md-option ng-value="_data[DeviceField.MNT_GROUP_ID]" ng-repeat="_data in MonitorGroupList.data">{{ _data[DeviceField.MNT_GROUP_ID] + ':' + _data[DeviceField.DESC]}}</md-option>
+                <label>监测点组ID</label> 
+                <md-select ng-model="MonitorGroupList.editOptionData" md-selected-text="getSelectedText(MonitorGroupList.editOptionData)">
+                    <md-option ng-value="editOptionData[DeviceField.MNT_GROUP_ID]" ng-repeat="editOptionData in MonitorGroupList">{{ editOptionData[DeviceField.MNT_GROUP_ID] + ':' + editOptionData[DeviceField.DESC]}}</md-option>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
@@ -32,10 +32,10 @@
                 <input ng-model="data[DeviceField.DESC]">
             </md-input-container>
         </md-list>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="save(data)">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(data,'save')">
             保存
         </md-button>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="cancel()">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="cancel()">
             取消
         </md-button>
     </md-content>

@@ -3940,7 +3940,7 @@
       "302": "{\"devicetypeid\":302,\"monitortypeid\":null,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
       "303": "{\"devicetypeid\":303,\"monitortypeid\":null,\"statusvalue\":\"0044\",\"alarmflg\":1,\"alarmlevel\":59,\"isdefault\":0,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"非法信号\"}",
       "304": "{\"devicetypeid\":304,\"monitortypeid\":4,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
-      "305": "{\"devicetypeid\":305,\"monitortypeid\":9,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
+      "305": "{\"devicetypeid\":305,\"monitortypeid\":9,\"statusvalue\":\"0000\",\"alarmflg\":1,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
       "306": "{\"devicetypeid\":306,\"monitortypeid\":24,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
       "307": "{\"devicetypeid\":307,\"monitortypeid\":25,\"statusvalue\":\"0001\",\"alarmflg\":1,\"alarmlevel\":90,\"isdefault\":0,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"报警\"}",
       "308": "{\"devicetypeid\":308,\"monitortypeid\":26,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",

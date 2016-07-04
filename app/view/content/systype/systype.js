@@ -4,9 +4,10 @@ angular.module('content.systype', ['ibuildweb.factorys', 'ibuildweb.factorys.ser
 function systypeCtrl($scope, $state, $rootScope, deviceSysTypeList, deviceTypeList, Paginator, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
-        load();
+        if ($state.current.name == "ibuildweb.category.content") {
+            load();
+        }
     });
-
     var query = {};
 
     function load() {
@@ -20,8 +21,12 @@ function systypeCtrl($scope, $state, $rootScope, deviceSysTypeList, deviceTypeLi
         });
     }
 
+    $scope.$watch('sysTypeData', function() {
+    });
     $scope.search = function() {
         $scope.showData._load(0);
+        query[DeviceField.SYS_TYPE_ID] = $scope.sysTypeData;
+        $rootScope.query = query;
     }
 
     $scope.save = function(obj, type) {
@@ -46,16 +51,12 @@ function systypeCtrl($scope, $state, $rootScope, deviceSysTypeList, deviceTypeLi
         deviceSysTypeList.deleteOne(obj).then(function(data) { $scope.showData._load() })
     }
 
-    $scope.$watch('sysTypeData', function() {
-        query[DeviceField.SYS_TYPE_ID] = $scope.sysTypeData;
-        $rootScope.query = query;
-    });
 
     $scope.getSelectedText = function(o) {
         if (o) {
             return o;
         } else {
-            return "Please select an item";
+            return " ";
         }
     };
 

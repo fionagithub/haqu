@@ -8,10 +8,6 @@ md-toolbar {
     background-color: #fff !important;
 }
 
-.md-sidenav-right {
-    padding-top: 80px;
-}
-
 .md-toggle-icon {
     display: block;
     margin-left: auto;
@@ -328,7 +324,7 @@ table td {
     line-height: 0.8rem;
     padding-left: 0;
     padding-right: 0;
-    width: 0.8rem;
+/*     width: 0.8rem; */
 }
 
 table.md-api-table .selected td {

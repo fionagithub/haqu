@@ -1,6 +1,6 @@
 <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="deviceMonitorCtrl">
     <md-input-container flex class="md-block">
-        <label>监控类</label>
+        <label>监控组</label>
         <md-select ng-model="sysTypeData" md-selected-text="getSelectedText(sysTypeData)">
             <md-option ng-value="sysTypeData[DeviceField.MNT_GROUP_ID]" ng-repeat="sysTypeData in MonitorGroupList">{{ sysTypeData[DeviceField.MNT_GROUP_ID] + ':' + sysTypeData[DeviceField.DESC]}}</md-option>
         </md-select>
@@ -16,7 +16,7 @@
             <thead>
                 <tr>
                     <th>设备</th>
-                    <th> 监控组ID </th>
+                    <th> 监控组 </th>
                     <th> 操作 </th>
                 </tr>
             </thead>

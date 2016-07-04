@@ -4,11 +4,11 @@ angular.module('iBuildWeb', [
         'content',
         'content.systype',
         'content.type',
-        'content.deviceMonitor', 'content.deviceInfo',
-        /* 'content.devicePoint',
-         */
-        'content.monitortype', 'content.map', 'content.monitorgroup'
+        'content.deviceMonitor',
+        'content.monitortype', 'content.map', 'content.monitorgroup', 'content.deviceInfo',
+    'content.deviceDefine', 'content.deviceGroupDefine',  'content.devicePoint'
     ])
+        /*   */
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('ibuildweb', {
@@ -23,6 +23,7 @@ angular.module('iBuildWeb', [
                         templateUrl: 'view/category/nav.tmpl.html'
                     },
                     'topnav@': {
+                        controller: topNavCtrl,
                         templateUrl: 'view/category/topnav.tmpl.html'
                     },
                     'content@': {
@@ -37,5 +38,9 @@ function iBuildWebCtr($scope) {
     $scope.$on("load",
         function(event, msg) {
             $scope.$broadcast("loadFromParrent");
+        });
+       $scope.$on("selectedMenu",
+        function(event, msg) {
+            $scope.$broadcast("selectedMenuFromParent",msg);
         });
 };

@@ -23,6 +23,15 @@
     "maptype": {
       "type": "string"
     },
+    "autoid": {
+      "type": "number"
+    },
+    "axisx": {
+      "type": "number"
+    },
+    "axisy": {
+      "type": "number"
+    },
     "deviceno": {
       "type": "string"
     }
@@ -32,3 +41,4 @@
   "acls": [],
   "methods": {}
 }
+  

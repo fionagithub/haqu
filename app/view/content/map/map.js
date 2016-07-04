@@ -4,10 +4,13 @@
        .directive('mapInlineTools', mapInlineTools)
 
    function mapCtrl(Paginator, $rootScope, $scope, $log, $mdSidenav, $state, map, deviceInfo, $mdComponentRegistry, DeviceField) {
-       $scope.$on('$stateChangeSuccess', function() {
+      
+    $scope.$on('$stateChangeSuccess', function() {
+        if ($state.current.name == "ibuildweb.category.content") {
+            load();
+        }
            $rootScope.query = null;
-       });
-
+    });
        $scope.$on("loadFromParrent", load);
        load();
 
@@ -20,9 +23,13 @@
        };
 
        var query = {};
-       $scope.$watch('sysTypeData', function() {
+
+       $scope.search = function() {
            query[DeviceField.MNT_GROUP_ID] = $scope.sysTypeData;
            $rootScope.query = query;
+
+       };
+       $scope.$watch('sysTypeData', function() {
        });
 
 
@@ -30,11 +37,12 @@
        $scope.selectedRow = function(index, event, obj) {
            // $state.go('ibuildweb.category.content.child', { mapid: obj[DeviceField.MAP_ID] });
            $scope.isDel = true;
-           if (obj.open) {
-               obj.open = false;
-           } else {
-               obj.open = true;
-           }
+           /* if (obj.open) {
+                obj.open = false;
+            } else {
+                obj.open = true;
+            }*/
+           obj.open = obj.open === false;
            var o = {};
            o[DeviceField.MAP_ID] = obj[DeviceField.MAP_ID];
            if (obj[DeviceField.MAP_NO]) {
@@ -82,10 +90,6 @@
        };
 
 
-       $scope.search = function() {
-
-       };
-
        function deleteNode(data) {
            var namelest = Object.keys(data);
            angular.forEach(namelest, function(v, i) {
@@ -100,7 +104,7 @@
            if (obj !== undefined) {
                return obj;
            } else {
-               return "Please select an item";
+               return " ";
            }
        };
 

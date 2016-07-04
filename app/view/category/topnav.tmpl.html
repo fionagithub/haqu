@@ -1,15 +1,19 @@
-<md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar _md" ng-controller="navCtrl">
+<md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar _md">
     <div class="md-toolbar-tools docs-toolbar-tools" tabindex="-1">
         <md-button ng-click="toggleLeft()" class="md-icon-button" hide-gt-md="">
             <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
         </md-button>
-        <div layout="row" flex="" class="fill-height layout-row flex">
-            <h2 class="md-toolbar-item md-breadcrumb md-headline"> 
-              <span>{{bbb.label}} </span> 
-              <span>
-              	{{aaa}}
-              </span>
-               </h2>
-        </div>
+        <h2>
+         <span style="color: black;"  ng-if='currentMenu && parentMenu.children.indexOf(currentMenu)!==-1 ' > 
+             {{parentMenu.label}}  >	{{currentMenu.label}}
+           </span> </h2>
+        <span flex=""></span>
+        <md-button class="md-icon-button" aria-label="Favorite">
+            <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="More">
+            <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+        </md-button>
     </div>
 </md-toolbar>
+<!---->

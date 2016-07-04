@@ -1,13 +1,11 @@
-<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="deviceInfoCtrl">
+<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="deviceDefineCtrl">
     <md-input-container flex class="md-block">
-        <label>设备类型</label>
+        <label> 设备类型</label>
         <md-select ng-model="sysTypeData" md-selected-text="getSelectedText(sysTypeData)">
             <md-option ng-value="sysTypeData[DeviceField.TYPE_ID]" ng-repeat="sysTypeData in DeviceTypeList">{{ sysTypeData[DeviceField.TYPE_ID] + ':' + sysTypeData[DeviceField.TYPE_NAME]}}</md-option>
         </md-select>
     </md-input-container>
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
-        <!--    <md-button class="  md-raised demo-dialog-open-button" ng-click="showData._load()">搜索
-     </md-button> -->
         <md-button class="  md-raised demo-dialog-open-button" ng-click="search()">搜索
         </md-button>
         <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
@@ -17,25 +15,29 @@
         <table class="md-api-table">
             <thead>
                 <tr>
-                    <th> 设备</th>
-                    <th> 设备名称 </th>
-                    <th> 设备编号 </th>
-                    <th> 设备类型</th>
-                    <th>地图</th>
-                    <th> 地图类型 </th>
+                    <th> 设备类型 </th>
+                    <th> 监控类型 </th>
+                    <th>状态值</th>
+                    <th> 数字校验位 </th>
+                    <th> 描述 </th>
+                    <th>报警flg</th>
+                    <th> 报警级别 </th>
+                    <th>isDefault </th>
+                    <th> isAnalogIO </th>
                     <th> 操作 </th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat='data in showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
-                    <td>{{data[DeviceField.DEVICE_ID]}} </td>
-                    <td> {{data[DeviceField.NAME]}}
-                    </td>
-                    <td>{{data[DeviceField.DEVICE_NO]}} </td>
                     <td>{{data[DeviceField.TYPE_ID][DeviceField.TYPE_NAME]}} </td>
-                    <td>{{data[DeviceField.MAP_ID][DeviceField.MAP_NAME]}} </td>
-                    <td> {{data[DeviceField.MAP_TYPE]}}
-                    </td>
+                    <td> {{data[DeviceField.MNT_TYPE_ID][DeviceField.DESC]}} </td>
+                    <td> {{data[DeviceField.STATUS_VAL]}} </td>
+                    <td> {{data[DeviceField.VAL]}} </td>
+                    <td> {{data[DeviceField.DESC]}}</td>
+                    <td> {{DeviceField[data[DeviceField.ALARM_FLG]]}} </td>
+                    <td> {{data[DeviceField.ALARM_LVL]}} </td>
+                    <td> {{DeviceField [data[DeviceField.IS_DEFAULT]]}} </td>
+                    <td> {{DeviceField[data[DeviceField.IS_ANALOGIO]]}} </td>
                     <td>
                         <inline-tools></inline-tools>
                     </td>

@@ -1,0 +1,72 @@
+<md-sidenav class="md-sidenav-right" md-component-id="right">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">设备点位状态</h1>
+    </md-toolbar>
+    <md-content layout-padding="">
+        <md-list>
+            <md-input-container flex class="md-block">
+                <label for="form-group ">设备类型 </label>
+                <md-select ng-model="DeviceTypeList.editData" md-selected-text="getSelectedText(DeviceTypeList.editData)">
+                    <md-optgroup>
+                        <md-option ng-value="editData[DeviceField.TYPE_ID]" ng-repeat="editData in DeviceTypeList"> {{ editData[DeviceField.TYPE_ID] + ':' + editData[DeviceField.TYPE_NAME]}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>监控类型</label>
+                <md-select ng-model="monitorTypeData" md-selected-text="getSelectedText(monitorTypeData)">
+                    <md-option ng-value="editData[DeviceField.MNT_TYPE_ID] + ':' + editData[DeviceField.DESC]" ng-repeat="editData in MonitorType">{{ editData[DeviceField.MNT_TYPE_ID] + ':' + editData[DeviceField.DESC]}}</md-option>
+                </md-select>
+                <!--
+                <select style="width:120px" ng-model="deviceSysTypeData" class="form-control" ng-options="(sysTypeData[DeviceField.MNT_TYPE_ID] + ':' + sysTypeData[DeviceField.DESC]) for sysTypeData in MonitorType">
+                </select>   -->
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label for="form-group ">状态值 </label>
+                <p class="form-control-static">{{groupFieldName[DeviceField.STATUS_VAL]}}</p>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>数字校验位</label>
+                <!--   <input ng-model="groupFieldName[DeviceField.VAL]"> -->
+                <md-select ng-model="valueOpartor.editData" md-selected-text="getSelectedText(valueOpartor.editData)">
+                    <md-option ng-value="editData" ng-repeat="editData in valueOpartor">{{ editData}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>描述 </label>
+                <input ng-model="groupFieldName[DeviceField.DESC]">
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label for="form-group ">报警flg </label>
+                <md-checkbox ng-model="DeviceField[groupFieldName[DeviceField.ALARM_FLG]]">
+                    <!--      {{DeviceField[groupFieldName[DeviceField.ALARM_FLG]]}} -->
+                </md-checkbox>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>报警级别</label>
+                <!--  <input ng-model="groupFieldName[DeviceField.ALARM_LVL]"> -->
+                <md-select ng-model="alarmLevel.editData" md-selected-text="getSelectedText(alarmLevel.editData)">
+                    <md-option ng-value="editData" ng-repeat="editData in alarmLevel">{{ editData}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>isDefault </label>
+                <md-checkbox ng-model="DeviceField[groupFieldName[DeviceField.IS_DEFAULT]]">
+                    <!--    {{DeviceField[groupFieldName[DeviceField.IS_DEFAULT]]}} -->
+                </md-checkbox>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>isAnalogIO</label>
+                <md-checkbox ng-model="DeviceField[groupFieldName[DeviceField.IS_ANALOGIO]]">
+                    <!--      {{DeviceField[groupFieldName[DeviceField.IS_ANALOGIO]]}}    -->
+                </md-checkbox>
+            </md-input-container>
+        </md-list>
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')">
+            更新
+        </md-button>
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="cancelDeviceType()">
+            取消
+        </md-button>
+    </md-content>
+</md-sidenav>

@@ -1,23 +1,27 @@
    angular.module('content.monitortype', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
        .controller('monitortypeCtrl', monitortypeCtrl)
 
-   function monitortypeCtrl($rootScope, Paginator, $scope, monitorGroup, monitorType, deviceTypeList, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+   function monitortypeCtrl($rootScope, Paginator, $scope, $timeout, monitorGroup, monitorType, deviceTypeList, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
        $scope.$on('$stateChangeSuccess', function() {
-           load();
+           if ($state.current.name == "ibuildweb.category.content") {
+               load();
+           }
        });
-
        $scope.$on("loadFromParrent", load);
 
        var query = {};
-       $scope.$watch('sysTypeData', function() {
+       $scope.search = function() {
+           $scope.showData._load(0);
+
+           query[DeviceField.DESC] = angular.copy($scope.monitorType);
            query[DeviceField.MNT_GROUP_ID] = $scope.sysTypeData;
            $rootScope.query = query;
-       });
+       }
 
-       $scope.$watch('monitorType', function() {
-           query[DeviceField.DESC] = angular.copy($scope.monitorType);
-           $rootScope.query = query;
-       });
+
+       $scope.$watch('sysTypeData', function() {});
+
+       $scope.$watch('monitorType', function() {});
 
 
        function load() {
@@ -30,11 +34,13 @@
            });
            deviceTypeList.filter(null, null, function(data) {
                $scope.DeviceTypeList = data;
-               sysIdMap();
+
            });
+           $timeout(sysIdMap, 100);
        }
 
        $scope.$watch('showData.data', sysIdMap);
+
        function sysIdMap() {
            for (var s in $scope.showData.data) {
                for (var o in $scope.DeviceTypeList) {
@@ -90,16 +96,11 @@
                   $rootScope.query = query;*/
        };
 
-       $scope.search = function() {
-           $scope.showData._load(0);
-       }
-
-
        $scope.getSelectedText = function(obj) {
            if (obj !== undefined) {
                return obj;
            } else {
-               return "Please select an item";
+               return " ";
            }
        };
 

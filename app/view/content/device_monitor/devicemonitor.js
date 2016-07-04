@@ -1,17 +1,15 @@
 angular.module('content.deviceMonitor', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('deviceMonitorCtrl', deviceMonitorCtrl)
 
-function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, monitorGroup, deviceTypeList, $scope, $mdSidenav, $state, $log, $mdComponentRegistry) {
+function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, monitorGroup, deviceTypeList, $timeout, $scope, $mdSidenav, $state, $log, $mdComponentRegistry) {
     $scope.$on('$stateChangeSuccess', function() {
-        load();
+        if ($state.current.name == "ibuildweb.category.content") {
+            load();
+        }
     });
     $scope.$on("loadFromParrent", load);
 
     var query = {};
-    $scope.$watch('sysTypeData', function() {
-        query[DeviceField.MNT_GROUP_ID] = $scope.sysTypeData;
-        $rootScope.query = query;
-    });
 
     function load() {
         $scope.showData = Paginator(deviceMonitor.filter, 10);
@@ -23,12 +21,22 @@ function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, mo
         });
         monitorGroup.filter(null, null, function(data) {
             $scope.MonitorGroupList = data;
-            sysIdMap();
+            //  sysIdMap();
         });
-
+        $timeout(sysIdMap, 100);
     }
 
-    $scope.$watch('showData.data', sysIdMap);
+    $scope.search = function() {
+            $scope.showData._load(0);
+            query[DeviceField.MNT_GROUP_ID] = $scope.sysTypeData;
+            $rootScope.query = query;
+        }
+        /*    $scope.$watch('sysTypeData', function() {
+                query[DeviceField.MNT_GROUP_ID] = $scope.sysTypeData;
+                $rootScope.query = query;
+            });*/
+    
+  $scope.$watch('showData.data', sysIdMap);
 
     function sysIdMap() {
         var showData = $scope.showData.data,
@@ -54,7 +62,7 @@ function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, mo
         if (obj) {
             $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MNT_GROUP_ID][DeviceField.MNT_GROUP_ID] });
             $scope.DeviceTypeList.data = obj[DeviceField.TYPE_ID][DeviceField.TYPE_ID];
-            $scope.mdSelectedData._data = obj[DeviceField.MNT_GROUP_ID][DeviceField.MNT_GROUP_ID];
+            $scope.MonitorGroupList.editOptionData = obj[DeviceField.MNT_GROUP_ID][DeviceField.MNT_GROUP_ID];
         } else {
             $state.go("ibuildweb.category.content.create");
 
@@ -84,7 +92,7 @@ function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, mo
         if (obj !== undefined) {
             return obj;
         } else {
-            return "Please select an item";
+            return " ";
         }
     };
 
@@ -92,7 +100,7 @@ function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, mo
     $scope.resave = function() {
         var obj = {};
         obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.data;
-        obj[DeviceField.MNT_GROUP_ID] = $scope.mdSelectedData._data;
+        obj[DeviceField.MNT_GROUP_ID] = $scope.MonitorGroupList.editOptionData;
 
     };
 
@@ -100,7 +108,7 @@ function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, mo
     $scope.save = function() {
         var obj = {};
         obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.data;
-        obj[DeviceField.MNT_GROUP_ID] = $scope.mdSelectedData._data;
+        obj[DeviceField.MNT_GROUP_ID] = $scope.MonitorGroupList.editOptionData;
     };
 
 

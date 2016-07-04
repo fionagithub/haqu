@@ -1,4 +1,5 @@
-<a ng-click="goCatory(obj)" ng-href='{{obj.url}}' ><!-- -->
+<a ng-href="{{obj.url}}" ng-click="goCatory(obj)">
+    <!--  ng-href='{{obj.url}}'-->
     <i ng-if="obj.iconClasses" class="{{obj.iconClasses}}"></i>
     <span>{{obj.label}}</span>
     <span ng-if="obj.children.length" aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : obj.open}">
@@ -9,7 +10,6 @@
 </svg>
 </md-icon>
     </span>
-    <span ng-bind-html="obj.html"></span>
 </a>
 <ul ng-if="obj.children.length" data-slide-out-nav="obj.open">
     <li ng-repeat="obj in obj.children" ng-class="{ hasChild:obj.children,

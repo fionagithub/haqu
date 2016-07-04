@@ -18,7 +18,7 @@ angular.module('ibuildweb.factorys', [])
         MNT_TYPE_ID: "monitortypeid",
         TMP_NAME: "templatename",
         SUBDEVICE_ID: "subdeviceid",
-
+        MONITOR: "monitor",
         MAP_ID: "mapid",
         MAP_NO: "mapno",
         MAP_NAME: "mapname",
@@ -31,10 +31,20 @@ angular.module('ibuildweb.factorys', [])
         ALARM_LVL: "alarmlevel",
         IS_DEFAULT: "isdefault",
         IS_ANALOGIO: "isanalogio",
-        VAL: "valuecompareoprator"
+        VAL: "valuecompareoprator",
+        0: false,
+        1:true
     });
 
-/*,
+/*
+
+    "statusvalue": "0024",
+    "alarmflg": 1,
+    "alarmlevel": 54,
+    "isdefault": 0,
+    "isanalogio": 0,
+    "valuecompareoprator": "=",
+    "description": "通讯故障"
         MONITOR: "monitor"
   "subdeviceid": "0 24013903"
 { 

@@ -1,26 +1,42 @@
 <md-sidenav class="md-sidenav-right" md-component-id="right">
     <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">组类型</h1>
+        <h1 class="md-toolbar-tools">设备信息</h1>
     </md-toolbar>
     <!-- ng-controller="editSysCtrl" -->
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
-                <label>设备类型ID</label>
-                <md-select ng-model="DeviceTypeList.data" md-selected-text="getSelectedText(DeviceTypeList.data)">
+                <label for="form-group ">设备ID </label>
+                <p class="form-control-static">{{groupFieldName[DeviceField.DEVICE_ID]}}</p>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>设备名称</label>
+                <input ng-model="groupFieldName[DeviceField.NAME]">
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>设备编号</label>
+                <input ng-model="groupFieldName[DeviceField.DEVICE_NO]">
+                 </md-input-container>
+            <md-input-container flex class="md-block">
+                <label> 设备类型</label>
+                <md-select ng-model="DeviceTypeList.editData" md-selected-text="getSelectedText(DeviceTypeList.editData)">
                     <md-optgroup>
-                        <md-option ng-value="data[DeviceField.TYPE_ID]" ng-repeat="data in DeviceTypeList"> {{ data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
+                        <md-option ng-value="editData[DeviceField.TYPE_ID]" ng-repeat="editData in DeviceTypeList"> {{ editData[DeviceField.TYPE_ID] + ':' + editData[DeviceField.TYPE_NAME]}}</md-option>
                     </md-optgroup>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label>监测点组ID</label>
-                <md-select ng-model="mdSelectedData._data" md-selected-text="getSelectedText(mdSelectedData._data)">
-                    <md-option ng-value="_data[DeviceField.MNT_GROUP_ID]" ng-repeat="_data in mdSelectedData.data">{{ _data[DeviceField.MNT_GROUP_ID] + ':' + _data[DeviceField.DESC]}}</md-option>
+                <label>地图</label> 
+                <md-select ng-model="mapData.editData" md-selected-text="getSelectedText(mapData.editData)">
+                    <md-option ng-value="editData[DeviceField.MAP_ID]" ng-repeat="editData in mapData">{{ editData[DeviceField.MAP_ID] + ':' + editData[DeviceField.MAP_NAME]}}</md-option>
                 </md-select>
             </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>地图类型 </label>
+                <input ng-model="groupFieldName[DeviceField.MAP_TYPE]">
+            </md-input-container>
         </md-list>
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="resave()">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')">
             更新
         </md-button>
         <md-button class="  md-raised demo-dialog-open-button" ng-click="cancelDeviceType()">

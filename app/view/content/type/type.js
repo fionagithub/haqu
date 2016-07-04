@@ -1,9 +1,11 @@
 angular.module('content.type', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('typeCtrl', typeCtrl)
 
-function typeCtrl($rootScope, Paginator, deviceSysTypeList, deviceTypeList, $state, $log, $mdSidenav, $scope, $mdComponentRegistry, DeviceField) {
+function typeCtrl($rootScope, Paginator, deviceSysTypeList, deviceTypeList, $state, $timeout, $log, $mdSidenav, $scope, $mdComponentRegistry, DeviceField) {
     $scope.$on('$stateChangeSuccess', function() {
-        load();
+        if ($state.current.name == "ibuildweb.category.content") {
+            load();
+        }
     });
     var query = {};
 
@@ -17,12 +19,17 @@ function typeCtrl($rootScope, Paginator, deviceSysTypeList, deviceTypeList, $sta
         $scope.DeviceField = DeviceField;
         deviceSysTypeList.filter(null, null, function(data) {
             $scope.DeviceSysTypeList = data;
-            sysIdMap();
+            //  sysIdMap();
         });
+        $timeout(sysIdMap, 100);
     }
 
     $scope.search = function() {
         $scope.showData._load(0);
+        query[DeviceField.TYPE_NAME] = angular.copy($scope.searchDeviceType);
+
+        query[DeviceField.SYS_TYPE_ID] = $scope.sysTypeData;
+        $rootScope.query = query;
     }
 
     function sysIdMap() {
@@ -36,15 +43,9 @@ function typeCtrl($rootScope, Paginator, deviceSysTypeList, deviceTypeList, $sta
 
     $scope.$watch('showData.data', sysIdMap);
 
-    $scope.$watch('sysTypeData', function() {
-        query[DeviceField.SYS_TYPE_ID] = $scope.sysTypeData;
-        $rootScope.query = query;
-    });
+    $scope.$watch('sysTypeData', function() {});
 
-    $scope.$watch('searchDeviceType', function() {
-        query[DeviceField.TYPE_NAME] = angular.copy($scope.searchDeviceType);
-        $rootScope.query = query;
-    });
+    $scope.$watch('searchDeviceType', function() {});
 
     $scope.save = function(obj, type) {
         if (type === 'save') {
@@ -101,7 +102,7 @@ function typeCtrl($rootScope, Paginator, deviceSysTypeList, deviceTypeList, $sta
         if (obj !== undefined) {
             return obj;
         } else {
-            return "Please select an item";
+            return " ";
         }
     };
 

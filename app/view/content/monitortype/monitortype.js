@@ -10,19 +10,27 @@
        $scope.$on("loadFromParrent", load);
 
        var query = {};
-       $scope.search = function() {
-           $scope.showData._load(0);
 
-           query[DeviceField.DESC] = angular.copy($scope.monitorType);
-           query[DeviceField.MNT_GROUP_ID] = $scope.sysTypeData;
+       $scope.search = function() {
            $rootScope.query = query;
+           $scope.showData._load(0);
        }
 
+       $scope.$watch('sysTypeData', function() {
+           if ($scope.sysTypeData) {
+               query[DeviceField.MNT_GROUP_ID] = angular.copy($scope.sysTypeData);
+           } else {
+               delete query[DeviceField.MNT_GROUP_ID];
+           }
+       });
 
-       $scope.$watch('sysTypeData', function() {});
-
-       $scope.$watch('monitorType', function() {});
-
+       $scope.$watch('monitorType', function() {
+           if ($scope.monitorType) {
+               query[DeviceField.DESC] = { "like": '%' + angular.copy($scope.monitorType) + '%' };
+           } else {
+               delete query[DeviceField.DESC];
+           }
+       });
 
        function load() {
            $rootScope.query = null;
@@ -105,6 +113,9 @@
        };
 
 
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+    };
        $scope.toggleRight = function(obj) {
            if (obj) {
                $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MNT_GROUP_ID][DeviceField.MNT_GROUP_ID] });

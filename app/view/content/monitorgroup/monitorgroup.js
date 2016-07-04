@@ -2,7 +2,7 @@ angular.module('content.monitorgroup', ['ibuildweb.factorys', 'ibuildweb.factory
     .controller('monitorgroupCtrl', monitorgroupCtrl)
 
 function monitorgroupCtrl($rootScope, Paginator, $scope, $log, DeviceField, monitorGroup, monitorType, $mdSidenav, $state, $mdComponentRegistry) {
-      $scope.$on('$stateChangeSuccess', function() {
+    $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
             load();
         }
@@ -21,12 +21,15 @@ function monitorgroupCtrl($rootScope, Paginator, $scope, $log, DeviceField, moni
         });
     }
     $scope.$watch('sysTypeData', function() {
+        if ($scope.sysTypeData) {
+            query[DeviceField.MNT_GROUP_ID] = angular.copy($scope.sysTypeData);
+        } else {
+            delete query[DeviceField.MNT_GROUP_ID];
+        }
     });
-
     $scope.search = function() {
-        $scope.showData._load(0);
-        query[DeviceField.MNT_GROUP_ID] = $scope.sysTypeData;
         $rootScope.query = query;
+        $scope.showData._load(0);
     }
 
     $scope.save = function(obj, type) {
@@ -82,6 +85,9 @@ function monitorgroupCtrl($rootScope, Paginator, $scope, $log, DeviceField, moni
         }
     };
 
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+    };
     $scope.toggleRight = function(obj) {
         if (obj) {
             $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MNT_GROUP_ID] });

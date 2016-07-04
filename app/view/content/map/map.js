@@ -4,13 +4,13 @@
        .directive('mapInlineTools', mapInlineTools)
 
    function mapCtrl(Paginator, $rootScope, $scope, $log, $mdSidenav, $state, map, deviceInfo, $mdComponentRegistry, DeviceField) {
-      
-    $scope.$on('$stateChangeSuccess', function() {
-        if ($state.current.name == "ibuildweb.category.content") {
-            load();
-        }
+
+       $scope.$on('$stateChangeSuccess', function() {
+           if ($state.current.name == "ibuildweb.category.content") {
+               load();
+           }
            $rootScope.query = null;
-    });
+       });
        $scope.$on("loadFromParrent", load);
        load();
 
@@ -29,8 +29,7 @@
            $rootScope.query = query;
 
        };
-       $scope.$watch('sysTypeData', function() {
-       });
+       $scope.$watch('sysTypeData', function() {});
 
 
        // 自定义设备 查看列表数据
@@ -109,6 +108,9 @@
        };
 
 
+       $scope.cancel = function() {
+           $mdSidenav('right').close();
+       };
        $scope.toggleRight = function(obj) {
            if (obj) {
                $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MAP_NO] });

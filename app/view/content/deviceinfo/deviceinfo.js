@@ -1,7 +1,7 @@
 angular.module('content.deviceInfo', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('deviceInfoCtrl', deviceInfoCtrl)
 
-function deviceInfoCtrl($scope, $rootScope, deviceInfo, map, deviceTypeList, Paginator,$timeout, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+function deviceInfoCtrl($scope, $rootScope, deviceInfo, map, deviceTypeList, Paginator, $timeout, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
@@ -27,7 +27,7 @@ function deviceInfoCtrl($scope, $rootScope, deviceInfo, map, deviceTypeList, Pag
         $timeout(sysIdMap, 100);
     }
 
-    $scope.$watch('showData.data',sysIdMap);
+    $scope.$watch('showData.data', sysIdMap);
 
     function sysIdMap() {
         for (var s in $scope.showData.data) {
@@ -47,13 +47,19 @@ function deviceInfoCtrl($scope, $rootScope, deviceInfo, map, deviceTypeList, Pag
     }
 
     $scope.search = function() {
-        $scope.showData._load(0);
-        query[DeviceField.TYPE_ID] = $scope.sysTypeData;
         $rootScope.query = query;
+        $scope.showData._load(0);
     }
 
+    $scope.$watch('sysTypeData', function() {
+        if ($scope.sysTypeData) {
+            query[DeviceField.TYPE_ID] = angular.copy($scope.sysTypeData);
+        } else {
+            delete query[DeviceField.TYPE_ID];
+        }
+    });
 
-    $scope.$watch('sysTypeData', function() {});
+
     $scope.save = function(obj, type) {
         /*        if (type === 'save') {
                     deviceTypeList.isExists(obj).then(function(data) {

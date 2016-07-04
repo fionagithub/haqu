@@ -25,12 +25,25 @@ function typeCtrl($rootScope, Paginator, deviceSysTypeList, deviceTypeList, $sta
     }
 
     $scope.search = function() {
-        $scope.showData._load(0);
-        query[DeviceField.TYPE_NAME] = angular.copy($scope.searchDeviceType);
-
-        query[DeviceField.SYS_TYPE_ID] = $scope.sysTypeData;
         $rootScope.query = query;
+        $scope.showData._load(0);
     }
+
+    $scope.$watch('sysTypeData', function() {
+        if ($scope.sysTypeData) {
+            query[DeviceField.SYS_TYPE_ID] = angular.copy($scope.sysTypeData);
+        } else {
+            delete query[DeviceField.SYS_TYPE_ID];
+        }
+    });
+
+    $scope.$watch('searchDeviceType', function() {
+        if ($scope.searchDeviceType) {
+            query[DeviceField.TYPE_NAME] = { "like": '%' + angular.copy($scope.searchDeviceType) + '%' };
+        } else {
+            delete query[DeviceField.TYPE_NAME];
+        }
+    });
 
     function sysIdMap() {
         for (var s in $scope.showData.data) {
@@ -42,10 +55,6 @@ function typeCtrl($rootScope, Paginator, deviceSysTypeList, deviceTypeList, $sta
     }
 
     $scope.$watch('showData.data', sysIdMap);
-
-    $scope.$watch('sysTypeData', function() {});
-
-    $scope.$watch('searchDeviceType', function() {});
 
     $scope.save = function(obj, type) {
         if (type === 'save') {

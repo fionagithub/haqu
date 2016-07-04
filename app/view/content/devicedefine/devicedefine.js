@@ -70,13 +70,19 @@ function deviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, $t
     }
 
     $scope.search = function() {
-        $scope.showData._load(0);
-        query[DeviceField.TYPE_ID] = $scope.sysTypeData;
         $rootScope.query = query;
+        $scope.showData._load(0); 
     }
+    $scope.$watch('sysTypeData', function() {
+        if ($scope.sysTypeData) {
+            query[DeviceField.TYPE_ID] = angular.copy($scope.sysTypeData);
+        } else {
+            delete query[DeviceField.TYPE_ID];
+        }
+    });
 
 
-    $scope.$watch('sysTypeData', function() {});
+ 
     $scope.save = function(obj, type) {
         save(obj, type);
     }

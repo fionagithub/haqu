@@ -23,14 +23,19 @@ function devicePointCtrl($scope, monitorType, devicePoint, $rootScope, Paginator
         $timeout(sysIdMap, 100);
     }
 
-    /* 
-    $scope.$watch('sysTypeData', function() {});*/
-    $scope.$watch('showData.data', sysIdMap);
     $scope.search = function() {
-        $scope.showData._load(0);
-        query[DeviceField.MNT_TYPE_ID] = $scope.sysTypeData;
         $rootScope.query = query;
+        $scope.showData._load(0);
     }
+    $scope.$watch('sysTypeData', function() {
+        if ($scope.sysTypeData) {
+            query[DeviceField.MNT_TYPE_ID] = angular.copy($scope.sysTypeData);
+        } else {
+            delete query[DeviceField.MNT_TYPE_ID];
+        }
+    });
+
+    $scope.$watch('showData.data', sysIdMap);
 
     $scope._oldSelectedRowObj = [];
     $scope.selectedRow = function(index, obj) {

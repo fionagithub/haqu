@@ -22,11 +22,16 @@ function systypeCtrl($scope, $state, $rootScope, deviceSysTypeList, deviceTypeLi
     }
 
     $scope.$watch('sysTypeData', function() {
+        if ($scope.sysTypeData) {
+            query[DeviceField.SYS_TYPE_ID] = angular.copy($scope.sysTypeData);
+        } else {
+            delete query[DeviceField.SYS_TYPE_ID];
+        }
     });
+
     $scope.search = function() {
-        $scope.showData._load(0);
-        query[DeviceField.SYS_TYPE_ID] = $scope.sysTypeData;
         $rootScope.query = query;
+        $scope.showData._load(0);
     }
 
     $scope.save = function(obj, type) {

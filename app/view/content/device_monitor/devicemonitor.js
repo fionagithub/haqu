@@ -27,16 +27,19 @@ function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, mo
     }
 
     $scope.search = function() {
-            $scope.showData._load(0);
-            query[DeviceField.MNT_GROUP_ID] = $scope.sysTypeData;
             $rootScope.query = query;
+            $scope.showData._load(0);
         }
-        /*    $scope.$watch('sysTypeData', function() {
-                query[DeviceField.MNT_GROUP_ID] = $scope.sysTypeData;
-                $rootScope.query = query;
-            });*/
-    
-  $scope.$watch('showData.data', sysIdMap);
+        /* */
+    $scope.$watch('sysTypeData', function() {
+        if ($scope.sysTypeData) {
+            query[DeviceField.MNT_GROUP_ID] = angular.copy($scope.sysTypeData);
+        } else {
+            delete query[DeviceField.MNT_GROUP_ID];
+        }
+    });
+
+    $scope.$watch('showData.data', sysIdMap);
 
     function sysIdMap() {
         var showData = $scope.showData.data,

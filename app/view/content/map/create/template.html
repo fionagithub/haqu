@@ -1,23 +1,37 @@
 <!-- <p>1122222</p>-->
 <md-sidenav md-component-id="right" class="md-sidenav-right">
     <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">系统设备</h1>
+        <h1 class="md-toolbar-tools">地图</h1>
     </md-toolbar>
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
-                <label>大类ID</label>
-                <input ng-model="systypeFieldName[DeviceField.SYS_TYPE_ID] ">
+                <label> 地图ID</label>
+                <input ng-model="addData[DeviceField.MAP_ID] ">
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label> 大类名称</label>
-                <input ng-model=" systypeFieldName[DeviceField.SYS_TYPE_NAME]">
+                <label>地图名称 </label>
+                <input ng-model="addData[DeviceField.MAP_NAME] ">
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>区域</label>
+                <md-select ng-model="showData.null.data" md-selected-text="getSelectedText(showData.null.data)">
+                    <md-option ng-value="data[DeviceField.MAP_ID]" ng-repeat='data in showData.null'>{{data[DeviceField.MAP_NAME]}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>地图文件 </label>
+                <input ng-model="addData[DeviceField.SOURCE] ">
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label> 地图类别 </label>
+                <input ng-model=" addData[DeviceField.MAP_TYPE]">
             </md-input-container>
         </md-list>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="saveDeviceType(systypeFieldName)">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(addData,'save')">
             保存
         </md-button>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="cancelDeviceType()">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="cancel()">
             取消
         </md-button>
     </md-content>

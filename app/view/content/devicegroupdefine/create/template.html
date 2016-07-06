@@ -1,0 +1,33 @@
+<md-sidenav md-component-id="right" class="md-sidenav-right">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">设备</h1>
+    </md-toolbar>
+    <md-content layout-padding="">
+        <md-list>
+            <md-input-container flex class="md-block">
+                <label for="form-group "> 设备ID </label>
+                <input ng-model="data[DeviceField.DEVICE_ID]">
+            </md-input-container> 
+            <md-input-container flex class="md-block">
+                <label>subDeviceId</label>
+                <input ng-model="data[DeviceField.SUBDEVICE_ID]">
+            <!--    <md-select ng-model="MonitorType.editData" md-selected-text="getSelectedText(MonitorType.editData)">
+                <md-optgroup>
+                    <md-option ng-value="editData[DeviceField.MNT_TYPE_ID]" ng-repeat="editData in MonitorType"> {{ editData[DeviceField.MNT_TYPE_ID] + ':' + editData[DeviceField.DESC]}}</md-option>
+                </md-optgroup>
+            </md-select> -->
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>templateName </label>
+                <input ng-model="data[DeviceField.TMP_NAME]">
+            </md-input-container>
+
+        </md-list>
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(data,'save')">
+            保存
+        </md-button>
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="cancel()">
+            取消
+        </md-button>
+    </md-content>
+</md-sidenav>

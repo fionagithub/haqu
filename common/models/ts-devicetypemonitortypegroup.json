@@ -1,0 +1,21 @@
+{
+  "name": "ts_devicetypemonitortypegroup",
+  "base": "PersistedModel",
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "devicetypeid": {
+      "type": "number",
+      "id": true
+    },
+    "monitortypegroupid": {
+      "type": "number",
+      "id": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

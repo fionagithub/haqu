@@ -1,0 +1,44 @@
+{
+  "name": "ts_deviceinfo",
+  "base": "PersistedModel",
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "deviceid": {
+      "type": "number",
+      "id": true,
+      "required": true
+    },
+    "devicename": {
+      "type": "string"
+    },
+    "devicetypeid": {
+      "type": "number",
+      "id": true
+    },
+    "mapid": {
+      "type": "number"
+    },
+    "maptype": {
+      "type": "string"
+    },
+    "autoid": {
+      "type": "number"
+    },
+    "axisx": {
+      "type": "number"
+    },
+    "axisy": {
+      "type": "number"
+    },
+    "deviceno": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
+  

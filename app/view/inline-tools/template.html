@@ -1,0 +1,8 @@
+<span ng-class="{'inline-tools':_oldSelectedRowObj.indexOf(data)!==-1}" ng-show="_oldSelectedRowObj.indexOf(data)!==-1">
+	<md-button ng-click="toggleRight(data)" class="md-fab md-mini" >
+         <md-icon  class="glyphicon glyphicon-pencil" ></md-icon>
+      </md-button>
+          <md-button class="md-fab md-mini" ng-show='_oldSelectedRowObj.indexOf(data)!==-1 &&isDel' class="btn btn-danger btn-xs" ng-click="delete(data)">
+                <md-icon class="glyphicon glyphicon-remove" ></md-icon>
+     </md-button>
+       </span>

@@ -1,52 +1,47 @@
 <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="monitortypeCtrl">
-<!--<md-input-container flex class="md-block">
-    <label>系统</label>
-    <md-select ng-model="DeviceSysTypeList.data.sysTypeData" md-selected-text="getSelectedText()">
-        <md-option ng-value="sysTypeData[DeviceField.SYS_TYPE_ID]" ng-repeat="sysTypeData in DeviceSysTypeList.data">{{ sysTypeData[DeviceField.SYS_TYPE_ID] + ':' + sysTypeData[DeviceField.SYS_TYPE_NAME]}}</md-option>
-    </md-select>
+    <md-input-container flex class="md-block">
+        <label>监控类</label>
+        <md-select ng-model="sysTypeData" md-selected-text="getSelectedText(sysTypeData)">
+            <md-option ng-value="sysTypeData[DeviceField.MNT_GROUP_ID]" ng-repeat="sysTypeData in MonitorGroupList">{{ sysTypeData[DeviceField.MNT_GROUP_ID] + ':' + sysTypeData[DeviceField.DESC]}}</md-option>
+        </md-select>
+    </md-input-container>
+    <md-input-container flex class="md-block">
+        <label>名称</label>
+        <input ng-model="monitorType">
     </md-input-container>
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="searchDevice()">搜索
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="search()">搜索
         </md-button>
-        &lt;!&ndash; DeviceSysTypeList.data.sysTypeData ui-sref="ibuildweb.category.content.create" &ndash;&gt;
-        <md-button ng-click="toggleRight()" class="md-primary md-raised demo-dialog-open-button">新增
+        <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
         </md-button>
-    </section>-->
+    </section>
     <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
         <table class="md-api-table">
             <thead>
                 <tr>
-                    <th> 监控类ID</th>
-                    <th>  名称</th>
-                    <th> 监控组类ID</th>
-                    <th>  DESC</th>
+                    <th> 监测ID</th>
+                    <th> 设备类型ID</th>
+                    <th> 命令名称</th>
+                    <th> 监测点组ID</th>
+                    <th> 描述</th>
                     <th> 操作 </th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat='data in showDeviceTypeList' ng-class="{'selected':$index == selectedIndex}" ng-click="selectedDeviceType($index,data)">
-                    <td>{{data[DeviceField.SYS_TYPE_ID]}} </td>
-                    <td> {{data[DeviceField.SYS_TYPE_NAME]}}
+                <tr ng-repeat='data in showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
+                    <td>{{data[DeviceField.MNT_TYPE_ID]}} </td>
+                    <td>{{data[DeviceField.TYPE_ID][DeviceField.TYPE_NAME]}} </td>
+                    <td>{{data[DeviceField.CMD_NAME]}} </td>
+                    <td> {{data[DeviceField.MNT_GROUP_ID][DeviceField.DESC]}}
+                    </td>
+                    <td> {{data[DeviceField.DESC]}}
                     </td>
                     <td>
-                        <span ng-class="{'inline-tools':$index == selectedIndex}" ng-show='$index == selectedIndex'><!-- ui-sref="ibuildweb.category.content.edit({systype:data[DeviceField.SYS_TYPE_ID]})"  ng-click="editDeviceType(data)" -->
-                             <md-button ng-click="toggleRight(data)" class="md-fab md-mini" aria-label="Eat cake">
-                             <md-icon  class="glyphicon glyphicon-pencil" ></md-icon>
-                             </md-button>
-                                 <md-button class="md-fab md-mini" ng-show='isDel && $index == selectedIndex' class="btn btn-danger btn-xs" ng-click="removeDeviceType(data)">
-                                           <md-icon class="glyphicon glyphicon-remove" ></md-icon>
-                                   </md-button>
-                             </span>
+                        <inline-tools></inline-tools>
                     </td>
             </tbody>
         </table>
-        <div layout="row">
-            <md-button class="md-primary md-raised demo-dialog-open-button" ng-disabled='isLoadTop' ng-show='isPagination' class="btn btn-default" ng-click="previousPage()">
-                上页
-            </md-button>
-            <md-button class="md-primary md-raised demo-dialog-open-button" ng-disabled='isLoadEnd' ng-show='isPagination' class="btn btn-default" ng-click="nextPage()">下页
-            </md-button>
-        </div>
+        <pagination> </pagination>
     </md-content>
     <ui-view>
     </ui-view>

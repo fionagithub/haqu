@@ -1,49 +1,17 @@
-<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="systypeCtrl">
-<md-input-container flex class="md-block">
-    <label>系统</label>
-    <md-select ng-model="DeviceSysTypeList.data.sysTypeData" md-selected-text="getSelectedText()">
-        <md-option ng-value="sysTypeData[DeviceField.SYS_TYPE_ID]" ng-repeat="sysTypeData in DeviceSysTypeList.data">{{ sysTypeData[DeviceField.SYS_TYPE_ID] + ':' + sysTypeData[DeviceField.SYS_TYPE_NAME]}}</md-option>
-    </md-select>
-    </md-input-container>
+<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="mapCtrl">
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="searchDevice()">搜索
-        </md-button>
-        <!-- DeviceSysTypeList.data.sysTypeData ui-sref="ibuildweb.category.content.create" -->
-        <md-button ng-click="toggleRight()" class="md-primary md-raised demo-dialog-open-button">新增
+        <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
         </md-button>
     </section>
     <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
-        <table class="md-api-table">
-            <thead>
-                <tr>
-                    <th> 大类ID</th>
-                    <th> 大类名称</th>
-                    <th> 操作 </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat='data in showDeviceTypeList' ng-class="{'selected':$index == selectedIndex}" ng-click="selectedDeviceType($index,data)">
-                    <td>{{data[DeviceField.SYS_TYPE_ID]}} </td>
-                    <td> {{data[DeviceField.SYS_TYPE_NAME]}}
-                    </td>
-                    <td>
-                        <span ng-class="{'inline-tools':$index == selectedIndex}" ng-show='$index == selectedIndex'><!-- ui-sref="ibuildweb.category.content.edit({systype:data[DeviceField.SYS_TYPE_ID]})"  ng-click="editDeviceType(data)" -->
-                             <md-button ng-click="toggleRight(data)" class="md-fab md-mini" aria-label="Eat cake">
-                             <md-icon  class="glyphicon glyphicon-pencil" ></md-icon>
-                             </md-button>
-                                 <md-button class="md-fab md-mini" ng-show='isDel && $index == selectedIndex' class="btn btn-danger btn-xs" ng-click="removeDeviceType(data)">
-                                           <md-icon class="glyphicon glyphicon-remove" ></md-icon>
-                                   </md-button>
-                             </span>
-                    </td>
-            </tbody>
-        </table>
         <div layout="row">
-            <md-button class="md-primary md-raised demo-dialog-open-button" ng-disabled='isLoadTop' ng-show='isPagination' class="btn btn-default" ng-click="previousPage()">
-                上页
-            </md-button>
-            <md-button class="md-primary md-raised demo-dialog-open-button" ng-disabled='isLoadEnd' ng-show='isPagination' class="btn btn-default" ng-click="nextPage()">下页
-            </md-button>
+            <ul class='map' flex="33">
+                <li flex-gt-xs="50" ng-repeat='data in showData.null' ng-class="{ hasChild:showData[data[DeviceField.MAP_ID]], 
+        open: showData[data[DeviceField.MAP_ID]]&& data.open }" ng-include="'view/content/map/floordata.html'">
+                </li>
+            </ul>
+            <div class='deviceinfo' flex="33" flex-gt-xs="50" style="height: 810px" bind="{'jsp-scroll-y':onJspScrollY}" ng-include="'view/content/map/device/template.html'">
+            </div>
         </div>
     </md-content>
     <ui-view>

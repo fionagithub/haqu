@@ -1,24 +1,38 @@
 <md-sidenav class="md-sidenav-right" md-component-id="right">
     <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">系统设备</h1>
+        <h1 class="md-toolbar-tools">地图</h1>
     </md-toolbar>
-    <!-- ng-controller="editSysCtrl" -->
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
-                <label>大类ID
-                </label>
-                <p class="form-control-static">{{deviceTypeFieldName[DeviceField.SYS_TYPE_ID]}}</p>
+                <label> 地图  </label>
+                <p>
+                    {{groupFieldName[DeviceField.MAP_ID]}}
+                </p>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label> 大类名称</label>
-                <input ng-model="deviceTypeFieldName[DeviceField.SYS_TYPE_NAME]">
+                <label> 地图名称 </label>
+                <input ng-model="groupFieldName[DeviceField.MAP_NAME] ">
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label> 区域 </label>
+                <md-select ng-model="showData.null.data" md-selected-text="getSelectedText(showData.null.data)">
+                    <md-option ng-value="data[DeviceField.MAP_ID]" ng-repeat='data in showData.null'>{{data[DeviceField.MAP_NAME]}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>地图文件 </label>
+                <input ng-model="groupFieldName[DeviceField.SOURCE] ">
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label> 地图类别 </label>
+                <input ng-model=" groupFieldName[DeviceField.MAP_TYPE]">
             </md-input-container>
         </md-list>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="reSaveDeviceType(deviceTypeFieldName)">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')">
             更新
         </md-button>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="cancelDeviceType()">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="cancel()">
             取消
         </md-button>
     </md-content>

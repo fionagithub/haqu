@@ -1,0 +1,21 @@
+{
+  "name": "ts_earmarkdevice",
+  "base": "PersistedModel",
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "deviceid": {
+      "type": "number",
+      "id": true,
+      "required": true
+    },
+    "monitor": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

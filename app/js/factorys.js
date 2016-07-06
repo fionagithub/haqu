@@ -4,29 +4,53 @@ angular.module('ibuildweb.factorys', [])
     .factory('API_URI', ApiUri)
     .constant('DeviceField', {
         ID: "autoid",
+        NAME: "devicename",
         DEVICE_ID: "deviceid",
         DEVICE_NO: "deviceno", // 回路号
-        NAME: "devicename",
         X: "axisx",
         Y: "axisy",
         TYPE_ID: "devicetypeid",
         TYPE_NAME: "devicetypename",
         SYS_TYPE_ID: "devicesystemtypeid",
         SYS_TYPE_NAME: "devicesystemtypename",
+        ICON_SRC: "iconsrc",
+        MNT_GROUP_ID: "monitortypegroupid",
+        MNT_TYPE_ID: "monitortypeid",
+        TMP_NAME: "templatename",
+        SUBDEVICE_ID: "subdeviceid",
+        MONITOR: "monitor",
         MAP_ID: "mapid",
         MAP_NO: "mapno",
         MAP_NAME: "mapname",
-        MAP_TYPE: "maptype",
-        MNT_TYPE_ID: "monitortypeid",
-        DESC: "description",
-        MNT_GROUP_ID: "monitortypegroupid",
-        MAP: "map",
         SOURCE: "source",
-        ICON_SRC: "iconsrc",
+        MAP_TYPE: "maptype",
+        CMD_NAME: "cmdname",
         DESC: "description",
-
-        MONITOR: "monitor"
+        STATUS_VAL: "statusvalue",
+        ALARM_FLG: "alarmflg",
+        ALARM_LVL: "alarmlevel",
+        IS_DEFAULT: "isdefault",
+        IS_ANALOGIO: "isanalogio",
+        VAL: "valuecompareoprator",
+        0: false,
+        1:true
     });
+
+/*
+
+    "statusvalue": "0024",
+    "alarmflg": 1,
+    "alarmlevel": 54,
+    "isdefault": 0,
+    "isanalogio": 0,
+    "valuecompareoprator": "=",
+    "description": "通讯故障"
+        MONITOR: "monitor"
+  "subdeviceid": "0 24013903"
+{ 
+}, ="," },
+    
+        MAP: "map",*/
 
 function AppInfo($http) {
     var _appInfo = { appname: 'iBuildWeb' };
@@ -42,6 +66,13 @@ function ApiUri(API_BASE) {
         MONITOR_TYPE: API_BASE + 'ts_monitortypes',
         MONITOR_GROUP: API_BASE + 'ts_newmonitortypegroups',
         DEVICE_TYPE: API_BASE + 'ts_devicetypes',
-        DEVICE_SYS_TYPE: API_BASE + 'ts_devicesystypes'
+        DEVICE_SYS_TYPE: API_BASE + 'ts_devicesystypes',
+        DEVICE_DEFINES: API_BASE + 'ts_device_defines',
+        DEVICE_POINT: API_BASE + 'ts_devicepoints',
+
+        DEVICE_INFO: API_BASE + 'ts_deviceinfos',
+        DEVICE_INFO_DEFINE: API_BASE + 'ts_deviceinfogroupdefines',
+        DEVICE_MONITOR: API_BASE + 'ts_devicetypemonitortypegroups',
+
     };
 };

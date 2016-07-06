@@ -1,0 +1,7 @@
+<div layout="row" ng-show='showData.checkPaginator()'>
+    <md-button class="  md-raised demo-dialog-open-button" ng-disabled='showData.checkLoadTop()' class="btn btn-default" ng-click="showData.previousPage()">
+        上页
+    </md-button>
+    <md-button class="  md-raised demo-dialog-open-button" ng-disabled='showData.checkLoadEnd()' class="btn btn-default" ng-click="showData.nextPage()">下页
+    </md-button>
+</div>

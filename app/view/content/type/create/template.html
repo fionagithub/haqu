@@ -1,38 +1,38 @@
 <!-- <p>createSysCtrl</p>-->
 <md-sidenav md-component-id="right" class="md-sidenav-right">
     <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">系统设备</h1>
-        <md-button ng-click="close()" class="md-primary">
+        <h1 class="md-toolbar-tools">小类</h1>
+        <md-button ng-click="close()" class=" ">
             Close
         </md-button>
     </md-toolbar>
     <md-content layout-padding="">
         <md-list ng-hide='deviceSysType'>
             <md-input-container flex class="md-block">
-                <label for="form-group ">小类ID </label>
-                <input ng-show='!isEditButton' ng-model="deviceTypeFieldName[DeviceField.TYPE_ID]">
+                <label for="form-group ">小类</label>
+                <input ng-show='!isEditButton' ng-model="deviceTypeField[DeviceField.TYPE_ID]">
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>小类名称</label>
-                <input ng-model="deviceTypeFieldName[DeviceField.TYPE_NAME]">
+                <input ng-model="deviceTypeField[DeviceField.TYPE_NAME]">
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>系统</label>
-                <md-select ng-model="DeviceSysTypeList.data.editSysTypeData" md-selected-text="getSelectedText(DeviceSysTypeList.data.editSysTypeData)">
+                <md-select ng-model="DeviceSysTypeList.editOptionData" md-selected-text="getSelectedText(DeviceSysTypeList.editOptionData)">
                     <md-optgroup>
-                        <md-option ng-value="editSysTypeData[DeviceField.SYS_TYPE_ID]" ng-repeat="editSysTypeData in DeviceSysTypeList.data"> {{ editSysTypeData[DeviceField.SYS_TYPE_ID] + ':' + editSysTypeData[DeviceField.SYS_TYPE_NAME]}}</md-option>
+                        <md-option ng-value="editOptionData[DeviceField.SYS_TYPE_ID]" ng-repeat="editOptionData in DeviceSysTypeList">{{ editOptionData[DeviceField.SYS_TYPE_ID] + ':' + editOptionData[DeviceField.SYS_TYPE_NAME]}}</md-option>
                     </md-optgroup>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>图标 </label>
-                <input ng-model="deviceTypeFieldName[DeviceField.ICON_SRC]">
+                <input ng-model="deviceTypeField[DeviceField.ICON_SRC]">
             </md-input-container>
         </md-list>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="saveDeviceType(deviceTypeFieldName)">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(deviceTypeField,'save')">
             保存
         </md-button>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="cancelDeviceType()">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="cancelDeviceType()">
             取消
         </md-button>
     </md-content>

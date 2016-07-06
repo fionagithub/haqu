@@ -1,8 +1,7 @@
 <md-sidenav class="md-sidenav-right" md-component-id="right">
     <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">组类型</h1>
-    </md-toolbar>
-    <!-- ng-controller="editSysCtrl" -->
+        <h1 class="md-toolbar-tools">监控</h1>
+    </md-toolbar> 
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
@@ -15,10 +14,10 @@
                 <input ng-model=" groupFieldName[DeviceField.DESC]">
             </md-input-container>
         </md-list>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="reSaveGroupType(groupFieldName)">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')">
             更新
         </md-button>
-        <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="cancelDeviceType()">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="cancelDeviceType()">
             取消
         </md-button>
     </md-content>

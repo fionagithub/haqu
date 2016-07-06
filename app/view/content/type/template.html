@@ -1,62 +1,49 @@
 <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="typeCtrl">
     <md-input-container flex class="md-block">
-            <label>系统</label>
-            <md-select ng-model="DeviceSysTypeList.data.sysTypeData" md-selected-text="getSelectedText(DeviceSysTypeList.data.sysTypeData)">
-                <md-option ng-value="sysTypeData[DeviceField.SYS_TYPE_ID]" ng-repeat="sysTypeData in DeviceSysTypeList.data">{{ sysTypeData[DeviceField.SYS_TYPE_ID] + ':' + sysTypeData[DeviceField.SYS_TYPE_NAME]}}</md-option>
-            </md-select>
-        </md-input-container>
-        <md-input-container flex class="md-block">
-            <label>小类名称</label>
-            <input ng-model="searchDeviceType">
-        </md-input-container>
-        <section layout-sm="column" flex layout-align="center center" layout-wrap="">
-            <md-button class="md-primary md-raised demo-dialog-open-button" ng-click="searchDevice()">搜索
-            </md-button>
-            <!--  ui-sref="ibuildweb.category.content.create" -->
-            <md-button ng-click="toggleRight()" class="md-primary md-raised demo-dialog-open-button">新增
-            </md-button>
-        </section>
+        <label>系统</label>
+        <md-select ng-model="sysTypeData" md-selected-text="getSelectedText(sysTypeData)">
+            <md-option ng-value="sysTypeData[DeviceField.SYS_TYPE_ID]" ng-repeat="sysTypeData in DeviceSysTypeList">{{ sysTypeData[DeviceField.SYS_TYPE_ID] + ':' + sysTypeData[DeviceField.SYS_TYPE_NAME]}}</md-option>
+        </md-select>
+    </md-input-container>
+    <md-input-container flex class="md-block">
+        <label>小类名称</label>
+        <input ng-model="searchDeviceType">
+    </md-input-container>
+    <section layout-sm="column" flex layout-align="center center" layout-wrap="">
+        <md-button class="md-raised demo-dialog-open-button" ng-click="search()">搜索
+        </md-button>
+        <!--  ui-sref="ibuildweb.category.content.create" -->
+        <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
+        </md-button>
+    </section>
     <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
         <table class="md-api-table">
-         <thead>
-        <tr>
-            <th> 小类ID</th>
-            <th> 小类名称</th>
-            <th> 大类ID</th>
-            <th> 图标</th>
-            <th> 操作 </th>
-        </tr>
-    </thead>
-          <tbody>
-        <tr ng-repeat='deviceTypeList in showDeviceTypeList' ng-class="{'selected':$index == selectedIndex}" ng-click="selectedDeviceType($index,deviceTypeList)">
-            <td>{{deviceTypeList[DeviceField.TYPE_ID]}} </td>
-            <td> {{deviceTypeList[DeviceField.TYPE_NAME]}}
-            </td>
-            <td>
-                {{deviceTypeList[DeviceField.SYS_TYPE_ID][DeviceField.SYS_TYPE_NAME]}}
-            </td>
-            <td>
-                {{ deviceTypeList["iconsrc"]}}
-            </td>
-            <td>
-                <span ng-class="{'inline-tools':$index == selectedIndex}" ng-show='$index == selectedIndex'>
-                             <md-button ng-click="toggleRight(deviceTypeList)" class="md-fab md-mini" aria-label="Eat cake">
-                             <md-icon  class="glyphicon glyphicon-pencil" ></md-icon>
-                             </md-button>
-                                 <md-button class="md-fab md-mini" ng-show='isDel && $index == selectedIndex' class="btn btn-danger btn-xs" ng-click="removeDeviceType(deviceTypeList)">
-                                           <md-icon class="glyphicon glyphicon-remove" ></md-icon>
-                                   </md-button>
-                             </span>
-            </td>
-    </tbody>
+            <thead>
+                <tr>
+                    <th> 小类ID</th>
+                    <th> 小类名称</th>
+                    <th> 大类ID</th>
+                    <th> 图标</th>
+                    <th> 操作 </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat='data in showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
+                    <td>{{data[DeviceField.TYPE_ID]}} </td>
+                    <td> {{data[DeviceField.TYPE_NAME]}}
+                    </td>
+                    <td>
+                        {{data[DeviceField.SYS_TYPE_ID][DeviceField.SYS_TYPE_NAME]}}
+                    </td>
+                    <td>
+                        {{ data["iconsrc"]}}
+                    </td>
+                    <td>
+                        <inline-tools></inline-tools>
+                    </td>
+            </tbody>
         </table>
-        <div layout="row">
-            <md-button class="md-primary md-raised demo-dialog-open-button" ng-disabled='isLoadTop' ng-show='isPagination' class="btn btn-default" ng-click="previousPage()">
-                上页
-            </md-button>
-            <md-button class="md-primary md-raised demo-dialog-open-button" ng-disabled='isLoadEnd' ng-show='isPagination' class="btn btn-default" ng-click="nextPage()">下页
-            </md-button>
-        </div>
+        <pagination> </pagination>
     </md-content>
     <ui-view>
     </ui-view>

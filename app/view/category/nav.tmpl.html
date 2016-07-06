@@ -1,12 +1,10 @@
-
-<md-sidenav class="md-sidenav-left md-whiteframe-z1" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
-      <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">点位系统</h1>
-      </md-toolbar>
-    <ul>
-        <li ng-repeat="obj in category"  ng-class="{ hasChild:obj.children,
+<md-toolbar class="md-theme-indigo">
+    <h1 class="md-toolbar-tools">点位系统</h1>
+</md-toolbar> 
+<ul class="docs-menu">
+    <li ng-repeat="obj in category" ng-class="{ hasChild:obj.children,
         active: obj.selected,
         open:obj.children&& obj.open }" ng-include="'view/category/views/nav_render.html'">
     </li>
- </ul>
-</md-sidenav>
+</ul>
+      

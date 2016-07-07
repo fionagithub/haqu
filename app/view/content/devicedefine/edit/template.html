@@ -38,28 +38,24 @@
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label for="form-group ">报警flg </label>
-                <md-checkbox ng-model="DeviceField[groupFieldName[DeviceField.ALARM_FLG]]">
-                    <!--      {{DeviceField[groupFieldName[DeviceField.ALARM_FLG]]}} -->
+                <md-checkbox ng-model="groupFieldName[DeviceField.ALARM_FLG]"> 
                 </md-checkbox>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>报警级别</label>
-                <!--  <input ng-model="groupFieldName[DeviceField.ALARM_LVL]"> -->
                 <md-select ng-model="alarmLevel.editData" md-selected-text="getSelectedText(alarmLevel.editData)">
                     <md-option ng-value="editData" ng-repeat="editData in alarmLevel">{{ editData}}</md-option>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>isDefault </label>
-                <md-checkbox ng-model="DeviceField[groupFieldName[DeviceField.IS_DEFAULT]]">
-                    <!--    {{DeviceField[groupFieldName[DeviceField.IS_DEFAULT]]}} -->
-                </md-checkbox>
+               <!--   --><md-checkbox ng-model="groupFieldName[DeviceField.IS_DEFAULT]">
+               </md-checkbox>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>isAnalogIO</label>
-                <md-checkbox ng-model="DeviceField[groupFieldName[DeviceField.IS_ANALOGIO]]">
-                    <!--      {{DeviceField[groupFieldName[DeviceField.IS_ANALOGIO]]}}    -->
-                </md-checkbox>
+              <!--   --> <md-checkbox ng-model="groupFieldName[DeviceField.IS_ANALOGIO]">
+              </md-checkbox>
             </md-input-container>
         </md-list>
         <md-button class="  md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')">

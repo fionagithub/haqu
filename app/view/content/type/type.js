@@ -78,6 +78,9 @@ function typeCtrl($rootScope, Paginator, deviceSysTypeList, deviceTypeList, $sta
         });
     }
 
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+    };
     $scope.delete = function(obj) {
         deviceTypeList.deleteOne(obj).then(function(data) { $scope.showData._load() })
     }

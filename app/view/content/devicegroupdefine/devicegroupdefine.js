@@ -73,5 +73,8 @@ function deviceGroupDefineCtrl($scope, deviceGroupDefine, $rootScope, Paginator,
         }
     };
 
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+    };
 
 }

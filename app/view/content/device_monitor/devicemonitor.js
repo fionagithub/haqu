@@ -115,6 +115,9 @@ function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, mo
     };
 
 
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+    };
 
 
 }

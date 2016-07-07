@@ -103,4 +103,7 @@ function devicePointCtrl($scope, monitorType, devicePoint, $rootScope, Paginator
     };
 
 
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+    };
 }

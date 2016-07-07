@@ -113,6 +113,9 @@
        };
 
 
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+    };
        $scope.toggleRight = function(obj) {
            if (obj) {
                $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MNT_GROUP_ID][DeviceField.MNT_GROUP_ID] });

@@ -113,6 +113,9 @@ function deviceInfoCtrl($scope, $rootScope, deviceInfo, map, deviceTypeList, Pag
             */
     };
 
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+    };
     $scope.toggleRight = function(obj) {
         if (obj) {
             $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.DEVICE_ID] });

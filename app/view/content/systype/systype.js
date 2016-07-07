@@ -1,7 +1,7 @@
 angular.module('content.systype', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('systypeCtrl', systypeCtrl)
     /*{"where" :{"devicesystemtypeid":4},"offset":4,  "limit": 4}*/
-function systypeCtrl($scope, $state, $rootScope, deviceSysTypeList, deviceTypeList, Paginator, $mdComponentRegistry, DeviceField) {
+function systypeCtrl($scope, $state, $rootScope, deviceSysTypeList, $mdSidenav, deviceTypeList, Paginator, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
@@ -85,7 +85,11 @@ function systypeCtrl($scope, $state, $rootScope, deviceSysTypeList, deviceTypeLi
             })
             /*    */
     };
- 
+
+
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+    };
     $scope.toggleRight = function(obj) {
         if (obj) {
             $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.SYS_TYPE_ID] });

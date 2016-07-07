@@ -1,10 +1,7 @@
 <!-- <p>createSysCtrl</p>-->
 <md-sidenav md-component-id="right" class="md-sidenav-right">
     <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">小类</h1>
-        <md-button ng-click="close()" class=" ">
-            Close
-        </md-button>
+        <h1 class="md-toolbar-tools">小类</h1> 
     </md-toolbar>
     <md-content layout-padding="">
         <md-list ng-hide='deviceSysType'>
@@ -32,7 +29,7 @@
         <md-button class="  md-raised demo-dialog-open-button" ng-click="save(deviceTypeField,'save')">
             保存
         </md-button>
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="cancelDeviceType()">
+        <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">
             取消
         </md-button>
     </md-content>

@@ -117,4 +117,7 @@ function deviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, $t
     };
 
 
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+    };
 }

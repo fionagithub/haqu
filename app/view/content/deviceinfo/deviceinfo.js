@@ -1,7 +1,7 @@
 angular.module('content.deviceInfo', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('deviceInfoCtrl', deviceInfoCtrl)
 
-function deviceInfoCtrl($scope, $rootScope, deviceInfo, map, deviceTypeList, Paginator, $timeout, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+function deviceInfoCtrl($scope, $rootScope, devicePoint, $mdDialog, deviceInfo, map, deviceTypeList, Paginator, $timeout, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
@@ -77,12 +77,22 @@ function deviceInfoCtrl($scope, $rootScope, deviceInfo, map, deviceTypeList, Pag
     function save(obj, type) {
         obj[DeviceField.MAP_ID] = $scope.mapData.editData;
         obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.editData;
-        deviceInfo.saveOne(obj, type).then(function() { $scope.showData._load() });
+        deviceInfo.saveOne(obj, type, function() { $scope.showData._load() });
     }
 
-    $scope.delete = function(obj) {
-        deviceInfo.deleteOne(obj).then(function(data) { $scope.showData._load() })
-    }
+    $scope.delete = function(ev, obj) {
+        var confirm = $mdDialog.confirm()
+            .title('确定要删除这条数据么?')
+            .ok('确定')
+            .cancel('取消');
+
+        $mdDialog.show(confirm).then(function() {
+            console.log('delete...');
+            deviceInfo.deleteOne(obj).then(function(data) { $scope.showData._load() })
+        }, function() {
+            console.log('cancel...');
+        });
+    };
 
     $scope.getSelectedText = function(o) {
         if (o) {
@@ -99,18 +109,18 @@ function deviceInfoCtrl($scope, $rootScope, deviceInfo, map, deviceTypeList, Pag
             $scope._oldSelectedRowObj.pop();
         }
         $scope._oldSelectedRowObj.unshift(obj);
-        /*   query[DeviceField.SYS_TYPE_ID] = obj[DeviceField.SYS_TYPE_ID];
+
+        query[DeviceField.DEVICE_ID] = obj[DeviceField.DEVICE_ID];
         $rootScope.query = query;
-        deviceTypeList.filter(null, null, function(data) {
-                if (data.length > 0) {
-                    $scope.isDel = false;
-                    console.log('存在子数据...');
-                } else {
-                    $scope.isDel = true;
-                }
-                $rootScope.query = null;
-            })
-            */
+        devicePoint.filter(null, null, function(data) {
+            if (data.length > 0) {
+                $scope.isDel = false;
+                console.log('存在子数据...');
+            } else {
+                $scope.isDel = true;
+            }
+            $rootScope.query = null;
+        })
     };
 
     $scope.cancel = function() {

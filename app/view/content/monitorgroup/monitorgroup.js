@@ -1,7 +1,7 @@
 angular.module('content.monitorgroup', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('monitorgroupCtrl', monitorgroupCtrl)
 
-function monitorgroupCtrl($rootScope, Paginator, $scope, $log, DeviceField, monitorGroup, monitorType, $mdSidenav, $state, $mdComponentRegistry) {
+function monitorgroupCtrl($rootScope,  $mdDialog, Paginator, $scope, $log, DeviceField, monitorGroup, monitorType, $mdSidenav, $state, $mdComponentRegistry) {
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
             load();
@@ -47,12 +47,24 @@ function monitorgroupCtrl($rootScope, Paginator, $scope, $log, DeviceField, moni
     }
 
     function save(obj, type) {
-        monitorGroup.saveOne(obj, type).then(function() { $scope.showData._load() });
+        monitorGroup.saveOne(obj, type, function() { $scope.showData._load() });
     }
 
-    $scope.delete = function(obj) {
-        monitorGroup.deleteOne(obj).then(function(data) { $scope.showData._load() })
-    }
+  
+  
+    $scope.delete = function(ev, obj) { 
+        var confirm = $mdDialog.confirm()
+            .title('确定要删除这条数据么?')
+            .ok('确定')
+            .cancel('取消');
+
+        $mdDialog.show(confirm).then(function() {
+            console.log( 'delete...');
+            monitorGroup.deleteOne(obj).then(function(data) { $scope.showData._load() })
+        }, function() {
+            console.log( 'cancel...');
+        });
+    };
 
     // 自定义设备 查看列表数据 
     $scope._oldSelectedRowObj = [];

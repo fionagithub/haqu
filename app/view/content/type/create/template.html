@@ -4,11 +4,7 @@
         <h1 class="md-toolbar-tools">小类</h1> 
     </md-toolbar>
     <md-content layout-padding="">
-        <md-list ng-hide='deviceSysType'>
-            <md-input-container flex class="md-block">
-                <label for="form-group ">小类</label>
-                <input ng-show='!isEditButton' ng-model="deviceTypeField[DeviceField.TYPE_ID]">
-            </md-input-container>
+        <md-list> 
             <md-input-container flex class="md-block">
                 <label>小类名称</label>
                 <input ng-model="deviceTypeField[DeviceField.TYPE_NAME]">

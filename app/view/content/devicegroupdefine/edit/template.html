@@ -4,18 +4,26 @@
     </md-toolbar>
     <md-content layout-padding="">
         <md-list>
-            <md-input-container flex class="md-block">
-                <label for="form-group ">设备ID </label>
-                <p class="form-control-static">{{groupFieldName[DeviceField.DEVICE_ID]}}</p>
-            </md-input-container>
+         <md-input-container flex class="autocompletedemoBasicUsage">
+                <label for="form-group "> 设备ID </label>
+                <md-autocomplete ng-disabled="isDisabled" md-no-cache="noCache" md-selected-item="selectedItem" md-search-text-change="searchTextChange(searchText)" md-search-text="searchText" md-selected-item-change="selectedItemChange(item)" md-items="item in querySearch(searchText)" md-item-text="item" md-min-length="0" placeholder="What is your favorite US state?">
+                    <md-item-template>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                        No states matching "{{searchText}}" were found.
+                        <!--    <a ng-click="newState(searchText)">Create a new one!</a> -->
+                    </md-not-found>
+                </md-autocomplete>
+            </md-input-container> 
+           
             <md-input-container flex class="md-block">
                 <label>subDeviceId</label>
-                <input ng-model="groupFieldName[DeviceField.SUBDEVICE_ID]">
-            <!--    <md-select ng-model="MonitorType.editData" md-selected-text="getSelectedText(MonitorType.editData)">
-                <md-optgroup>
-                    <md-option ng-value="editData[DeviceField.MNT_TYPE_ID]" ng-repeat="editData in MonitorType"> {{ editData[DeviceField.MNT_TYPE_ID] + ':' + editData[DeviceField.DESC]}}</md-option>
-                </md-optgroup>
-            </md-select> -->
+                <md-select ng-model="subData.item" md-on-close="clearSearchTerm()" multiple> 
+                    <md-optgroup label="subDeviceId">
+                        <md-option ng-value="item[DeviceField.DEVICE_ID]" ng-repeat="item in subData">{{item[DeviceField.DEVICE_ID]}}</md-option>
+                    </md-optgroup>
+                </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>templateName </label>

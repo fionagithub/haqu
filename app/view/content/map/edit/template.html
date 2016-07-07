@@ -5,13 +5,10 @@
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
-                <label> 地图  </label>
-                <p>
+                <label> 地图名称 </label>
+                <p class="form-control-static hide">
                     {{groupFieldName[DeviceField.MAP_ID]}}
                 </p>
-            </md-input-container>
-            <md-input-container flex class="md-block">
-                <label> 地图名称 </label>
                 <input ng-model="groupFieldName[DeviceField.MAP_NAME] ">
             </md-input-container>
             <md-input-container flex class="md-block">

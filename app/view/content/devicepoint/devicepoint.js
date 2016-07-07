@@ -1,7 +1,7 @@
 angular.module('content.devicePoint', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('devicePointCtrl', devicePointCtrl)
 
-function devicePointCtrl($scope, monitorType, devicePoint, $rootScope, Paginator, $timeout, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+function devicePointCtrl($scope,  $mdDialog, monitorType, devicePoint, $rootScope, Paginator, $timeout, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
@@ -39,7 +39,8 @@ function devicePointCtrl($scope, monitorType, devicePoint, $rootScope, Paginator
 
     $scope._oldSelectedRowObj = [];
     $scope.selectedRow = function(index, obj) {
-        if ($scope._oldSelectedRowObj.length > 0) {
+          $scope.isDel = true;
+       if ($scope._oldSelectedRowObj.length > 0) {
             $scope._oldSelectedRowObj.pop();
         }
         $scope._oldSelectedRowObj.unshift(obj);
@@ -87,12 +88,23 @@ function devicePointCtrl($scope, monitorType, devicePoint, $rootScope, Paginator
 
     function save(obj, type) {
         obj[DeviceField.MNT_TYPE_ID] = $scope.MonitorType.editData;
-        devicePoint.saveOne(obj, type).then(function() { $scope.showData._load() });
+        devicePoint.saveOne(obj, type,function() { $scope.showData._load()});
     }
 
-    $scope.delete = function(obj) {
-        devicePoint.deleteOne(obj).then(function(data) { $scope.showData._load() })
-    }
+  
+    $scope.delete = function(ev, obj) { 
+        var confirm = $mdDialog.confirm()
+            .title('确定要删除这条数据么?')
+            .ok('确定')
+            .cancel('取消');
+
+        $mdDialog.show(confirm).then(function() {
+            console.log( 'delete...');
+            devicePoint.deleteOne(obj).then(function(data) { $scope.showData._load() })
+        }, function() {
+            console.log( 'cancel...');
+        });
+    };
 
     $scope.getSelectedText = function(o) {
         if (o) {

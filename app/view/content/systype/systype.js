@@ -1,7 +1,7 @@
 angular.module('content.systype', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('systypeCtrl', systypeCtrl)
     /*{"where" :{"devicesystemtypeid":4},"offset":4,  "limit": 4}*/
-function systypeCtrl($scope, $state, $rootScope, deviceSysTypeList, $mdSidenav, deviceTypeList, Paginator, $mdComponentRegistry, DeviceField) {
+function systypeCtrl($scope, $state, $rootScope, $mdDialog, deviceSysTypeList, $mdSidenav, deviceTypeList, Paginator, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
@@ -33,7 +33,7 @@ function systypeCtrl($scope, $state, $rootScope, deviceSysTypeList, $mdSidenav, 
         $rootScope.query = query;
         $scope.showData._load(0);
     }
-
+/*
     $scope.save = function(obj, type) {
         if (type === 'save') {
             deviceTypeList.isExists(obj).then(function(data) {
@@ -47,14 +47,24 @@ function systypeCtrl($scope, $state, $rootScope, deviceSysTypeList, $mdSidenav, 
             save(obj, type);
         }
     }
-
-    function save(obj, type) {
-        deviceSysTypeList.saveOne(obj, type).then(function() { $scope.showData._load() });
+*/
+    $scope.save = function(obj, type) {
+        deviceSysTypeList.saveOne(obj, type, function() { $scope.showData._load() });
     }
+ 
+    $scope.delete = function(ev, obj) { 
+        var confirm = $mdDialog.confirm()
+            .title('确定要删除这条数据么?')
+            .ok('确定')
+            .cancel('取消');
 
-    $scope.delete = function(obj) {
-        deviceSysTypeList.deleteOne(obj).then(function(data) { $scope.showData._load() })
-    }
+        $mdDialog.show(confirm).then(function() {
+            console.log( 'delete...');
+            deviceSysTypeList.deleteOne(obj).then(function(data) { $scope.showData._load() })
+        }, function() {
+            console.log( 'cancel...');
+        });
+    };
 
 
     $scope.getSelectedText = function(o) {

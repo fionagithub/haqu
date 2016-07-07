@@ -2,7 +2,7 @@
                            <md-button ng-click="toggleRight(data)" class="md-fab md-mini" aria-label="Eat cake">
                            <md-icon  class="glyphicon glyphicon-pencil" ></md-icon>
                            </md-button>
-                               <md-button class="md-fab md-mini" class="btn btn-danger btn-xs" ng-click="remove(data)">
+                               <md-button class="md-fab md-mini" class="btn btn-danger btn-xs" ng-show='isDel' ng-click="delete($event,data)">
                                          <md-icon class="glyphicon glyphicon-remove" ></md-icon>
                                  </md-button>
                            </span>

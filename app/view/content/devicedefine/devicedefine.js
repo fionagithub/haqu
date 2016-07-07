@@ -1,7 +1,7 @@
 angular.module('content.deviceDefine', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('deviceDefineCtrl', deviceDefineCtrl)
 
-function deviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, $timeout, $rootScope, Paginator, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+function deviceDefineCtrl($scope, monitorType,   $mdDialog,deviceTypeList, deviceDefines, $timeout, $rootScope, Paginator, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     /* */
     $scope.$on('$stateChangeSuccess', function() {
@@ -92,12 +92,24 @@ function deviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, $t
         obj[DeviceField.MNT_TYPE_ID] = $scope.MonitorType.editData;
         obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.editData;
         obj[DeviceField.VAL] = $scope.valueOpartor.editData;
-        deviceDefines.saveOne(obj, type).then(function() { $scope.showData._load() });
+        deviceDefines.saveOne(obj, type,function() { $scope.showData._load() });
     }
 
-    $scope.delete = function(obj) {
-        deviceDefines.deleteOne(obj).then(function(data) { $scope.showData._load() })
-    }
+
+    $scope.delete = function(ev, obj) { 
+        var confirm = $mdDialog.confirm()
+            .title('确定要删除这条数据么?')
+            .ok('确定')
+            .cancel('取消');
+
+        $mdDialog.show(confirm).then(function() {
+            console.log( 'delete...');
+            deviceDefines.deleteOne(obj).then(function(data) { $scope.showData._load() })
+        }, function() {
+            console.log( 'cancel...');
+        });
+    };
+
 
     $scope.getSelectedText = function(o) {
         if (o) {
@@ -110,7 +122,8 @@ function deviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, $t
     $scope._oldSelectedRowObj = [];
     // 自定义设备 查看列表数据 
     $scope.selectedRow = function(index, obj) {
-        if ($scope._oldSelectedRowObj.length > 0) {
+          $scope.isDel = true;
+       if ($scope._oldSelectedRowObj.length > 0) {
             $scope._oldSelectedRowObj.pop();
         }
         $scope._oldSelectedRowObj.unshift(obj);

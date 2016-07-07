@@ -1,7 +1,7 @@
 angular.module('content.deviceMonitor', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('deviceMonitorCtrl', deviceMonitorCtrl)
 
-function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, monitorGroup, deviceTypeList, $timeout, $scope, $mdSidenav, $state, $log, $mdComponentRegistry) {
+function deviceMonitorCtrl(deviceMonitor, $rootScope,$mdDialog, Paginator, DeviceField, monitorGroup, deviceTypeList, $timeout, $scope, $mdSidenav, $state, $log, $mdComponentRegistry) {
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
             load();
@@ -60,6 +60,28 @@ function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, mo
 
     }
 
+    // 自定义设备 保存按钮
+    $scope.save = function(type) {
+        var obj = {};
+        obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.data;
+        obj[DeviceField.MNT_GROUP_ID] = $scope.MonitorGroupList.editOptionData;
+         deviceMonitor.saveOne(obj, type,function() { $scope.showData._load() });
+    };
+
+ $scope.delete = function(ev, obj) { 
+        var confirm = $mdDialog.confirm()
+            .title('确定要删除这条数据么?')
+            .ok('确定')
+            .cancel('取消');
+
+        $mdDialog.show(confirm).then(function() {
+            console.log( 'delete...');
+            deviceMonitor.deleteOne(obj).then(function(data) { $scope.showData._load() })
+        }, function() {
+            console.log( 'cancel...');
+        });
+    };
+
 
     $scope.toggleRight = function(obj) {
         if (obj) {
@@ -97,21 +119,6 @@ function deviceMonitorCtrl(deviceMonitor, $rootScope, Paginator, DeviceField, mo
         } else {
             return " ";
         }
-    };
-
-    // 自定义设备 重新保存按钮
-    $scope.resave = function() {
-        var obj = {};
-        obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.data;
-        obj[DeviceField.MNT_GROUP_ID] = $scope.MonitorGroupList.editOptionData;
-
-    };
-
-    // 自定义设备 保存按钮
-    $scope.save = function() {
-        var obj = {};
-        obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.data;
-        obj[DeviceField.MNT_GROUP_ID] = $scope.MonitorGroupList.editOptionData;
     };
 
 

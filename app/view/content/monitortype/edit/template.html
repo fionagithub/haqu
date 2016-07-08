@@ -6,11 +6,8 @@
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
-                <label for="form-group ">监测 </label>
-                <p class="form-control-static">{{groupFieldName[DeviceField.MNT_TYPE_ID]}}</p>
-            </md-input-container>
-            <md-input-container flex class="md-block">
                 <label>命令名称</label>
+                <p class="form-control-static hide">{{groupFieldName[DeviceField.MNT_TYPE_ID]}}</p>
                 <input ng-model="groupFieldName[DeviceField.CMD_NAME]">
             </md-input-container>
             <md-input-container flex class="md-block">

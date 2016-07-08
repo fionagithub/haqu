@@ -7,11 +7,11 @@
     "Role": 1,
     "ts_map": 922,
     "ts_deviceinfo": 369906,
-    "ts_devicetype": 1103333133361,
-    "ts_devicesystype": 87655617,
+    "ts_devicetype": 1103333133370,
+    "ts_devicesystype": 87655643,
     "V_DevicePointList": 240316,
-    "ts_newmonitortypegroup": 90014,
-    "ts_monitortypes": 901005,
+    "ts_newmonitortypegroup": 90016,
+    "ts_monitortypes": 901006,
     "ts_deviceinfogroupdefine": 50401011024013900,
     "ts_devicepoint": 10101010901002080,
     "ts_devicetypemonitortypegroup": 551,
@@ -1017,15 +1017,11 @@
       "804518": "{\"monitortypeid\":804518,\"monitortypegroupid\":34,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"总有功功率\"}",
       "804519": "{\"monitortypeid\":804519,\"monitortypegroupid\":34,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"总视在功率\"}",
       "804520": "{\"monitortypeid\":804520,\"monitortypegroupid\":34,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"总负载率\"}",
-      "901001": "{\"monitortypeid\":901001,\"monitortypegroupid\":9001,\"devicetypeid\":901,\"cmdname\":\"readDeviceStatus\",\"description\":\"设备状态\"}"
+      "901001": "{\"monitortypeid\":901001,\"monitortypegroupid\":9001,\"devicetypeid\":901,\"cmdname\":\"readDeviceStatus\",\"description\":\"设备状态\"}",
+      "901002": "{\"monitortypeid\":901002,\"monitortypegroupid\":9002,\"cmdname\":\"-=--=\",\"description\":\"-0-=-\"}"
     },
     "ts_devicetype": {
-      "2": "{\"devicetypeid\":2,\"devicetypename\":\"232\",\"devicesystemtypeid\":11}",
-      "6": "{\"devicetypeid\":6,\"devicetypename\":\"放\",\"devicesystemtypeid\":11}",
-      "66": "{\"devicetypeid\":66,\"devicetypename\":\"-==77===--\",\"devicesystemtypeid\":11}",
-      "89": "{\"devicetypeid\":89,\"devicetypename\":\"=--77\",\"devicesystemtypeid\":11}",
       "101": "{\"devicetypeid\":101,\"devicetypename\":\"视频监控\",\"devicesystemtypeid\":1,\"iconsrc\":null}",
-      "111": "{\"devicetypeid\":111,\"devicetypename\":\"323\",\"devicesystemtypeid\":11}",
       "202": "{\"devicetypeid\":202,\"devicetypename\":\"速通门道闸\",\"devicesystemtypeid\":2,\"iconsrc\":null}",
       "203": "{\"devicetypeid\":203,\"devicetypename\":\"消费管理\",\"devicesystemtypeid\":2,\"iconsrc\":null}",
       "204": "{\"devicetypeid\":204,\"devicesystemtypeid\":2,\"iconsrc\":null}",
@@ -1035,7 +1031,6 @@
       "208": "{\"devicetypeid\":208,\"devicetypename\":\"考勤管理系统\",\"devicesystemtypeid\":2,\"iconsrc\":null}",
       "209": "{\"devicetypeid\":209,\"devicetypename\":\"出入口门禁\",\"devicesystemtypeid\":2,\"iconsrc\":null}",
       "210": "{\"devicetypeid\":210,\"devicetypename\":\"出入口门禁\",\"devicesystemtypeid\":2,\"iconsrc\":null}",
-      "234": "{\"devicetypeid\":234,\"devicetypename\":\"324\",\"devicesystemtypeid\":11}",
       "301": "{\"devicetypeid\":301,\"devicetypename\":\"烟感\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
       "302": "{\"devicetypeid\":302,\"devicetypename\":\"温感\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
       "303": "{\"devicetypeid\":303,\"devicetypename\":\"手动报警按钮\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
@@ -1047,7 +1042,6 @@
       "309": "{\"devicetypeid\":309,\"devicetypename\":\"防火防烟阀\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
       "310": "{\"devicetypeid\":310,\"devicetypename\":\"信号蝶阀\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
       "311": "{\"devicetypeid\":311,\"devicetypename\":\"水流指示器\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
-      "312": "{\"devicetypeid\":312,\"devicetypename\":\"正压阀\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
       "313": "{\"devicetypeid\":313,\"devicetypename\":\"感温报警\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
       "314": "{\"devicetypeid\":314,\"devicetypename\":\"变电所非消防电源\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
       "315": "{\"devicetypeid\":315,\"devicetypename\":\"排烟口\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
@@ -1072,7 +1066,6 @@
       "334": "{\"devicetypeid\":334,\"devicetypename\":\"火焰探测器\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
       "335": "{\"devicetypeid\":335,\"devicetypename\":\"空气采样预警\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
       "399": "{\"devicetypeid\":399,\"devicetypename\":\"未定义设备类型\",\"devicesystemtypeid\":3,\"iconsrc\":null}",
-      "444": "{\"devicetypeid\":444,\"devicetypename\":\"343\",\"devicesystemtypeid\":11}",
       "501": "{\"devicetypeid\":501,\"devicetypename\":\"空调机\",\"devicesystemtypeid\":5,\"iconsrc\":null}",
       "502": "{\"devicetypeid\":502,\"devicetypename\":\"VAV\",\"devicesystemtypeid\":5,\"iconsrc\":null}",
       "503": "{\"devicetypeid\":503,\"devicetypename\":\"CO2传感器\",\"devicesystemtypeid\":5,\"iconsrc\":null}",
@@ -1122,7 +1115,6 @@
       "547": "{\"devicetypeid\":547,\"devicetypename\":\"冷却水换热器\",\"devicesystemtypeid\":5,\"iconsrc\":null}",
       "548": "{\"devicetypeid\":548,\"devicetypename\":\"中庭翅流加热控制\",\"devicesystemtypeid\":5,\"iconsrc\":null}",
       "549": "{\"devicetypeid\":549,\"devicetypename\":\"中庭翅片散热器用换热器\",\"devicesystemtypeid\":5,\"iconsrc\":null}",
-      "646": "{\"devicetypeid\":646,\"devicetypename\":\"466\",\"devicesystemtypeid\":11}",
       "666": "{\"devicetypeid\":666,\"devicetypename\":\"66\",\"devicesystemtypeid\":null}",
       "801": "{\"devicetypeid\":801,\"devicetypename\":\"温湿度\",\"devicesystemtypeid\":8,\"iconsrc\":null}",
       "802": "{\"devicetypeid\":802,\"devicetypename\":\"配电开关\",\"devicesystemtypeid\":8,\"iconsrc\":null}",
@@ -1139,25 +1131,22 @@
       "909": "{\"devicetypeid\":909,\"devicetypename\":\"物业电梯\",\"devicesystemtypeid\":9,\"iconsrc\":null}",
       "910": "{\"devicetypeid\":910,\"devicetypename\":\"会议中心电梯\",\"devicesystemtypeid\":9,\"iconsrc\":null}",
       "911": "{\"devicetypeid\":911,\"devicetypename\":\"消防酒店转换电梯\",\"devicesystemtypeid\":9,\"iconsrc\":null}",
-      "1101": "{\"devicetypeid\":1101,\"devicetypename\":\"===11s999dd===\",\"devicesystemtypeid\":11,\"iconsrc\":null,\"devicesystemtype\":null}",
-      "1102": "{\"devicetypeid\":1102,\"devicetypename\":\"ertwt\",\"devicesystemtypeid\":null}",
+      "1101": "{\"devicetypeid\":1101,\"devicetypename\":\"4的\",\"devicesystemtypeid\":11}",
+      "1102": "{\"devicetypeid\":1102,\"devicetypename\":\"sdfa\",\"devicesystemtypeid\":11}",
+      "1103": "{\"devicetypeid\":1103,\"devicetypename\":\"--=o000==-\",\"devicesystemtypeid\":11}",
       "1122": "{\"devicetypeid\":1122,\"devicetypename\":\"121\"}",
       "1154": "{\"devicetypeid\":1154,\"devicetypename\":\"dfsa\"}",
       "1156": "{\"devicetypeid\":1156,\"devicetypename\":\"dddd==\"}",
-      "1223": "{\"devicetypeid\":1223,\"devicetypename\":\"放00-==\",\"devicesystemtypeid\":11}",
       "1301": "{\"devicetypeid\":1301,\"devicetypename\":\"test--=--==-\",\"iconsrc\":null}",
       "1311": "{\"devicetypeid\":1311,\"devicetypename\":\"222\",\"iconsrc\":null}",
-      "3333": "{\"devicetypeid\":3333,\"devicetypename\":\"===11s999dd===\",\"devicesystemtypeid\":11,\"iconsrc\":null,\"devicesystemtype\":null}",
       "3435": "{\"devicetypeid\":3435,\"devicetypename\":\"676\",\"devicesystemtypeid\":null}",
-      "9988": "{\"devicetypeid\":9988,\"devicetypename\":\"===9999====\",\"devicesystemtypeid\":11}",
       "11222": "{\"devicetypeid\":11222,\"devicetypename\":\"2222\"}",
       "34353": "{\"devicetypeid\":34353,\"devicetypename\":\"34\",\"devicesystemtypeid\":null}",
       "999999": "{\"devicetypeid\":999999,\"devicetypename\":\"--==---=\",\"devicesystemtypeid\":null}",
       "1103333133339": "{\"devicetypeid\":1103333133339,\"devicetypename\":\"股份制\"}",
       "1103333133341": "{\"devicetypeid\":1103333133341,\"devicetypename\":\"奇才\"}",
       "1103333133342": "{\"devicetypeid\":1103333133342,\"devicetypename\":\"奇才\"}",
-      "9999999999": "{\"devicetypeid\":9999999999,\"devicetypename\":\"89009\",\"devicesystemtypeid\":null}",
-      "1103333133360": "{\"devicetypeid\":1103333133360,\"devicetypename\":\"er\",\"devicesystemtypeid\":11}"
+      "9999999999": "{\"devicetypeid\":9999999999,\"devicetypename\":\"89009\",\"devicesystemtypeid\":null}"
     },
     "ts_devicesystype": {
       "0": "{\"devicesystemtypeid\":0,\"devicesystemtypename\":\"综合\"}",
@@ -1172,7 +1161,7 @@
       "9": "{\"devicesystemtypeid\":9,\"devicesystemtypename\":\"电梯系统\"}",
       "10": "{\"devicesystemtypeid\":10,\"devicesystemtypename\":\"车库管理系统\"}",
       "11": "{\"devicesystemtypeid\":11,\"devicesystemtypename\":\"eleven--\"}",
-      "12": "{\"devicesystemtypeid\":12,\"devicesystemtypename\":\"-009990==\"}"
+      "12": "{\"devicesystemtypeid\":12,\"devicesystemtypename\":\"999\"}"
     },
     "ts_map": {
       "334": "{\"mapid\":334,\"mapname\":\"B区\",\"mapno\":null,\"maplocation\":null,\"maptype\":1,\"source\":null}",
@@ -1318,7 +1307,6 @@
       "478": "{\"mapid\":478,\"mapname\":\"baxitong\",\"mapno\":null,\"maplocation\":null,\"maptype\":2,\"source\":null}",
       "479": "{\"mapid\":479,\"mapname\":\"b1F\",\"mapno\":\"478\",\"maplocation\":\"ba\",\"maptype\":2,\"source\":\"maps/b1f.png\"}",
       "480": "{\"mapid\":480,\"mapname\":\"-=-000-=\",\"mapno\":null,\"maplocation\":null,\"maptype\":3,\"source\":null,\"open\":true}",
-      "481": "{\"mapid\":481,\"mapname\":\"dianneg\",\"mapno\":\"480\",\"maplocation\":\"cpms\",\"maptype\":3,\"source\":\"maps/b1f.png\"}",
       "482": "{\"mapid\":482,\"mapname\":null,\"mapno\":null,\"maplocation\":null,\"maptype\":null,\"source\":null}"
     },
     "ts_deviceinfo": {
@@ -3756,7 +3744,7 @@
       "239921": "{\"autoid\":239921,\"deviceid\":\"030301010903025116\",\"devicename\":\"B3F2号坡道手报L25-116\",\"devicetypeid\":303,\"axisx\":null,\"axisy\":null,\"mapid\":346,\"deviceno\":\"L25-116\",\"monitor\":\"0057366B\",\"cmdname\":null}"
     },
     "ts_newmonitortypegroup": {
-      "1": "{\"monitortypegroupid\":1,\"description\":\"博士摄像机\"}",
+      "1": "{\"monitortypegroupid\":1,\"description\":\"--==--=\"}",
       "2": "{\"monitortypegroupid\":2,\"description\":\"一卡通\"}",
       "3": "{\"monitortypegroupid\":3,\"description\":\"OP720-CN点型感烟火灾探测器\"}",
       "5": "{\"monitortypegroupid\":5,\"description\":\"BA\"}",
@@ -3800,7 +3788,7 @@
       "7006": "{\"monitortypegroupid\":7006,\"description\":\"地刀\"}",
       "7007": "{\"monitortypegroupid\":7007,\"description\":\"隔离开关\"}",
       "9001": "{\"monitortypegroupid\":9001,\"description\":\"LED屏\"}",
-      "32423": "{\"monitortypegroupid\":32423,\"description\":\"-==999==\"}"
+      "9002": "{\"monitortypegroupid\":9002,\"description\":\"-==-\"}"
     },
     "ts_deviceinfogroupdefine": {
       "50101011024012400": "{\"deviceid\":50101011024012400,\"subdeviceid\":null,\"templatename\":null}",
@@ -3816,7 +3804,8 @@
       "50201011024010410": "{\"deviceid\":50201011024010410,\"subdeviceid\":50201011024010410,\"templatename\":null}",
       "50201011024010420": "{\"deviceid\":50201011024010420,\"subdeviceid\":50201011024010420,\"templatename\":null}",
       "50301011024013900": "{\"deviceid\":50301011024013900,\"subdeviceid\":50301011024013900,\"templatename\":null}",
-      "50401011024013900": "{\"deviceid\":50401011024013900,\"subdeviceid\":50401011024013900,\"templatename\":null}"
+      "50401011024013900": "{\"deviceid\":50401011024013900,\"subdeviceid\":50401011024013900,\"templatename\":null}",
+      "30101010903022004": "{\"deviceid\":30101010903022004,\"subdeviceid\":\"30101010903022004,30101010903022016\",\"templatename\":\"--==00\",\"undefined\":null}"
     },
     "ts_devicepoint": {
       "10101010901001000": "{\"deviceid\":10101010901001000,\"cmdname\":\"JK-B1F-001\",\"monitortypeid\":101004,\"datasource\":null,\"monitor\":\"10.2.1.2\"}",

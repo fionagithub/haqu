@@ -15,14 +15,16 @@ angular.module('ibuildweb.factorys.services', ['ibuildweb.factorys.resources', '
 function map(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.MAP,
-        param: DeviceField.MAP_ID
+        param: DeviceField.MAP_ID,
+        paramId: DeviceField.MAP_ID
     })
 }
 
 function deviceSysTypeList(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.DEVICE_SYS_TYPE,
-        param: DeviceField.SYS_TYPE_ID
+        param: DeviceField.SYS_TYPE_ID,
+        paramId: DeviceField.SYS_TYPE_ID
     })
 
 }
@@ -30,14 +32,16 @@ function deviceSysTypeList(Resources, API_URI, DeviceField) {
 function deviceTypeList(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.DEVICE_TYPE,
-        param: DeviceField.TYPE_ID
+        param: DeviceField.TYPE_ID,
+        paramId: DeviceField.TYPE_ID
     });
 }
 
 function monitorGroup(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.MONITOR_GROUP,
-        param: DeviceField.MNT_GROUP_ID
+        param: DeviceField.MNT_GROUP_ID,
+        paramId: DeviceField.MNT_GROUP_ID
     });
 }
 
@@ -45,7 +49,8 @@ function monitorGroup(Resources, API_URI, DeviceField) {
 function monitorType(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.MONITOR_TYPE,
-        param: DeviceField.MNT_TYPE_ID
+        param: DeviceField.MNT_TYPE_ID,
+        paramId: DeviceField.MNT_TYPE_ID
     });
 }
 
@@ -59,7 +64,8 @@ function deviceMonitor(Resources, API_URI, DeviceField) {
 function deviceInfo(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.DEVICE_INFO,
-        param: DeviceField.MAP_ID
+        param: DeviceField.MAP_ID,
+        paramId: DeviceField.DEVICE_ID
     })
 }
 

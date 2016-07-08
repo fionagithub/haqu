@@ -1,7 +1,7 @@
    angular.module('content.monitortype', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
        .controller('monitortypeCtrl', monitortypeCtrl)
 
-   function monitortypeCtrl($rootScope, Paginator, $scope, $timeout, monitorGroup, monitorType, deviceTypeList, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+   function monitortypeCtrl($rootScope, Paginator, devicePoint, $scope, $timeout, monitorGroup, monitorType, deviceTypeList, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
        $scope.$on('$stateChangeSuccess', function() {
            if ($state.current.name == "ibuildweb.category.content") {
                load();
@@ -85,7 +85,7 @@
        function save(obj, type) {
            obj[DeviceField.MNT_GROUP_ID] = $scope.MonitorGroupList.editOptionData;
            obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.editData;
-           monitorType.saveOne(obj, type).then(function() { $scope.showData._load() });
+           monitorType.saveOne(obj, type, function() { $scope.showData._load() });
        }
 
        $scope.delete = function(obj) {
@@ -95,13 +95,22 @@
        // 自定义设备 查看列表数据 
        $scope._oldSelectedRowObj = [];
        $scope.selectedRow = function(index, obj) {
-           if ($scope._oldSelectedRowObj.length > 1) {
+           if ($scope._oldSelectedRowObj.length > 0) {
                $scope._oldSelectedRowObj.pop();
            }
            $scope._oldSelectedRowObj.unshift(obj);
-           //   angular.copy($rootScope.query);
-           /*       query[DeviceField.MNT_GROUP_ID] = obj[DeviceField.MNT_GROUP_ID];
-                  $rootScope.query = query;*/
+           
+           query[DeviceField.TYPE_ID] = obj[DeviceField.TYPE_ID];
+           $rootScope.query = query;
+           devicePoint.filter(null, null, function(data) {
+               if (data.length > 0) {
+                   $scope.isDel = false;
+                   console.log('存在子数据...');
+               } else {
+                   $scope.isDel = true;
+               }
+               $rootScope.query = null;
+           })
        };
 
        $scope.getSelectedText = function(obj) {
@@ -113,9 +122,10 @@
        };
 
 
-    $scope.cancel = function() {
-        $mdSidenav('right').close();
-    };
+       $scope.cancel = function() {
+           $mdSidenav('right').close();
+       };
+
        $scope.toggleRight = function(obj) {
            if (obj) {
                $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MNT_GROUP_ID][DeviceField.MNT_GROUP_ID] });

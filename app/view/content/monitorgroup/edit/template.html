@@ -3,15 +3,11 @@
         <h1 class="md-toolbar-tools">监控</h1>
     </md-toolbar> 
     <md-content layout-padding="">
-        <md-list>
+        <md-list> 
             <md-input-container flex class="md-block">
-                <label>大类ID
-                </label>
-                <p class="form-control-static">{{groupFieldName[DeviceField.MNT_GROUP_ID]}}</p>
-            </md-input-container>
-            <md-input-container flex class="md-block">
-                <label> 大类名称</label>
-                <input ng-model=" groupFieldName[DeviceField.DESC]">
+               <label> 描述</label>
+                <p class="form-control-static hide">{{groupFieldName[DeviceField.MNT_GROUP_ID]}}</p>
+                <input ng-model="groupFieldName[DeviceField.DESC]">
             </md-input-container>
         </md-list>
         <md-button class="  md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')">

@@ -3,7 +3,7 @@
        .directive('jscrollpane', jscrollpane)
        .directive('mapInlineTools', mapInlineTools)
 
-   function mapCtrl(Paginator, $rootScope, $scope, $log, $mdSidenav, $state, map, deviceInfo, $mdComponentRegistry, DeviceField) {
+   function mapCtrl(Paginator, $rootScope, $mdDialog, $scope, $log, $mdSidenav, $state, map, deviceInfo, $mdComponentRegistry, DeviceField) {
 
        $scope.$on('$stateChangeSuccess', function() {
            if ($state.current.name == "ibuildweb.category.content") {
@@ -15,12 +15,12 @@
        load();
 
        // 用来检测报警列表滚动
-       $scope.onJspScrollY = function() {
-           if ($scope.isLoadTop) {
-               $scope.page += 10;
-               showMore();
-           }
-       };
+       /*     $scope.onJspScrollY = function() {
+                if ($scope.isLoadTop) {
+                    $scope.page += 10;
+                    showMore();
+                }
+            };*/
 
        var query = {};
 
@@ -32,30 +32,28 @@
        $scope.$watch('sysTypeData', function() {});
 
 
-       // 自定义设备 查看列表数据
-       $scope.selectedRow = function(index, event, obj) {
-           // $state.go('ibuildweb.category.content.child', { mapid: obj[DeviceField.MAP_ID] });
-           $scope.isDel = true;
-           /* if (obj.open) {
-                obj.open = false;
-            } else {
-                obj.open = true;
-            }*/
+       // 自定义设备 查看列表数据 remove
+       $scope.selectedRow = function(index, obj) {
            obj.open = obj.open === false;
            var o = {};
-           o[DeviceField.MAP_ID] = obj[DeviceField.MAP_ID];
-           if (obj[DeviceField.MAP_NO]) {
+           o[DeviceField.MAP_NO] = obj[DeviceField.MAP_ID];
+           if (obj[DeviceField.MAP_NO] == null) {
                $rootScope.query = o;
-               showMore();
+               map.filter(null, null, function(data) {
+                   $rootScope.query = null;
+                   $scope.isDel = data.length == 0;
+               });
            }
        };
-       $scope.showDataList = [];
 
-       function showMore() {
-           deviceInfo.filter(null, null, function(data) {
-               $scope.showDataList = data;
-           });
-       }
+
+
+       /* $scope.showDataList = [];
+              function showMore() {
+                  deviceInfo.filter(null, null, function(data) {
+                      $scope.showDataList = data;
+                  });
+              }*/
 
        function load() {
            map.filter(null, null, function(data) {
@@ -111,6 +109,22 @@
        $scope.cancel = function() {
            $mdSidenav('right').close();
        };
+
+       $scope.delete = function(ev, obj) {
+           var confirm = $mdDialog.confirm()
+               .title('确定要删除这条数据么?')
+               .ok('确定')
+               .cancel('取消');
+
+           $mdDialog.show(confirm).then(function() {
+               console.log('delete...');
+               map.deleteOne(obj).then(function(data) {
+                   load();
+               })
+           }, function() {
+               console.log('cancel...');
+           });
+       };
        $scope.toggleRight = function(obj) {
            if (obj) {
                $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MAP_NO] });
@@ -143,14 +157,9 @@
 
        function save(obj, type) {
            obj[DeviceField.MAP_ID] = $scope.showData.null.data;
-           map.saveOne(obj, type).then(function() { load(); });
+           map.saveOne(obj, type, function() { load(); });
        }
 
-       $scope.delete = function(obj) {
-           map.deleteOne(obj).then(function(data) {
-               load();
-           })
-       }
 
    }
 

@@ -39,14 +39,13 @@
     <!-- monitor -->
     <script type="text/javascript" src="view/content/monitorgroup/monitorgroup.js"></script>
     <script type="text/javascript" src="view/content/monitortype/monitortype.js"></script>
-   
     <script type="text/javascript" src="view/content/device_monitor/devicemonitor.js"></script>
     <script type="text/javascript" src="view/content/map/map.js"></script>
     <script type="text/javascript" src="view/content/deviceinfo/deviceinfo.js"></script>
     <script type="text/javascript" src="view/content/devicepoint/devicepoint.js"></script>
     <script type="text/javascript" src="view/content/devicedefine/devicedefine.js"></script>
-   <!--
-     -->  <script type="text/javascript" src="view/content/devicegroupdefine/devicegroupdefine.js"></script>
+
+    <script type="text/javascript" src="view/content/devicegroupdefine/devicegroupdefine.js"></script>
 </head>
 
 <body class="docs-body layout-row" layout="row">
@@ -54,7 +53,7 @@
         <div ui-view="category"></div>
     </md-sidenav>
     <div layout="column" tabindex="-1" role="main" flex class="layout-column flex">
-      <div ui-view="topnav"></div>
+        <div ui-view="topnav"></div>
         <ui-view name="content"></ui-view>
     </div>
 </body>

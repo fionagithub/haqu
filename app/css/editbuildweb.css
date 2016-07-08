@@ -280,7 +280,13 @@ table td {
 }
 
 .deviceinfo {
+    display: block;
     border: 1px solid #00BCD4;
+}
+
+.deviceinfo img {
+    padding: 20px;
+    width: 500px;
 }
 
 .deviceinfo li {

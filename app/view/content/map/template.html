@@ -10,8 +10,11 @@
         open: showData[data[DeviceField.MAP_ID]]&& data.open }" ng-include="'view/content/map/floordata.html'">
                 </li>
             </ul>
-            <div class='deviceinfo' flex="33" flex-gt-xs="50" style="height: 810px" bind="{'jsp-scroll-y':onJspScrollY}" ng-include="'view/content/map/device/template.html'">
-            </div>
+            <input type="file" file-model="myFile" />
+            <br>
+            <br>
+            <button ng-click="uploadFile()">Upload</button> 
+            <img ng-src="{{showMapUri}}">
         </div>
     </md-content>
     <ui-view>

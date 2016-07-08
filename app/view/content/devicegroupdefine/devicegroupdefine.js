@@ -106,7 +106,6 @@ function deviceGroupDefineCtrl($scope, $timeout, $q, $log, $element, deviceGroup
 
 
     $scope.save = function(obj, type) {
-
         save(obj, type);
     }
 

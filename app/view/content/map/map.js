@@ -1,10 +1,41 @@
    angular.module('content.map', ['ibuildweb.factorys.services', 'ibuildweb.factorys', 'ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
        .controller('mapCtrl', mapCtrl)
-       .directive('jscrollpane', jscrollpane)
        .directive('mapInlineTools', mapInlineTools)
+       .directive('fileModel', ['$parse', function($parse) {
+           return {
+               restrict: 'A',
+               link: function(scope, element, attrs) {
+                   var model = $parse(attrs.fileModel);
+                   var modelSetter = model.assign;
 
-   function mapCtrl(Paginator, $rootScope, $mdDialog, $scope, $log, $mdSidenav, $state, map, deviceInfo, $mdComponentRegistry, DeviceField) {
+                   element.bind('change', function() {
+                       scope.$apply(function() {
+                           modelSetter(scope, element[0].files[0]);
+                       });
+                   });
+               }
+           };
+       }])
 
+   function mapCtrl(Paginator, map, $http, $timeout, deviceInfo, config, DeviceField, $rootScope, $mdDialog, $scope, $log, $mdSidenav, $state, $mdComponentRegistry) {
+       $scope.uploadFile = function() {
+           var file = $scope.myFile;
+           var uploadUrl = "/upload";
+           var fd = new FormData();
+           fd.append('file', file);
+           fd.append('aaa', '111');
+
+           $http.post(uploadUrl, fd, {
+                   transformRequest: angular.identity,
+                   headers: { 'Content-Type': undefined }
+               })
+               .success(function() {
+                   console.log("success!!");
+               })
+               .error(function() {
+                   console.log("error!!");
+               });
+       };
        $scope.$on('$stateChangeSuccess', function() {
            if ($state.current.name == "ibuildweb.category.content") {
                load();
@@ -31,29 +62,20 @@
        };
        $scope.$watch('sysTypeData', function() {});
 
+       $scope.upload = function() {
+           query[DeviceField.MNT_GROUP_ID] = $scope.sysTypeData;
+           $rootScope.query = query;
+
+       };
 
        // 自定义设备 查看列表数据 remove
        $scope.selectedRow = function(index, obj) {
            obj.open = obj.open === false;
-           var o = {};
-           o[DeviceField.MAP_NO] = obj[DeviceField.MAP_ID];
-           if (obj[DeviceField.MAP_NO] == null) {
-               $rootScope.query = o;
-               map.filter(null, null, function(data) {
-                   $rootScope.query = null;
-                   $scope.isDel = data.length == 0;
-               });
+           if (obj[DeviceField.SOURCE]) {
+               $scope.showMapUri = config.$$state.value.img_path + obj[DeviceField.SOURCE];
+               console.log('---' + config)
            }
        };
-
-
-
-       /* $scope.showDataList = [];
-              function showMore() {
-                  deviceInfo.filter(null, null, function(data) {
-                      $scope.showDataList = data;
-                  });
-              }*/
 
        function load() {
            map.filter(null, null, function(data) {
@@ -180,50 +202,4 @@
                });
            }
        }
-   }
-
-   function jscrollpane($timeout) {
-       return {
-           restrict: 'A',
-           scope: {
-               options: '=jscrollpane',
-               scrollToElement: '=',
-               bind: '='
-           },
-           link: function(scope, element, attr) {
-               $timeout(function() {
-                   if (navigator.appVersion.indexOf("Win") != -1)
-                       element.jScrollPane($.extend({ mouseWheelSpeed: 20 }, scope.options))
-                   else
-                       element.jScrollPane(scope.options);
-                   element.on('click', '.jspVerticalBar', function(event) {
-                       event.preventDefault();
-                       event.stopPropagation();
-                   });
-                   element.bind('mousewheel', function(e) {
-                       e.preventDefault();
-                   });
-
-                   // bind event http://jscrollpane.kelvinluck.com/events.html
-                   if (scope.bind) {
-                       for (var event in scope.bind) {
-                           element.bind(event, scope.bind[event])
-                       }
-                   }
-                   // scroll to element
-                   if (attr.hasOwnProperty('scrollToElement')) {
-                       var _api = $(element).data('jsp');
-                       scope.$watch('scrollToElement', function(_elemnt) {
-                           if (_elemnt) {
-                               if (typeof _elemnt == 'string') {
-                                   _elemnt = document.getElementById(_elemnt);
-                               }
-                               _api.scrollToElement(_elemnt, true);
-                           }
-                       })
-                   }
-
-               });
-           }
-       };
    }

@@ -1,10 +1,9 @@
 /*
  *
+process.env.NODE_ENV = 'development';
  * */
-process.env.NODE_ENV = 'develop';
 var loopback = require('loopback');
 var boot = require('loopback-boot');
-
 var app = module.exports = loopback();
 
 app.start = function() {

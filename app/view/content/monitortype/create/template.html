@@ -6,22 +6,24 @@
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
-                <label>命令名称</label>
-                <input ng-model="data[DeviceField.CMD_NAME]">
-            </md-input-container>
-            <md-input-container flex class="md-block">
-                <label>设备类型</label>
-                <md-select ng-model="DeviceTypeList.data" md-selected-text="getSelectedText(DeviceTypeList.data)">
+                <label>监测点组ID</label>
+                <md-select ng-model="selected.monitor">
                     <md-optgroup>
-                        <md-option ng-value="data[DeviceField.TYPE_ID]" ng-repeat="data in DeviceTypeList"> {{ data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
+                        <md-option ng-value="data[DeviceField.MNT_GROUP_ID]" ng-repeat="data in MonitorGroupList">{{data[DeviceField.MNT_GROUP_ID] + ':' + data[DeviceField.DESC]}}</md-option>
                     </md-optgroup>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label>监测点组ID</label> 
-                <md-select ng-model="MonitorGroupList.editOptionData" md-selected-text="getSelectedText(MonitorGroupList.editOptionData)">
-                    <md-option ng-value="editOptionData[DeviceField.MNT_GROUP_ID]" ng-repeat="editOptionData in MonitorGroupList">{{ editOptionData[DeviceField.MNT_GROUP_ID] + ':' + editOptionData[DeviceField.DESC]}}</md-option>
+                <label>设备类型</label>
+                <md-select ng-model="selected.device">
+                    <md-optgroup>
+                        <md-option ng-value="data[DeviceField.TYPE_ID]" ng-repeat="data in DeviceTypeList"> {{data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
+                    </md-optgroup>
                 </md-select>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>命令名称</label>
+                <input ng-model="data[DeviceField.CMD_NAME]">
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>描述 </label>
@@ -32,7 +34,7 @@
             保存
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">
-           取消
+            取消
         </md-button>
     </md-content>
 </md-sidenav>

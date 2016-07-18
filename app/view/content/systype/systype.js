@@ -1,7 +1,6 @@
 angular.module('content.systype', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
-    .controller('systypeCtrl', systypeCtrl)
-    /*{"where" :{"devicesystemtypeid":4},"offset":4,  "limit": 4}*/
-function systypeCtrl($scope, $state, $rootScope, $mdDialog, deviceSysTypeList, $mdSidenav, deviceTypeList, Paginator, $mdComponentRegistry, DeviceField) {
+    .controller('systypeCtrl', systypeCtrl) 
+function systypeCtrl($scope, $state, $rootScope,  delDialogService, deviceSysTypeList, $mdSidenav, deviceTypeList, Paginator, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
@@ -14,16 +13,16 @@ function systypeCtrl($scope, $state, $rootScope, $mdDialog, deviceSysTypeList, $
         $rootScope.query = null;
         $scope.showData = Paginator(deviceSysTypeList.filter, 10);
         $scope.DeviceField = DeviceField;
-        $scope.sysTypeData = null;
+        $scope.deviceSysTypeData = null;
 
         deviceSysTypeList.filter(null, null, function(data) {
             $scope.DeviceSysTypeList = data;
         });
     }
 
-    $scope.$watch('sysTypeData', function() {
-        if ($scope.sysTypeData) {
-            query[DeviceField.SYS_TYPE_ID] = angular.copy($scope.sysTypeData);
+    $scope.$watch('deviceSysTypeData', function() {
+        if ($scope.deviceSysTypeData) {
+            query[DeviceField.SYS_TYPE_ID] = angular.copy($scope.deviceSysTypeData[DeviceField.SYS_TYPE_ID]);
         } else {
             delete query[DeviceField.SYS_TYPE_ID];
         }
@@ -32,49 +31,19 @@ function systypeCtrl($scope, $state, $rootScope, $mdDialog, deviceSysTypeList, $
     $scope.search = function() {
         $rootScope.query = query;
         $scope.showData._load(0);
-    }
-/*
-    $scope.save = function(obj, type) {
-        if (type === 'save') {
-            deviceTypeList.isExists(obj).then(function(data) {
-                if (data.data.exists) {
-                    console.log('数据已存在...')
-                } else {
-                    save(obj, type);
-                }
-            })
-        } else {
-            save(obj, type);
-        }
-    }
-*/
+    } 
     $scope.save = function(obj, type) {
         deviceSysTypeList.saveOne(obj, type, function() { $scope.showData._load() });
     }
- 
-    $scope.delete = function(ev, obj) { 
-        var confirm = $mdDialog.confirm()
-            .title('确定要删除这条数据么?')
-            .ok('确定')
-            .cancel('取消');
+  
 
-        $mdDialog.show(confirm).then(function() {
-            console.log( 'delete...');
+    $scope.deleteData = function(obj) {
+        delDialogService(function() {
+            console.log('delete...');
             deviceSysTypeList.deleteOne(obj).then(function(data) { $scope.showData._load() })
-        }, function() {
-            console.log( 'cancel...');
-        });
+        
+        })
     };
-
-
-    $scope.getSelectedText = function(o) {
-        if (o) {
-            return o;
-        } else {
-            return " ";
-        }
-    };
-
     $scope._oldSelectedRowObj = [];
     // 自定义设备 查看列表数据 
     $scope.selectedRow = function(index, obj) {

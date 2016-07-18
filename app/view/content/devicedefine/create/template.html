@@ -7,16 +7,18 @@
         <md-list>
             <md-input-container flex class="md-block">
                 <label for="form-group ">设备类型 </label>
-                <md-select ng-model="DeviceTypeList.editData" md-selected-text="getSelectedText(DeviceTypeList.editData)">
+                <md-select ng-model="selected.device">
                     <md-optgroup>
-                        <md-option ng-value="editData[DeviceField.TYPE_ID]" ng-repeat="editData in DeviceTypeList"> {{ editData[DeviceField.TYPE_ID] + ':' + editData[DeviceField.TYPE_NAME]}}</md-option>
+                        <md-option ng-value="data[DeviceField.TYPE_ID]" ng-repeat="data in DeviceTypeList">{{data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
                     </md-optgroup>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>监控类型</label>
-                <md-select ng-model="MonitorType.editData" md-selected-text="getSelectedText(MonitorType.editData)">
-                    <md-option ng-value="editData[DeviceField.MNT_TYPE_ID]" ng-repeat="editData in MonitorType">{{ editData[DeviceField.MNT_TYPE_ID] + ':' + editData[DeviceField.DESC]}}</md-option>
+                <md-select ng-model="selected.monitor">
+                    <md-optgroup>
+                        <md-option ng-value="data[DeviceField.MNT_TYPE_ID] " ng-repeat="data in MonitorType">{{data[DeviceField.MNT_TYPE_ID] + ':' + data[DeviceField.DESC]}}</md-option>
+                    </md-optgroup>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
@@ -27,6 +29,9 @@
                 <label>数字校验位</label>
                 <!-- 
                 <input ng-model="data[DeviceField.VAL]"> -->
+                <md-select ng-model="aaa.sel" md-selected-text="aaa.sel.n" ng-init="aaa=[{n:'1',i:1},{n:'2',i:2},{n:'3',i:3}]; aaa.sel = {n:'2'}">
+                    <md-option ng-value="a.i" ng-repeat="a in aaa">{{ a.n}}</md-option>
+                </md-select>
                 <md-select ng-model="valueOpartor.editData" md-selected-text="getSelectedText(valueOpartor.editData)">
                     <md-option ng-value="editData" ng-repeat="editData in valueOpartor">{{ editData}}</md-option>
                 </md-select>
@@ -61,8 +66,8 @@
         <md-button class="  md-raised demo-dialog-open-button" ng-click="save(data,'save')">
             保存
         </md-button>
-         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">
-           取消
+        <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">
+            取消
         </md-button>
     </md-content>
 </md-sidenav>

@@ -5,17 +5,17 @@
     "ACL": 1,
     "RoleMapping": 1,
     "Role": 1,
-    "ts_map": 922,
+    "ts_map": 923,
     "ts_deviceinfo": 369906,
-    "ts_devicetype": 1103333133370,
-    "ts_devicesystype": 87655643,
+    "ts_devicetype": 1103333133386,
+    "ts_devicesystype": 87655648,
     "V_DevicePointList": 240316,
-    "ts_newmonitortypegroup": 90016,
-    "ts_monitortypes": 901006,
+    "ts_newmonitortypegroup": 90028,
+    "ts_monitortypes": 901029,
     "ts_deviceinfogroupdefine": 50401011024013900,
-    "ts_devicepoint": 10101010901002080,
-    "ts_devicetypemonitortypegroup": 551,
-    "ts_device_define": 628
+    "ts_devicepoint": 10101010901002092,
+    "ts_devicetypemonitortypegroup": 1112,
+    "ts_device_define": 629
   },
   "models": {
     "AccessToken": {},
@@ -82,6 +82,7 @@
       "102201": "{\"monitortypeid\":102201,\"monitortypegroupid\":35,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"红外探测器\\r\\n\"}",
       "102301": "{\"monitortypeid\":102301,\"monitortypegroupid\":35,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"紧急按钮\\r\\n\"}",
       "103001": "{\"monitortypeid\":103001,\"monitortypegroupid\":1,\"devicetypeid\":103,\"cmdname\":\"NUC-21012-F2\",\"description\":\"电梯摄像机\"}",
+      "103002": "{\"monitortypeid\":103002,\"monitortypegroupid\":1,\"cmdname\":\"-=99=-0-=\",\"devicetypeid\":202}",
       "201001": "{\"monitortypeid\":201001,\"monitortypegroupid\":2,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"单门门禁推杠锁(T1-1)\"}",
       "201102": "{\"monitortypeid\":201102,\"monitortypegroupid\":2,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"单门门禁电扣锁(T1-2)\"}",
       "201103": "{\"monitortypeid\":201103,\"monitortypegroupid\":2,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"单门门禁磁力锁(T1-3)\"}",
@@ -1017,8 +1018,15 @@
       "804518": "{\"monitortypeid\":804518,\"monitortypegroupid\":34,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"总有功功率\"}",
       "804519": "{\"monitortypeid\":804519,\"monitortypegroupid\":34,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"总视在功率\"}",
       "804520": "{\"monitortypeid\":804520,\"monitortypegroupid\":34,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"总负载率\"}",
+      "900201": "{\"monitortypeid\":900201,\"monitortypegroupid\":9002,\"cmdname\":\"--test-==\",\"devicetypeid\":202}",
+      "900202": "{\"monitortypeid\":900202,\"monitortypegroupid\":9002,\"cmdname\":\"0=-=\",\"devicetypeid\":307}",
+      "900203": "{\"monitortypeid\":900203,\"monitortypegroupid\":9002,\"cmdname\":\"324-00-\",\"devicetypeid\":203}",
+      "900204": "{\"monitortypeid\":900204,\"monitortypegroupid\":9002,\"cmdname\":\"0-=\",\"devicetypeid\":203}",
+      "900205": "{\"monitortypeid\":900205,\"monitortypegroupid\":9002,\"cmdname\":\"-0=-0\",\"devicetypeid\":203}",
+      "900206": "{\"monitortypeid\":900206,\"monitortypegroupid\":9002,\"cmdname\":\"9-90-\",\"devicetypeid\":202}",
+      "900207": "{\"monitortypeid\":900207,\"monitortypegroupid\":9002,\"cmdname\":\"3r\",\"devicetypeid\":203}",
       "901001": "{\"monitortypeid\":901001,\"monitortypegroupid\":9001,\"devicetypeid\":901,\"cmdname\":\"readDeviceStatus\",\"description\":\"设备状态\"}",
-      "901002": "{\"monitortypeid\":901002,\"monitortypegroupid\":9002,\"cmdname\":\"-=--=\",\"description\":\"-0-=-\"}"
+      "901006": "{\"monitortypeid\":901006,\"monitortypegroupid\":5,\"cmdname\":\"80998\",\"devicetypeid\":205}"
     },
     "ts_devicetype": {
       "101": "{\"devicetypeid\":101,\"devicetypename\":\"视频监控\",\"devicesystemtypeid\":1,\"iconsrc\":null}",
@@ -1131,12 +1139,16 @@
       "909": "{\"devicetypeid\":909,\"devicetypename\":\"物业电梯\",\"devicesystemtypeid\":9,\"iconsrc\":null}",
       "910": "{\"devicetypeid\":910,\"devicetypename\":\"会议中心电梯\",\"devicesystemtypeid\":9,\"iconsrc\":null}",
       "911": "{\"devicetypeid\":911,\"devicetypename\":\"消防酒店转换电梯\",\"devicesystemtypeid\":9,\"iconsrc\":null}",
-      "1101": "{\"devicetypeid\":1101,\"devicetypename\":\"4的\",\"devicesystemtypeid\":11}",
-      "1102": "{\"devicetypeid\":1102,\"devicetypename\":\"sdfa\",\"devicesystemtypeid\":11}",
-      "1103": "{\"devicetypeid\":1103,\"devicetypename\":\"--=o000==-\",\"devicesystemtypeid\":11}",
+      "1101": "{\"devicetypeid\":1101,\"devicetypename\":\"---test0-==-\",\"devicesystemtypeid\":11}",
+      "1106": "{\"devicetypeid\":1106,\"devicetypename\":\"---test--==\",\"devicesystemtypeid\":11}",
+      "1107": "{\"devicetypeid\":1107,\"devicetypename\":\"-999-==-\",\"devicesystemtypeid\":11}",
+      "1108": "{\"devicetypeid\":1108,\"devicetypename\":\"--999---=\",\"devicesystemtypeid\":11}",
+      "1109": "{\"devicetypeid\":1109,\"devicetypename\":\"--2332---\",\"devicesystemtypeid\":11}",
+      "1111": "{\"devicetypeid\":1111,\"devicetypename\":\"90-=0\",\"devicesystemtypeid\":11}",
       "1122": "{\"devicetypeid\":1122,\"devicetypename\":\"121\"}",
       "1154": "{\"devicetypeid\":1154,\"devicetypename\":\"dfsa\"}",
       "1156": "{\"devicetypeid\":1156,\"devicetypename\":\"dddd==\"}",
+      "1201": "{\"devicetypeid\":1201,\"devicetypename\":\"-=-\",\"devicesystemtypeid\":12}",
       "1301": "{\"devicetypeid\":1301,\"devicetypename\":\"test--=--==-\",\"iconsrc\":null}",
       "1311": "{\"devicetypeid\":1311,\"devicetypename\":\"222\",\"iconsrc\":null}",
       "3435": "{\"devicetypeid\":3435,\"devicetypename\":\"676\",\"devicesystemtypeid\":null}",
@@ -1149,8 +1161,8 @@
       "9999999999": "{\"devicetypeid\":9999999999,\"devicetypename\":\"89009\",\"devicesystemtypeid\":null}"
     },
     "ts_devicesystype": {
-      "0": "{\"devicesystemtypeid\":0,\"devicesystemtypename\":\"综合\"}",
-      "1": "{\"devicesystemtypeid\":1,\"devicesystemtypename\":\"安全防范系统\"}",
+      "0": "{\"devicesystemtypeid\":0,\"devicesystemtypename\":\"--请选择设备系统类型--\"}",
+      "1": "{\"devicesystemtypeid\":1,\"devicesystemtypename\":\"34r43\"}",
       "2": "{\"devicesystemtypeid\":2,\"devicesystemtypename\":\"一卡通系统\"}",
       "3": "{\"devicesystemtypeid\":3,\"devicesystemtypename\":\"消防报警系统\"}",
       "4": "{\"devicesystemtypeid\":4,\"devicesystemtypename\":\"多能源管理系统\"}",
@@ -1161,7 +1173,8 @@
       "9": "{\"devicesystemtypeid\":9,\"devicesystemtypename\":\"电梯系统\"}",
       "10": "{\"devicesystemtypeid\":10,\"devicesystemtypename\":\"车库管理系统\"}",
       "11": "{\"devicesystemtypeid\":11,\"devicesystemtypename\":\"eleven--\"}",
-      "12": "{\"devicesystemtypeid\":12,\"devicesystemtypename\":\"999\"}"
+      "12": "{\"devicesystemtypeid\":12,\"devicesystemtypename\":\"---999---\"}",
+      "13": "{\"devicesystemtypeid\":13,\"devicesystemtypename\":\"--\"}"
     },
     "ts_map": {
       "334": "{\"mapid\":334,\"mapname\":\"B区\",\"mapno\":null,\"maplocation\":null,\"maptype\":1,\"source\":null}",
@@ -1307,7 +1320,8 @@
       "478": "{\"mapid\":478,\"mapname\":\"baxitong\",\"mapno\":null,\"maplocation\":null,\"maptype\":2,\"source\":null}",
       "479": "{\"mapid\":479,\"mapname\":\"b1F\",\"mapno\":\"478\",\"maplocation\":\"ba\",\"maptype\":2,\"source\":\"maps/b1f.png\"}",
       "480": "{\"mapid\":480,\"mapname\":\"-=-000-=\",\"mapno\":null,\"maplocation\":null,\"maptype\":3,\"source\":null,\"open\":true}",
-      "482": "{\"mapid\":482,\"mapname\":null,\"mapno\":null,\"maplocation\":null,\"maptype\":null,\"source\":null}"
+      "482": "{\"mapid\":482,\"mapname\":null,\"mapno\":null,\"maplocation\":null,\"maptype\":null,\"source\":null}",
+      "483": "{\"mapid\":483,\"mapname\":\"——test——\",\"maptype\":null}"
     },
     "ts_deviceinfo": {
       "166095": "{\"autoid\":166095,\"deviceid\":\"030101010903058028\",\"devicename\":\"B3F湿式报警阀间烟感L58-28\",\"devicetypeid\":301,\"axisx\":null,\"axisy\":null,\"mapid\":346,\"deviceno\":\"L58-28\"}",
@@ -3744,7 +3758,7 @@
       "239921": "{\"autoid\":239921,\"deviceid\":\"030301010903025116\",\"devicename\":\"B3F2号坡道手报L25-116\",\"devicetypeid\":303,\"axisx\":null,\"axisy\":null,\"mapid\":346,\"deviceno\":\"L25-116\",\"monitor\":\"0057366B\",\"cmdname\":null}"
     },
     "ts_newmonitortypegroup": {
-      "1": "{\"monitortypegroupid\":1,\"description\":\"--==--=\"}",
+      "1": "{\"monitortypegroupid\":1,\"description\":\"--==-444-=\"}",
       "2": "{\"monitortypegroupid\":2,\"description\":\"一卡通\"}",
       "3": "{\"monitortypegroupid\":3,\"description\":\"OP720-CN点型感烟火灾探测器\"}",
       "5": "{\"monitortypegroupid\":5,\"description\":\"BA\"}",
@@ -3823,7 +3837,8 @@
       "10101010901001176": "{\"deviceid\":10101010901001176,\"cmdname\":\"JK-B1F-177\",\"monitortypeid\":101011,\"datasource\":null,\"monitor\":\"10.2.1.178\"}",
       "10101010901002074": "{\"deviceid\":10101010901002074,\"cmdname\":\"JK-B1F-074\",\"monitortypeid\":101001,\"datasource\":null,\"monitor\":\"10.2.1.75\"}",
       "10101010901002076": "{\"deviceid\":10101010901002076,\"cmdname\":\"JK-B1F-075\",\"monitortypeid\":101001,\"datasource\":null,\"monitor\":\"10.2.1.76\"}",
-      "10101010901002080": "{\"deviceid\":10101010901002080,\"cmdname\":\"JK-B1F-079\",\"monitortypeid\":101004,\"datasource\":null,\"monitor\":\"10.2.1.80\"}"
+      "10101010901002080": "{\"deviceid\":10101010901002080,\"cmdname\":\"JK-B1F-079\",\"monitortypeid\":101004,\"datasource\":null,\"monitor\":\"10.2.1.80\"}",
+      "10101010901002090": "{\"deviceid\":10101010901002090,\"cmdname\":\"---test---\",\"monitortypeid\":1,\"monitor\":\"123123\",\"undefined\":null}"
     },
     "ts_devicetypemonitortypegroup": {
       "6": "{\"devicetypeid\":6,\"monitortypegroupid\":1}",
@@ -3921,14 +3936,10 @@
       "546": "{\"devicetypeid\":546,\"monitortypegroupid\":27}",
       "547": "{\"devicetypeid\":547,\"monitortypegroupid\":27}",
       "548": "{\"devicetypeid\":548,\"monitortypegroupid\":28}",
-      "549": "{\"devicetypeid\":549,\"monitortypegroupid\":28}"
+      "549": "{\"devicetypeid\":549,\"monitortypegroupid\":28}",
+      "1111": "{\"devicetypeid\":1111,\"monitortypegroupid\":1,\"undefined\":null}"
     },
     "ts_device_define": {
-      "201": "{\"devicetypeid\":201,\"monitortypeid\":201001,\"statusvalue\":\"1\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":0,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"开\"}",
-      "301": "{\"devicetypeid\":301,\"monitortypeid\":null,\"statusvalue\":\"0024\",\"alarmflg\":1,\"alarmlevel\":54,\"isdefault\":0,\"isanalogio\":0,\"valuecompareoprator\":\">\",\"description\":\"通讯故障\"}",
-      "302": "{\"devicetypeid\":302,\"monitortypeid\":null,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
-      "303": "{\"devicetypeid\":303,\"monitortypeid\":null,\"statusvalue\":\"0044\",\"alarmflg\":1,\"alarmlevel\":59,\"isdefault\":0,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"非法信号\"}",
-      "304": "{\"devicetypeid\":304,\"monitortypeid\":4,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
       "305": "{\"devicetypeid\":305,\"monitortypeid\":9,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
       "306": "{\"devicetypeid\":306,\"monitortypeid\":24,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
       "307": "{\"devicetypeid\":307,\"monitortypeid\":25,\"statusvalue\":\"0001\",\"alarmflg\":1,\"alarmlevel\":90,\"isdefault\":0,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"报警\"}",
@@ -3936,8 +3947,6 @@
       "309": "{\"devicetypeid\":309,\"monitortypeid\":27,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
       "310": "{\"devicetypeid\":310,\"monitortypeid\":28,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
       "311": "{\"devicetypeid\":311,\"monitortypeid\":29,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
-      "312": "{\"devicetypeid\":312,\"monitortypeid\":30,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
-      "313": "{\"devicetypeid\":313,\"monitortypeid\":31,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
       "314": "{\"devicetypeid\":314,\"monitortypeid\":32,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
       "315": "{\"devicetypeid\":315,\"monitortypeid\":33,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",
       "316": "{\"devicetypeid\":316,\"monitortypeid\":34,\"statusvalue\":\"0000\",\"alarmflg\":0,\"alarmlevel\":0,\"isdefault\":1,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"正常\"}",

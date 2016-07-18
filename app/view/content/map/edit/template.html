@@ -13,13 +13,20 @@
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label> 区域 </label>
-                <md-select ng-model="showData.null.data" md-selected-text="getSelectedText(showData.null.data)">
-                    <md-option ng-value="data[DeviceField.MAP_ID]" ng-repeat='data in showData.null'>{{data[DeviceField.MAP_NAME]}}</md-option>
+                <!--       <md-select ng-model="showData.null.data" md-selected-text="getSelectedText(showData.null.data)">
+              <md-option ng-value="data[DeviceField.MAP_ID]" ng-repeat='data in showData.null'>{{data[DeviceField.MAP_NAME]}}</md-option>
+          </md-select> -->
+                <md-select ng-model="selected.map">
+                    <md-optgroup>
+                        <md-option ng-value="data[DeviceField.MAP_ID]" ng-repeat='data in showData.null '>{{data[DeviceField.MAP_ID] + ':' +data[DeviceField.MAP_NAME]}}</md-option>
+                    </md-optgroup> 
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label>地图文件 </label>
-                <input ng-model="groupFieldName[DeviceField.SOURCE] ">
+                <p> {{showImgUri}} </p>
+                <input type="file" file-model="myFile" />
+                <md-button ng-click="uploadFile()" class="md-raised demo-dialog-open-button">上传
+                </md-button>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label> 地图类别 </label>

@@ -1,11 +1,10 @@
 angular.module('content.deviceDefine', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('deviceDefineCtrl', deviceDefineCtrl)
 
-function deviceDefineCtrl($scope, monitorType,   $mdDialog,deviceTypeList, deviceDefines, $timeout, $rootScope, Paginator, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+function deviceDefineCtrl($scope, monitorType, deviceTypeList, delDialogService, deviceDefines, $timeout, $rootScope, Paginator, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
-    /* */
+
     $scope.$on('$stateChangeSuccess', function() {
-        /* */
         if ($state.current.name == "ibuildweb.category.content") {
             load();
         }
@@ -14,13 +13,34 @@ function deviceDefineCtrl($scope, monitorType,   $mdDialog,deviceTypeList, devic
     var query = {};
     var valueOpartor = ['<', '>', '[]'];
     var alarmLevel = ['0', '1'];
+
+
+    $scope.deleteData = function(obj) {
+        delDialogService(function() {
+            console.log('delete...');
+            deviceDefines.deleteOne(obj).then(function(data) {
+                if ($scope.selectedData) {
+                    query[DeviceField.TYPE_ID] = angular.copy($scope.selectedData);
+                    $rootScope.query = query;
+                }
+                $scope.showData._load()
+            })
+        })
+    };
+
     $scope.toggleRight = function(obj) {
         $scope.valueOpartor = valueOpartor;
         $scope.alarmLevel = alarmLevel;
         if (obj) {
-            $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.TYPE_ID][DeviceField.TYPE_ID] });
-            $scope.MonitorType.editData = obj[DeviceField.MNT_TYPE_ID][DeviceField.MNT_TYPE_ID];
-            $scope.DeviceTypeList.editData = obj[DeviceField.TYPE_ID][DeviceField.TYPE_ID];
+            if (obj[DeviceField.MNT_TYPE_ID]) {
+                $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.TYPE_ID][DeviceField.TYPE_ID] });
+                $scope.selected.monitor = obj[DeviceField.MNT_TYPE_ID];
+            } else {
+                $state.go("ibuildweb.category.content.edit");
+            }
+            if (obj[DeviceField.TYPE_ID]) {
+                $scope.selected.device = obj[DeviceField.TYPE_ID];
+            }
             $scope.valueOpartor.editData = obj[DeviceField.VAL];
             $scope.alarmLevel.editData = obj[DeviceField.ALARM_LVL];
         } else {
@@ -37,78 +57,67 @@ function deviceDefineCtrl($scope, monitorType,   $mdDialog,deviceTypeList, devic
         $rootScope.query = null;
         $scope.showData = Paginator(deviceDefines.filter, 10);
         $scope.DeviceField = DeviceField;
-        $scope.sysTypeData = null;
+        $scope.selected = {
+            device: null,
+            monitor: null
+        };
 
         monitorType.filter(null, null, function(data) {
             $scope.MonitorType = data;
         });
         deviceTypeList.filter(null, null, function(data) {
             $scope.DeviceTypeList = data;
-            // sysIdMap();
-            $timeout(sysIdMap, 100);
         });
     }
-
-    /* */
-    $scope.$watch('showData.data', sysIdMap);
-
-    function sysIdMap() {
-        for (var s in $scope.showData.data) {
-            for (var o in $scope.DeviceTypeList) {
-                if ($scope.showData.data[s][DeviceField.TYPE_ID] == $scope.DeviceTypeList[o][DeviceField.TYPE_ID])
-                    $scope.showData.data[s][DeviceField.TYPE_ID] = $scope.DeviceTypeList[o];
+    $scope.monitorMap = {};
+    $scope.deviceMap = {};
+    var k, v;
+    $scope.$watch('MonitorType', function() {
+        if ($scope.MonitorType) {
+            for (var i in $scope.MonitorType) {
+                k = $scope.MonitorType[i][DeviceField.MNT_TYPE_ID];
+                v = $scope.MonitorType[i][DeviceField.DESC];
+                $scope.monitorMap[k] = v;
             }
         }
+    });
 
-        for (var m in $scope.showData.data) {
-            for (var n in $scope.MonitorType) {
-                if ($scope.showData.data[m][DeviceField.MNT_TYPE_ID] && $scope.showData.data[m][DeviceField.MNT_TYPE_ID] == $scope.MonitorType[n][DeviceField.MNT_TYPE_ID])
-                    $scope.showData.data[m][DeviceField.MNT_TYPE_ID] = $scope.MonitorType[n];
+    $scope.$watch('DeviceTypeList', function() {
+        if ($scope.DeviceTypeList) {
+            for (var i in $scope.DeviceTypeList) {
+                k = $scope.DeviceTypeList[i][DeviceField.TYPE_ID];
+                v = $scope.DeviceTypeList[i][DeviceField.TYPE_NAME];
+                $scope.deviceMap[k] = v;
             }
         }
-
-    }
-
+    });
     $scope.search = function() {
         $rootScope.query = query;
-        $scope.showData._load(0); 
+        $scope.showData._load(0);
     }
-    $scope.$watch('sysTypeData', function() {
-        if ($scope.sysTypeData) {
-            query[DeviceField.TYPE_ID] = angular.copy($scope.sysTypeData);
+    $scope.$watch('selectedData', function() {
+        if ($scope.selectedData) {
+            query[DeviceField.TYPE_ID] = angular.copy($scope.selectedData);
         } else {
             delete query[DeviceField.TYPE_ID];
         }
     });
 
 
- 
+
     $scope.save = function(obj, type) {
-        save(obj, type);
-    }
-
-    function save(obj, type) {
         obj[DeviceField.ALARM_LVL] = $scope.alarmLevel.editData;
-        obj[DeviceField.MNT_TYPE_ID] = $scope.MonitorType.editData;
-        obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.editData;
+        obj[DeviceField.MNT_TYPE_ID] = $scope.selected.monitor[DeviceField.MNT_TYPE_ID];
+        obj[DeviceField.TYPE_ID] = $scope.selected.device[DeviceField.TYPE_ID];
         obj[DeviceField.VAL] = $scope.valueOpartor.editData;
-        deviceDefines.saveOne(obj, type,function() { $scope.showData._load() });
-    }
-
-
-    $scope.delete = function(ev, obj) { 
-        var confirm = $mdDialog.confirm()
-            .title('确定要删除这条数据么?')
-            .ok('确定')
-            .cancel('取消');
-
-        $mdDialog.show(confirm).then(function() {
-            console.log( 'delete...');
-            deviceDefines.deleteOne(obj).then(function(data) { $scope.showData._load() })
-        }, function() {
-            console.log( 'cancel...');
+        deviceDefines.saveOne(obj, type, function() {
+            if ($scope.selectedData) {
+                query[DeviceField.TYPE_ID] = angular.copy($scope.selectedData);
+                $rootScope.query = query;
+            }
+            $scope.showData._load()
         });
-    };
+    }
 
 
     $scope.getSelectedText = function(o) {
@@ -122,8 +131,8 @@ function deviceDefineCtrl($scope, monitorType,   $mdDialog,deviceTypeList, devic
     $scope._oldSelectedRowObj = [];
     // 自定义设备 查看列表数据 
     $scope.selectedRow = function(index, obj) {
-          $scope.isDel = true;
-       if ($scope._oldSelectedRowObj.length > 0) {
+        $scope.isDel = true;
+        if ($scope._oldSelectedRowObj.length > 0) {
             $scope._oldSelectedRowObj.pop();
         }
         $scope._oldSelectedRowObj.unshift(obj);

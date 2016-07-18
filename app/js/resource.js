@@ -11,10 +11,10 @@ function Resources($http, DeviceField, $rootScope) {
             paramsSysId: null, //最大ID号或者是
             filter: function(offset, limit, callback) {
                 var _obj = {},
-                    _where = {},
                     _params = {};
                 for (var i in $rootScope.query) {
                     if ($rootScope.query[i]) {
+                        var _where = {};
                         _where[i] = $rootScope.query[i];
                     }
                 }
@@ -61,25 +61,25 @@ function Resources($http, DeviceField, $rootScope) {
                     'save': options.uri,
                     'resave': options.uri + '/' + obj[options.param]
                 };
+                /*    var saveUri = options.uri;*/
                 if (type == 'save') {
                     this.getMaxID(function(data) {
-                        var _data = data[0][options.paramId];
-                        if (data && dataInfo.paramsSysId) {
-                            var SysId = dataInfo.paramsSysId;
-                            if (String(SysId)) {
-                                if (String(SysId) === String(_data).substring(0, String(SysId).length)) {
-                                    obj[options.paramId] = parseInt(_data) + 1;
-                                } else {
-                                    obj[options.paramId] = Math.pow(10, 2) * SysId + 1;
-                                }
+                        var autoId = dataInfo.paramsSysId;
+                        if (data[0]) {
+                            var _data = data[0][options.paramId];
+                            if (autoId && parseInt(_data / Math.pow(10, 2)) / autoId === 1) {
+                                obj[options.paramId] = parseInt(_data) + 1;
+                            } else {
+                                obj[options.paramId] = parseInt(_data) + 1;
                             }
                         } else {
-                            obj[options.paramId] = parseInt(_data) + 1;
+                            obj[options.paramId] = Math.pow(10, 2) * autoId + 1;
                         }
-                        $http.put(saveUri[type], obj).success(callback);
                     });
+                    $http.put(saveUri[type], obj).success(callback);
                 } else {
                     $http.put(saveUri[type], obj).success(callback);
+
                 }
             },
             deleteOne: function(obj) {

@@ -1,7 +1,89 @@
 angular.module('content.deviceGroupDefine', ['ibuildweb.factorys', 'ngMaterial', 'ibuildweb.factorys.services'])
     .controller('deviceGroupDefineCtrl', deviceGroupDefineCtrl)
+    .directive("smartyInput", smartyInput)
+    .directive("focusMe", focusMe)
+    .directive("smartySuggestions", smartySuggestions)
+    .directive("smartySuggestionsBox", smartySuggestionsBox)
 
-function deviceGroupDefineCtrl($scope, $timeout, $q, $log, $element, deviceGroupDefine, deviceInfo, $mdDialog, $rootScope, Paginator, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+function deviceGroupDefineCtrl($scope, $timeout, $document, $window, $q, $log, $element, deviceGroupDefine, deviceInfo, delDialogService, $rootScope, Paginator, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+    var _this = this;
+    _this.selected = -1;
+    _this.selectionMade = false;
+    _this.query = {};
+    _this.suggestions = [];
+    _this.subData = [];
+    _this.clickedSomewhereElse = clickedSomewhereElse;
+    _this.suggestionPicked = suggestionPicked;
+    _this.selectedRow = selectedRow;
+    _this.getSelectedText = getSelectedText;
+    _this.cancel = cancel;
+    _this.toggleRight = toggleRight;
+    _this.deleteData = deleteData;
+
+    _this.save = save;
+    _this.setSelected = setSelected;
+    _this.search = search;
+
+
+    var prefixId = function() {
+        return _this.prefix;
+    };
+
+    _this.prefixWatch = $scope.$watch(prefixId, function(newValue, oldValue) {
+        if (newValue != oldValue) {
+            if (_this.selectionMade) {
+                _this.suggestions = [];
+            } else {
+                _this.query[DeviceField.DEVICE_ID] = { "like": '%' + _this.prefix + '%' };
+                $rootScope.query = _this.query;
+                deviceInfo.filter(null, null, function(data) {
+                    _this.suggestions = [];
+                    delete _this.query[DeviceField.DEVICE_ID];
+                    return data.map(function(_data) {
+                        return _this.suggestions = _this.suggestions.concat(_data[DeviceField.DEVICE_ID]);
+                    });
+                })
+            }
+        }
+    });
+
+    function suggestionPicked() {
+        _this.selectionMade = true;
+
+        if (_this.selected != -1 && _this.selected < _this.suggestions.length) {
+            _this.prefix = _this.suggestions[_this.selected];
+
+            _this.query[DeviceField.DEVICE_ID] = { "like": '%' + parseInt(_this.prefix / Math.pow(10, 2)) + '%' };
+            $rootScope.query = _this.query;
+            deviceInfo.filter(null, null, function(data) {
+                delete _this.query[DeviceField.DEVICE_ID];
+                return data.map(function(_data) {
+                    return _this.subData = _this.subData.concat(_data[DeviceField.DEVICE_ID]);
+                });
+            });
+        }
+        _this.suggestions = [];
+    };
+
+    function toggleRight(obj) {
+        // 'No instance found for handle'
+        $mdComponentRegistry.when('right').then(function(it) {
+            it.toggle();
+        });
+        if (obj) {
+            $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.DEVICE_ID] });
+            _this.selectionMade = true;
+            _this.prefix = obj[DeviceField.DEVICE_ID];
+            var subID = obj[DeviceField.SUBDEVICE_ID];
+            _this.subData = subID.split(",");
+            _this.subData.item = subID.split(",");
+        } else {
+            $state.go("ibuildweb.category.content.create");
+        }
+        _this.groupFieldName = angular.copy(obj);
+
+    };
+
 
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
@@ -9,127 +91,58 @@ function deviceGroupDefineCtrl($scope, $timeout, $q, $log, $element, deviceGroup
             load();
         }
     });
-    var query = {};
 
     function load() {
         $rootScope.query = null;
-        $scope.showData = Paginator(deviceGroupDefine.filter, 10);
-        $scope.DeviceField = DeviceField;
-        $scope.sysTypeData = null;
-        $scope.subData = [];
-        $scope.subData.propertyIsEnumerable.item = [];
+        _this.showData = Paginator(deviceGroupDefine.filter, 10);
+        //   
+        _this.DeviceField = DeviceField;
+        _this.sysTypeData = null;
+        _this.subData = [];
+        _this.subData.propertyIsEnumerable.item = [];
+    }
 
-        deviceInfo.filter(null, null, function(data) {
-            map(data)
+    _this._oldSelectedRowObj = [];
+
+    function selectedRow(index, obj) {
+        _this.isDel = true;
+        if (_this._oldSelectedRowObj.length > 0) {
+            _this._oldSelectedRowObj.pop();
+        }
+        _this._oldSelectedRowObj.unshift(obj);
+    };
+
+    function deleteData(obj) {
+        delDialogService(function() {
+            console.log('delete...');
+            deviceGroupDefine.deleteOne(obj).then(function(data) { _this.showData._load() })
         })
-    }
-    $scope.states = [];
+    };
 
-    function map(_data) {
-        _data.map(function(data) {
-            $scope.states = $scope.states.concat(data[DeviceField.DEVICE_ID]);
-        });
-    }
-    $scope.simulateQuery = false;
-    $scope.isDisabled = false;
-    //    $scope.states = loadAll(); list of `state` value/display objects   
+    function clickedSomewhereElse() {
+        _this.selected = -1;
+        _this.suggestions = [];
+    };
 
-    $scope.querySearch = querySearch;
-    $scope.selectedItemChange = selectedItemChange;
-    /*   $scope.searchTextChange = searchTextChange;*/
-
-    function querySearch(query) {
-        var results = query ? $scope.states.filter(createFilterFor(query)) : $scope.states,
-            deferred;
-        if ($scope.simulateQuery) {
-            deferred = $q.defer();
-            $timeout(function() { deferred.resolve(results); }, Math.random() * 1000, false);
-            return deferred.promise;
-        } else {
-            return results;
-        }
-    }
-
-    function selectedItemChange(item) {
-        $log.info('Item changed to ' + JSON.stringify(item));
-        $scope.selectedItem = JSON.stringify(item);
-    }
-
-
-    $scope.$watch('selectedItem', function() {
-        if ($scope.selectedItem) {
-            query[DeviceField.DEVICE_ID] = { "like": '%' + parseInt($scope.selectedItem / Math.pow(10, 2)) + '%' };
-            $rootScope.query = query;
-            deviceInfo.filter(null, null, function(data) {
-                $scope.subData = data;
-                $rootScope.query = null;
-            })
-        } else {
-            delete query[DeviceField.DEVICE_ID];
-        }
+    $document.bind("click", function() {
+        $scope.$apply(clickedSomewhereElse());
     });
 
-    function createFilterFor(query) {
-        return function filterFn(state) {
-            return (String(state).indexOf(String(query)) !== -1);
-        };
-    }
-
-    $scope.search = function() {
-        $scope.showData._load(0);
-    }
-
-    $scope._oldSelectedRowObj = [];
-    $scope.selectedRow = function(index, obj) {
-        $scope.isDel = true;
-        if ($scope._oldSelectedRowObj.length > 0) {
-            $scope._oldSelectedRowObj.pop();
-        }
-        $scope._oldSelectedRowObj.unshift(obj);
-    };
-
-    $scope.toggleRight = function(obj) {
-        // 'No instance found for handle'
-        $mdComponentRegistry.when('right').then(function(it) {
-            it.toggle();
-        });
-        if (obj) {
-            var subID = obj[DeviceField.SUBDEVICE_ID];
-            $scope.selectedItem = obj[DeviceField.DEVICE_ID];
-            $scope.subData.item = subID.split(",");
-            $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.DEVICE_ID] });
+    function setSelected(newValue) {
+        if (newValue > _this.suggestions.length) {
+            _this.selected = 0;
+        } else if (newValue < 0) {
+            _this.selected = _this.suggestions.length;
         } else {
-            $state.go("ibuildweb.category.content.create");
+            _this.selected = newValue;
         }
-        $scope.groupFieldName = angular.copy(obj);
     };
 
-
-    $scope.save = function(obj, type) {
-        save(obj, type);
+    function search() {
+        _this.showData._load(0);
     }
 
-    function save(obj, type) {
-        obj[DeviceField.DEVICE_ID] = $scope.selectedItem;
-        obj[DeviceField.SUBDEVICE_ID] = $scope.subData.item;
-        deviceGroupDefine.saveOne(obj, type, function() { $scope.showData._load() });
-    }
-
-    $scope.delete = function(ev, obj) {
-        var confirm = $mdDialog.confirm()
-            .title('确定要删除这条数据么?')
-            .ok('确定')
-            .cancel('取消');
-
-        $mdDialog.show(confirm).then(function() {
-            console.log('delete...');
-            deviceGroupDefine.deleteOne(obj).then(function(data) { $scope.showData._load() })
-        }, function() {
-            console.log('cancel...');
-        });
-    };
-
-    $scope.getSelectedText = function(o) {
+    function getSelectedText(o) {
         if (o) {
             return o;
         } else {
@@ -137,8 +150,131 @@ function deviceGroupDefineCtrl($scope, $timeout, $q, $log, $element, deviceGroup
         }
     };
 
-    $scope.cancel = function() {
+
+    function save(obj, type) {
+        obj[DeviceField.DEVICE_ID] = _this.prefix;
+        obj[DeviceField.SUBDEVICE_ID] = _this.subData.item;
+        deviceGroupDefine.saveOne(obj, type, function() { _this.showData._load() });
+    }
+
+    function cancel() {
         $mdSidenav('right').close();
     };
+}
 
+function smartyInput() {
+    function link(scope, element) {
+        element.bind("keydown", function(event) {
+            switch (event.which) {
+                case 40: // down arrow
+                    scope.$apply(function() {
+                        scope.select({ "x": parseInt(scope.index) + 1 });
+                    });
+                    break;
+                case 38: // up arrow
+                    scope.$apply(function() {
+                        scope.select({ "x": parseInt(scope.index) - 1 });
+                    });
+                    break;
+                case 13: // enter
+                    event.preventDefault();
+                    if (scope.selectionMade == false) {
+                        if (scope.index == "-1") {
+                            scope.$apply(function() {
+                                scope.listItems = [];
+                            });
+                        }
+                        scope.$apply(function() {
+                            scope.close();
+                        })
+                    }
+                    break;
+                default:
+                    scope.$apply(function() {
+                        scope.selectionMade = false;
+                        scope.index = -1;
+                    });
+            }
+        });
+
+        element.bind("blur", function(event) {
+            /**/
+            if (scope.listItems.length) {
+                event.preventDefault();
+                scope.$apply(function() {
+                    scope.close();
+                })
+
+            }
+        });
+    }
+    return {
+        restrict: "A",
+        link: link,
+        scope: {
+            prefix: "=ngModel",
+            select: "&",
+            index: "=",
+            selectionMade: "=",
+            listItems: "=",
+            close: "&"
+        }
+    };
+}
+
+function smartySuggestionsBox() {
+    return {
+        restrict: "A",
+        template: '<div smarty-suggestions apply-class="dgdCtrl.setSelected(x)"' +
+            'select-suggestion="dgdCtrl.suggestionPicked()" suggestions="dgdCtrl.suggestions"' +
+            'selected="dgdCtrl.selected" clicked-elsewhere="dgdCtrl.clickedSomewhereElse()"' +
+            'ng-if="dgdCtrl.suggestions.length > 0" prefix="{{dgdCtrl.prefix}} "' +
+            'class="autocomplete-suggestions-menu ng-cloak"></div>'
+    };
+    // Removes the need for duplicating the scode that makes the suggestions list. 
+    /*   templateUrl: 'view/content/devicegroupdefine/suggestions_box.html'*/
+}
+
+
+function smartySuggestions($document) {
+    function link(scope, element, attrs) {
+        element.bind("click", function(e) {
+            e.stopPropagation();
+        });
+    }
+    return {
+        restrict: "A",
+        link: link,
+        scope: {
+            suggestions: "=",
+            selected: "=",
+            applyClass: "&",
+            selectSuggestion: "&"
+        },
+        template: '<p ng-repeat="suggestion in suggestions track by $index" ' +
+            'ng-class="{selected: $index == selected}" ' +
+            'ng-mouseover="applyClass({x:$index})" ' +
+            'ng-click="selectSuggestion()"> ' +
+            '  {{suggestion}}  ' +
+            '</p>'
+
+    };
+}
+/*  add or show more
+
+      prefix: "@"'<p ng-mouseover="applyClass({x:suggestions.length})" ' +
+            'ng-class="{selected: suggestions.length == selected}" ' +
+            'ng-click="selectSuggestion()" class="show-all"> ' +
+            'Show all for " {{prefix}}  " &raquo;</p>'*/
+function focusMe() {
+    return {
+        restrict: "A",
+        link: function(scope, element, attrs) {
+            attrs.$observe("focusWhen", function() {
+                if (attrs.focusWhen == "true") {
+                    element[0].focus();
+                }
+            });
+        }
+    };
 }

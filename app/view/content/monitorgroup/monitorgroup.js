@@ -1,7 +1,7 @@
 angular.module('content.monitorgroup', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('monitorgroupCtrl', monitorgroupCtrl)
 
-function monitorgroupCtrl($rootScope,  $mdDialog, Paginator, $scope, $log, DeviceField, monitorGroup, monitorType, $mdSidenav, $state, $mdComponentRegistry) {
+function monitorgroupCtrl($rootScope, delDialogService, Paginator, $scope, $log, DeviceField, monitorGroup, monitorType, $mdSidenav, $state, $mdComponentRegistry) {
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
             load();
@@ -14,15 +14,15 @@ function monitorgroupCtrl($rootScope,  $mdDialog, Paginator, $scope, $log, Devic
     function load() {
         $rootScope.query = null;
         $scope.DeviceField = DeviceField;
-        $scope.sysTypeData = null;
+        $scope.selectedData = null;
         $scope.showData = Paginator(monitorGroup.filter, 10);
         monitorGroup.filter(null, null, function(data) {
             $scope.MonitorGroupList = data;
         });
     }
-    $scope.$watch('sysTypeData', function() {
-        if ($scope.sysTypeData) {
-            query[DeviceField.MNT_GROUP_ID] = angular.copy($scope.sysTypeData);
+    $scope.$watch('selectedData', function() {
+        if ($scope.selectedData) {
+            query[DeviceField.MNT_GROUP_ID] = angular.copy($scope.selectedData[DeviceField.MNT_GROUP_ID]);
         } else {
             delete query[DeviceField.MNT_GROUP_ID];
         }
@@ -47,25 +47,29 @@ function monitorgroupCtrl($rootScope,  $mdDialog, Paginator, $scope, $log, Devic
     }
 
     function save(obj, type) {
-        monitorGroup.saveOne(obj, type, function() { $scope.showData._load() });
+        monitorGroup.saveOne(obj, type, function() {
+            if ($scope.selectedData) {
+                query[DeviceField.MNT_GROUP_ID] = obj[DeviceField.MNT_GROUP_ID];
+                $rootScope.query = query;
+            }
+            $scope.showData._load()
+        });
     }
 
-  
-  
-    $scope.delete = function(ev, obj) { 
-        var confirm = $mdDialog.confirm()
-            .title('确定要删除这条数据么?')
-            .ok('确定')
-            .cancel('取消');
 
-        $mdDialog.show(confirm).then(function() {
-            console.log( 'delete...');
-            monitorGroup.deleteOne(obj).then(function(data) { $scope.showData._load() })
-        }, function() {
-            console.log( 'cancel...');
-        });
+    $scope.deleteData = function(obj) {
+        delDialogService(function() {
+            console.log('delete...');
+               monitorGroup.deleteOne(obj).then(function(data) {
+                if ($scope.selectedData) {
+                    query[DeviceField.MNT_GROUP_ID] = obj[DeviceField.MNT_GROUP_ID];
+                    $rootScope.query = query;
+                }
+                $scope.showData._load()
+            })
+        })
     };
-
+ 
     // 自定义设备 查看列表数据 
     $scope._oldSelectedRowObj = [];
     $scope.selectedRow = function(index, obj) {
@@ -83,19 +87,11 @@ function monitorgroupCtrl($rootScope,  $mdDialog, Paginator, $scope, $log, Devic
                 } else {
                     $scope.isDel = true;
                 }
-                query[DeviceField.MNT_GROUP_ID] = $scope.sysTypeData;
-                $rootScope.query = query;
+                delete query[DeviceField.MNT_GROUP_ID];
             })
             /*    */
     };
 
-    $scope.getSelectedText = function(obj) {
-        if (obj !== undefined) {
-            return obj;
-        } else {
-            return " ";
-        }
-    };
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
@@ -113,7 +109,6 @@ function monitorgroupCtrl($rootScope,  $mdDialog, Paginator, $scope, $log, Devic
             it.toggle();
         });
         $scope.groupFieldName = angular.copy(obj);
-        $scope._groupFieldName = angular.copy(obj);
     };
 
 

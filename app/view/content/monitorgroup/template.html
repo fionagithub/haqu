@@ -1,13 +1,15 @@
 <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="monitorgroupCtrl">
-    <md-input-container flex class="md-block">
-        <label>监控类</label>
-        <md-select ng-model="sysTypeData" md-selected-text="getSelectedText(sysTypeData)">
-            <md-option ng-value="sysTypeData[DeviceField.MNT_GROUP_ID]" ng-repeat="sysTypeData in MonitorGroupList">{{ sysTypeData[DeviceField.MNT_GROUP_ID] + ':' + sysTypeData[DeviceField.DESC]}}</md-option>
-        </md-select>
-    </md-input-container>
+   <!--  <md-input-container flex class="md-block">
+       <label>监控类</label>
+       <md-select ng-model="selectedData">
+           <md-optgroup>
+               <md-option ng-value="selectedData" ng-repeat="selectedData in MonitorGroupList">{{ selectedData[DeviceField.MNT_GROUP_ID] + ':' + selectedData[DeviceField.DESC]}}</md-option>
+           </md-optgroup>
+       </md-select>
+   </md-input-container> -->
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="search()">搜索
-        </md-button>
+  <!--       <md-button class="  md-raised demo-dialog-open-button" ng-click="search()">搜索
+  </md-button> -->
         <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
         </md-button>
     </section>
@@ -26,11 +28,11 @@
                     <td> {{data[DeviceField.DESC]}}
                     </td>
                     <td>
-                        <inline-tools></inline-tools>
+                        <inline-tools open="toggleRight(data)" delete='deleteData(data)' old='_oldSelectedRowObj' data='data' del='isDel'></inline-tools>
                     </td>
             </tbody>
         </table>
-        <pagination> </pagination>
+        <pagination-section> </pagination-section>
     </md-content>
     <ui-view>
     </ui-view>

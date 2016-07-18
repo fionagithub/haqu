@@ -5,21 +5,20 @@
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
-                <label for="form-group ">设备类型 </label>
-                <md-select ng-model="DeviceTypeList.editData" md-selected-text="getSelectedText(DeviceTypeList.editData)">
+                <label for="form-group ">设备类型 </label>  
+                <md-select ng-model="selected.device">
                     <md-optgroup>
-                        <md-option ng-value="editData[DeviceField.TYPE_ID]" ng-repeat="editData in DeviceTypeList"> {{ editData[DeviceField.TYPE_ID] + ':' + editData[DeviceField.TYPE_NAME]}}</md-option>
+                        <md-option ng-value="data[DeviceField.TYPE_ID]" ng-repeat="data in DeviceTypeList">{{data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
                     </md-optgroup>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label>监控类型</label>
-                <md-select ng-model="monitorTypeData" md-selected-text="getSelectedText(monitorTypeData)">
-                    <md-option ng-value="editData[DeviceField.MNT_TYPE_ID] + ':' + editData[DeviceField.DESC]" ng-repeat="editData in MonitorType">{{ editData[DeviceField.MNT_TYPE_ID] + ':' + editData[DeviceField.DESC]}}</md-option>
+                <label>监控类型</label> 
+                <md-select ng-model="selected.monitor">
+                    <md-optgroup>
+                        <md-option ng-value="data[DeviceField.MNT_TYPE_ID]" ng-repeat="data in MonitorType">{{data[DeviceField.MNT_TYPE_ID] + ':' + data[DeviceField.DESC]}}</md-option>
+                    </md-optgroup>
                 </md-select>
-                <!--
-                <select style="width:120px" ng-model="deviceSysTypeData" class="form-control" ng-options="(sysTypeData[DeviceField.MNT_TYPE_ID] + ':' + sysTypeData[DeviceField.DESC]) for sysTypeData in MonitorType">
-                </select>   -->
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label for="form-group ">状态值 </label>

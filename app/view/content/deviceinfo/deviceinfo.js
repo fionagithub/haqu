@@ -1,7 +1,7 @@
 angular.module('content.deviceInfo', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('deviceInfoCtrl', deviceInfoCtrl)
 
-function deviceInfoCtrl($scope, $rootScope, devicePoint, $mdDialog, deviceInfo, map, deviceTypeList, Paginator, $timeout, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+function deviceInfoCtrl($scope, $rootScope, devicePoint, delDialogService, deviceInfo, map, deviceTypeList, Paginator, $timeout, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
@@ -15,45 +15,51 @@ function deviceInfoCtrl($scope, $rootScope, devicePoint, $mdDialog, deviceInfo, 
         $rootScope.query = null;
         $scope.showData = Paginator(deviceInfo.filter, 10);
         $scope.DeviceField = DeviceField;
-        $scope.sysTypeData = null;
+        $scope.selected = {
+            data: null,
+            device: null,
+            map: null
+        };
 
         map.filter(null, null, function(data) {
             $scope.mapData = data;
         });
         deviceTypeList.filter(null, null, function(data) {
             $scope.DeviceTypeList = data;
-            //  sysIdMap();
         });
-        $timeout(sysIdMap, 100);
     }
 
-    $scope.$watch('showData.data', sysIdMap);
-
-    function sysIdMap() {
-        for (var s in $scope.showData.data) {
-            for (var o in $scope.DeviceTypeList) {
-                if ($scope.showData.data[s][DeviceField.TYPE_ID] == $scope.DeviceTypeList[o][DeviceField.TYPE_ID])
-                    $scope.showData.data[s][DeviceField.TYPE_ID] = $scope.DeviceTypeList[o];
+    $scope.deviceMap = {};
+    $scope.mapMap = {};
+    var k, v;
+    $scope.$watch('DeviceTypeList', function() {
+        if ($scope.DeviceTypeList) {
+            for (var i in $scope.DeviceTypeList) {
+                k = $scope.DeviceTypeList[i][DeviceField.TYPE_ID];
+                v = $scope.DeviceTypeList[i][DeviceField.TYPE_NAME];
+                $scope.deviceMap[k] = v;
             }
         }
+    });
 
-        for (var m in $scope.showData.data) {
-            for (var n in $scope.mapData) {
-                if ($scope.showData.data[m][DeviceField.MAP_ID] && $scope.showData.data[m][DeviceField.MAP_ID] == $scope.mapData[n][DeviceField.MAP_ID])
-                    $scope.showData.data[m][DeviceField.MAP_ID] = $scope.mapData[n];
+    $scope.$watch('mapData', function() {
+        if ($scope.mapData) {
+            for (var i in $scope.mapData) {
+                k = $scope.mapData[i][DeviceField.MAP_ID];
+                v = $scope.mapData[i][DeviceField.MAP_NAME];
+                $scope.mapMap[k] = v;
             }
         }
-
-    }
+    });
 
     $scope.search = function() {
         $rootScope.query = query;
         $scope.showData._load(0);
     }
 
-    $scope.$watch('sysTypeData', function() {
-        if ($scope.sysTypeData) {
-            query[DeviceField.TYPE_ID] = angular.copy($scope.sysTypeData);
+    $scope.$watch('selected.data', function() {
+        if ($scope.selected.data) {
+            query[DeviceField.TYPE_ID] = angular.copy($scope.selected.data[DeviceField.TYPE_ID]);
         } else {
             delete query[DeviceField.TYPE_ID];
         }
@@ -61,46 +67,27 @@ function deviceInfoCtrl($scope, $rootScope, devicePoint, $mdDialog, deviceInfo, 
 
 
     $scope.save = function(obj, type) {
-        /*        if (type === 'save') {
-                    deviceTypeList.isExists(obj).then(function(data) {
-                        if (data.data.exists) {
-                            console.log('数据已存在...')
-                        } else {
-                            save(obj, type);
-                        }
-                    })
-                } else {
-                }*/
-        save(obj, type);
-    }
-
-    function save(obj, type) {
-        obj[DeviceField.MAP_ID] = $scope.mapData.editData;
-        obj[DeviceField.TYPE_ID] = $scope.DeviceTypeList.editData;
-        deviceInfo.saveOne(obj, type, function() { $scope.showData._load() });
-    }
-
-    $scope.delete = function(ev, obj) {
-        var confirm = $mdDialog.confirm()
-            .title('确定要删除这条数据么?')
-            .ok('确定')
-            .cancel('取消');
-
-        $mdDialog.show(confirm).then(function() {
-            console.log('delete...');
-            deviceInfo.deleteOne(obj).then(function(data) { $scope.showData._load() })
-        }, function() {
-            console.log('cancel...');
+        obj[DeviceField.MAP_ID] = $scope.selected.map;
+        obj[DeviceField.TYPE_ID] = $scope.selected.device;
+        deviceInfo.saveOne(obj, type, function() {
+            if ($scope.selected.data) {
+                query[DeviceField.TYPE_ID] = angular.copy($scope.selected.data[DeviceField.TYPE_ID]);
+                $rootScope.query = query;
+            }
+            $scope.showData._load()
         });
-    };
 
-    $scope.getSelectedText = function(o) {
-        if (o) {
-            return o;
-        } else {
-            return " ";
-        }
-    };
+    }
+ $scope.deleteData = function(obj) {
+           delDialogService(function() {
+               console.log('delete...');
+           
+            deviceInfo.deleteOne(obj).then(function(data) { $scope.showData._load() })
+           })
+       };
+
+ 
+
 
     $scope._oldSelectedRowObj = [];
     // 自定义设备 查看列表数据 
@@ -129,8 +116,12 @@ function deviceInfoCtrl($scope, $rootScope, devicePoint, $mdDialog, deviceInfo, 
     $scope.toggleRight = function(obj) {
         if (obj) {
             $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.DEVICE_ID] });
-            $scope.mapData.editData = obj[DeviceField.MAP_ID][DeviceField.MAP_ID];
-            $scope.DeviceTypeList.editData = obj[DeviceField.TYPE_ID][DeviceField.TYPE_ID];
+            if (obj[DeviceField.MAP_ID]) {
+                $scope.selected.map = obj[DeviceField.MAP_ID];
+            }
+            if (obj[DeviceField.TYPE_ID]) {
+                $scope.selected.device = obj[DeviceField.TYPE_ID];
+            }
         } else {
             $state.go("ibuildweb.category.content.create");
         }
@@ -142,3 +133,33 @@ function deviceInfoCtrl($scope, $rootScope, devicePoint, $mdDialog, deviceInfo, 
     };
 
 }
+/*
+    $scope.$watch('showData.data', sysIdMap);
+
+    function sysIdMap() {
+        angular.forEach($scope.showData.data, function(data, index) {
+            if (data[DeviceField.TYPE_ID] && typeof data[DeviceField.TYPE_ID] == 'number') {
+                query[DeviceField.TYPE_ID] = data[DeviceField.TYPE_ID];
+                $rootScope.query = query;
+                deviceTypeList.filter(null, null, function(_data) {
+                    data[DeviceField.TYPE_ID] = _data[0];
+                    delete query[DeviceField.TYPE_ID];
+                });
+            }
+
+
+        });
+        angular.forEach($scope.showData.data, function(data, index) {
+            delete query[DeviceField.TYPE_ID];
+
+            if (data[DeviceField.MAP_ID] && typeof data[DeviceField.MAP_ID] == 'number') {
+                query[DeviceField.MAP_ID] = data[DeviceField.MAP_ID];
+                $rootScope.query = query;
+                map.filter(null, null, function(_data) {
+                    data[DeviceField.MAP_ID] = _data[0];
+                    delete query[DeviceField.MAP_ID];
+                });
+            }
+        });
+    }
+*/

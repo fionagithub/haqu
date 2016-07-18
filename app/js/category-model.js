@@ -23,14 +23,14 @@ function category() {
             iconClasses: "fa",
             url: "#/monitorgroup"
         }, {
-            label: "常规类型",
-            iconClasses: "fa",
-            url: "#/monitortype"
-
-        }, {
             label: "关联设备与监控",
             iconClasses: "fa",
             url: "#/device_monitor"
+
+        }, {
+            label: "常规类型",
+            iconClasses: "fa",
+            url: "#/monitortype"
 
         }]
     }, {

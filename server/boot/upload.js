@@ -6,14 +6,14 @@
      server.post('/upload', function(req, res) {
          var _file;
 
-         console.log('---', req.body);
+         console.log('--filename--', req.body.filename);
          if (!req.files) {
              res.send('No files were uploaded.');
              return;
          }
 
          _file = req.files.file;
-         _file.mv('app/' + config.img_path + 'maps/filename.jpg', function(err) {
+         _file.mv('app/' + config.img_path + 'maps/' + 'req.body.filename', function(err) {
              if (err) {
                  res.status(500).send(err);
              } else {

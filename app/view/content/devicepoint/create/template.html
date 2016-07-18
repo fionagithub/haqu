@@ -14,9 +14,9 @@
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label> 监控类型</label>
-                <md-select ng-model="MonitorType.editData" md-selected-text="getSelectedText(MonitorType.editData)">
+                <md-select ng-model="selected.data">
                     <md-optgroup>
-                        <md-option ng-value="editData[DeviceField.MNT_TYPE_ID]" ng-repeat="editData in MonitorType"> {{ editData[DeviceField.MNT_TYPE_ID] + ':' + editData[DeviceField.DESC]}}</md-option>
+                        <md-option ng-value="data[DeviceField.MNT_TYPE_ID] " ng-repeat="data in MonitorType">{{data[DeviceField.MNT_TYPE_ID] + ':' + data[DeviceField.DESC]}}</md-option>
                     </md-optgroup>
                 </md-select>
             </md-input-container>
@@ -32,8 +32,8 @@
         <md-button class="  md-raised demo-dialog-open-button" ng-click="save(data,'save')">
             保存
         </md-button>
-    <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">
-              取消
+        <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">
+            取消
         </md-button>
     </md-content>
 </md-sidenav>

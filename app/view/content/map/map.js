@@ -17,13 +17,23 @@
            };
        }])
 
-   function mapCtrl(Paginator, map, $http, $timeout, deviceInfo, config, DeviceField, $rootScope, $mdDialog, $scope, $log, $mdSidenav, $state, $mdComponentRegistry) {
+   function mapCtrl(Paginator, map, $http, $timeout, deviceInfo, config, DeviceField, $rootScope, delDialogService, $scope, $log, $mdSidenav, $state, $mdComponentRegistry) {
+
+       $scope.$on('$stateChangeSuccess', function() {
+           if ($state.current.name == "ibuildweb.category.content") {
+               load();
+           }
+           $rootScope.query = null;
+       });
+       $scope.$on("loadFromParrent", load);
+       load();
        $scope.uploadFile = function() {
            var file = $scope.myFile;
            var uploadUrl = "/upload";
            var fd = new FormData();
            fd.append('file', file);
-           fd.append('aaa', '111');
+           $scope.filename = $scope.myFile.name;
+           fd.append('filename', $scope.filename);
 
            $http.post(uploadUrl, fd, {
                    transformRequest: angular.identity,
@@ -36,22 +46,6 @@
                    console.log("error!!");
                });
        };
-       $scope.$on('$stateChangeSuccess', function() {
-           if ($state.current.name == "ibuildweb.category.content") {
-               load();
-           }
-           $rootScope.query = null;
-       });
-       $scope.$on("loadFromParrent", load);
-       load();
-
-       // 用来检测报警列表滚动
-       /*     $scope.onJspScrollY = function() {
-                if ($scope.isLoadTop) {
-                    $scope.page += 10;
-                    showMore();
-                }
-            };*/
 
        var query = {};
 
@@ -83,7 +77,9 @@
                $scope.showData = _data;
                $scope.showAreaData = _data[null];
            });
-
+           $scope.selected = {
+               map: null
+           };
            $scope.DeviceField = DeviceField;
        }
 
@@ -109,48 +105,25 @@
        };
 
 
-       function deleteNode(data) {
-           var namelest = Object.keys(data);
-           angular.forEach(namelest, function(v, i) {
-               if (data[v] === '' || data[v] == null) {
-                   delete data[v];
-               }
-           });
-           return data
-       };
-
-       $scope.getSelectedText = function(obj) {
-           if (obj !== undefined) {
-               return obj;
-           } else {
-               return " ";
-           }
-       };
-
 
        $scope.cancel = function() {
            $mdSidenav('right').close();
        };
 
-       $scope.delete = function(ev, obj) {
-           var confirm = $mdDialog.confirm()
-               .title('确定要删除这条数据么?')
-               .ok('确定')
-               .cancel('取消');
 
-           $mdDialog.show(confirm).then(function() {
+       $scope.deleteData = function(obj) {
+           delDialogService(function() {
                console.log('delete...');
                map.deleteOne(obj).then(function(data) {
                    load();
                })
-           }, function() {
-               console.log('cancel...');
-           });
+           })
        };
        $scope.toggleRight = function(obj) {
            if (obj) {
-               $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MAP_NO] });
-               $scope.showData.null.data = obj[DeviceField.MAP_NO];
+               $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MAP_ID] });
+               $scope.selected.map = obj[DeviceField.MAP_NO];
+               $scope.showImgUri = obj[DeviceField.SOURCE];
            } else {
                $state.go("ibuildweb.category.content.create");
            }
@@ -178,7 +151,8 @@
        }
 
        function save(obj, type) {
-           obj[DeviceField.MAP_ID] = $scope.showData.null.data;
+           obj[DeviceField.SOURCE] = $scope.filename;
+           obj[DeviceField.MAP_ID] = $scope.selected.map[DeviceField.MAP_ID];
            map.saveOne(obj, type, function() { load(); });
        }
 

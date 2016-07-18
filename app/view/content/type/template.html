@@ -1,8 +1,10 @@
-<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="typeCtrl">
+<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="typeCtrl as type">
     <md-input-container flex class="md-block">
         <label>系统</label>
-        <md-select ng-model="sysTypeData" md-selected-text="getSelectedText(sysTypeData)">
-            <md-option ng-value="sysTypeData[DeviceField.SYS_TYPE_ID]" ng-repeat="sysTypeData in DeviceSysTypeList">{{ sysTypeData[DeviceField.SYS_TYPE_ID] + ':' + sysTypeData[DeviceField.SYS_TYPE_NAME]}}</md-option>
+        <md-select ng-model="deviceSysTypeData">
+            <md-optgroup>  
+                <md-option ng-value="sysTypeData[DeviceField.SYS_TYPE_ID]" ng-repeat="sysTypeData in DeviceSysTypeList track by $index">{{ tmp=DeviceSysTypeList[sysTypeData[DeviceField.SYS_TYPE_ID]][DeviceField.SYS_TYPE_NAME] }}</md-option> 
+            </md-optgroup>
         </md-select>
     </md-input-container>
     <md-input-container flex class="md-block">
@@ -11,8 +13,7 @@
     </md-input-container>
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
         <md-button class="md-raised demo-dialog-open-button" ng-click="search()">搜索
-        </md-button>
-        <!--  ui-sref="ibuildweb.category.content.create" -->
+        </md-button> 
         <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
         </md-button>
     </section>
@@ -33,17 +34,17 @@
                     <td> {{data[DeviceField.TYPE_NAME]}}
                     </td>
                     <td>
-                        {{data[DeviceField.SYS_TYPE_ID][DeviceField.SYS_TYPE_NAME]}}
+                        {{sysMap[data[DeviceField.SYS_TYPE_ID]]}}
                     </td>
                     <td>
                         {{ data["iconsrc"]}}
                     </td>
                     <td>
-                        <inline-tools></inline-tools>
+                        <inline-tools open="toggleRight(data)" delete='deleteData( data)' old='_oldSelectedRowObj' data='data' del='isDel'></inline-tools>
                     </td>
             </tbody>
         </table>
-        <pagination> </pagination>
+        <pagination-section> </pagination-section>
     </md-content>
     <ui-view>
     </ui-view>

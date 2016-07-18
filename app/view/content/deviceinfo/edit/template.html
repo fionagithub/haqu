@@ -4,28 +4,30 @@
     </md-toolbar>
     <!-- ng-controller="editSysCtrl" -->
     <md-content layout-padding="">
-        <md-list> 
+        <md-list>
             <md-input-container flex class="md-block">
                 <label>设备名称</label>
-                  <p class="form-control-static hide">{{groupFieldName[DeviceField.DEVICE_ID]}}</p>
-              <input ng-model="groupFieldName[DeviceField.NAME]">
+                <p class="form-control-static hide">{{groupFieldName[DeviceField.DEVICE_ID]}}</p>
+                <input ng-model="groupFieldName[DeviceField.NAME]">
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>设备编号</label>
                 <input ng-model="groupFieldName[DeviceField.DEVICE_NO]">
-                 </md-input-container>
+            </md-input-container>
             <md-input-container flex class="md-block">
                 <label> 设备类型</label>
-                <md-select ng-model="DeviceTypeList.editData" md-selected-text="getSelectedText(DeviceTypeList.editData)">
+                <md-select ng-model="selected.device">
                     <md-optgroup>
-                        <md-option ng-value="editData[DeviceField.TYPE_ID]" ng-repeat="editData in DeviceTypeList"> {{ editData[DeviceField.TYPE_ID] + ':' + editData[DeviceField.TYPE_NAME]}}</md-option>
+                        <md-option ng-value="data[DeviceField.TYPE_ID] " ng-repeat="data in DeviceTypeList">{{ data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
                     </md-optgroup>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label>地图</label> 
-                <md-select ng-model="mapData.editData" md-selected-text="getSelectedText(mapData.editData)">
-                    <md-option ng-value="editData[DeviceField.MAP_ID]" ng-repeat="editData in mapData">{{ editData[DeviceField.MAP_ID] + ':' + editData[DeviceField.MAP_NAME]}}</md-option>
+                <label>地图</label>
+                <md-select ng-model="selected.map">
+                    <md-optgroup>
+                        <md-option ng-value="data[DeviceField.MAP_ID]" ng-repeat='data in mapData '>{{data[DeviceField.MAP_ID] + ':' +data[DeviceField.MAP_NAME]}}</md-option>
+                    </md-optgroup>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">

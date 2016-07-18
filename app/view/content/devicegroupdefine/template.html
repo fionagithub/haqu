@@ -1,14 +1,14 @@
-<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="deviceGroupDefineCtrl">
-   <!--     <md-input-container flex class="md-block">
+<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="deviceGroupDefineCtrl as dgdCtrl">
+    <!--     <md-input-container flex class="md-block">
         <label>监控类</label>
         <md-select ng-model="sysTypeData" md-selected-text="getSelectedText(sysTypeData)">
             <md-option ng-value="sysTypeData[DeviceField.MNT_TYPE_ID]" ng-repeat="sysTypeData in MonitorType">{{ sysTypeData[DeviceField.MNT_TYPE_ID] + ':' + sysTypeData[DeviceField.DESC]}}</md-option>
         </md-select>
     </md-input-container>-->
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
-     <!--    <md-button class="  md-raised demo-dialog-open-button" ng-click="search()">搜索
+        <!--    <md-button class="  md-raised demo-dialog-open-button" ng-click="search()">搜索
      </md-button> -->
-        <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
+        <md-button ng-click="dgdCtrl.toggleRight()" class="  md-raised demo-dialog-open-button">新增
         </md-button>
     </section>
     <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
@@ -22,17 +22,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat='data in showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
-                    <td>{{data[DeviceField.DEVICE_ID]}} </td>
-                    <td>{{data[DeviceField.SUBDEVICE_ID]}} </td>
-                    <td> {{data[DeviceField.TMP_NAME]}} </td>
+                <tr ng-repeat='data in dgdCtrl.showData.data' ng-class="{'selected':dgdCtrl._oldSelectedRowObj.indexOf(data)!==-1}" ng-click="dgdCtrl.selectedRow($index,data)">
+                    <td>{{data[dgdCtrl.DeviceField.DEVICE_ID]}} 
+                    </td>
+                    <td>{{data[dgdCtrl.DeviceField.SUBDEVICE_ID]}} </td>
+                    <td> {{data[dgdCtrl.DeviceField.TMP_NAME]}} </td>
                     <td>
-                        <inline-tools></inline-tools>
+                        <inline-tools open="dgdCtrl.toggleRight(data)" delete='dgdCtrl.deleteData(data)' old='dgdCtrl._oldSelectedRowObj' data='data' del='dgdCtrl.isDel'></inline-tools>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <pagination> </pagination>
+        <pagination-section> </pagination-section>
     </md-content>
     <ui-view>
         <!--  left side  -->

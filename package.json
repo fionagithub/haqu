@@ -1,10 +1,9 @@
 {
-  "name": "editBuildWeb",
+  "name": "AMS",
   "version": "0.4.3",
-  "authors": [
-    "MaXiaojun <somaxj@163.com>"
+  "authors": [ 
   ],
-  "description": "ibms points deploy tools",
+  "description": "ams",
   "main": "server/server.js",
   "scripts": {
     "start": "node .",
@@ -22,7 +21,7 @@
     "ez-config-loader": "^0.1.2",
     "loopback": "^2.8.0",
     "loopback-boot": "^2.4.0",
-    "loopback-connector-mssql": "^1.1.4",
+    "loopback-connector-mssql": "^1.5.1",
     "loopback-datasource-juggler": "^2.7.0",
     "multer": "^1.1.0",
     "serve-favicon": "^2.0.1"

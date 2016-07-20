@@ -1,7 +1,7 @@
 angular.module('content.type', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('typeCtrl', typeCtrl)
 
-function typeCtrl($rootScope, Paginator, delDialogService, deviceInfo, deviceSysTypeList, deviceTypeList, $state, $timeout, $log, $mdSidenav, $scope, $mdComponentRegistry, DeviceField) {
+function typeCtrl($rootScope, Paginator, delDialogService, toastService, deviceInfo, deviceSysTypeList, deviceTypeList, $state, $timeout, $log, $mdSidenav, $scope, $mdComponentRegistry, DeviceField) {
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
             load();
@@ -16,8 +16,9 @@ function typeCtrl($rootScope, Paginator, delDialogService, deviceInfo, deviceSys
         $rootScope.query = null;
         $scope.searchDeviceType = null;
         $scope.deviceSysTypeData = null;
-        $scope.selected = {
-            device: null
+        $scope.data = {
+            deviceSys: null,
+            deviceTypeField: null
         };
         $scope.showData = Paginator(deviceTypeList.filter, 10);
         $scope.DeviceField = DeviceField;
@@ -70,6 +71,7 @@ function typeCtrl($rootScope, Paginator, delDialogService, deviceInfo, deviceSys
     $scope.search = function() {
         $rootScope.query = query;
         $scope.showData._load(0);
+        delete query[DeviceField.SYS_TYPE_ID];
     }
 
     $scope._oldSelectedRowObj = [];
@@ -95,40 +97,30 @@ function typeCtrl($rootScope, Paginator, delDialogService, deviceInfo, deviceSys
     };
 
     $scope.save = function(obj, type) {
-        if (type === 'save') {
-            $rootScope.query = query;
-            deviceTypeList.isExists(obj).then(function(data) {
-                if (data.data.exists) {
-                    console.log('数据已存在...')
-                } else {
-                    save(obj, type);
-                }
-            })
-        } else {
-            save(obj, type);
-        }
-    }
-
-    function save(obj, type) {
-        obj[DeviceField.SYS_TYPE_ID] = angular.copy($scope.selected.device[DeviceField.SYS_TYPE_ID]);
+        $rootScope.query = query;
+        obj[DeviceField.SYS_TYPE_ID] = angular.copy($scope.data.deviceSys);
         deviceTypeList.saveOne(obj, type, function() {
+            delete query[DeviceField.SYS_TYPE_ID];
             if ($scope.deviceSysTypeData) {
                 query[DeviceField.SYS_TYPE_ID] = $scope.deviceSysTypeData;
                 $rootScope.query = query;
             }
+            toastService();
             $scope.showData._load()
         })
     }
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
-        $scope.selected = {
-            device: null
+        $scope.data = {
+            deviceSys: null,
+            deviceTypeField: null
         };
     };
 
-    $scope.$watch('selected.device ', function() {
-        if ($scope.selected.device) {
+    $scope.$watch('data.deviceSys ', function() {
+        if ($scope.data.deviceSys) {
+            query[DeviceField.SYS_TYPE_ID] = angular.copy($scope.data.deviceSys);
 
         }
     });
@@ -144,10 +136,14 @@ function typeCtrl($rootScope, Paginator, delDialogService, deviceInfo, deviceSys
         oldQuery = angular.copy($rootScope.query);
         if (obj) {
             $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.TYPE_ID] });
-            $scope.deviceTypeFieldName = angular.copy(obj);
-            $scope.selected.device = obj[DeviceField.SYS_TYPE_ID];
+            $scope.data.deviceTypeField = angular.copy(obj);
+            $scope.data.deviceSys = obj[DeviceField.SYS_TYPE_ID];
         } else {
             $state.go("ibuildweb.category.content.create");
+            $scope.data = {
+                deviceSys: null,
+                deviceTypeField: null
+            };
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {

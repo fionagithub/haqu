@@ -1,7 +1,7 @@
 angular.module('content.deviceDefine', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('deviceDefineCtrl', deviceDefineCtrl)
 
-function deviceDefineCtrl($scope, monitorType, deviceTypeList, delDialogService, deviceDefines, $timeout, $rootScope, Paginator, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+function deviceDefineCtrl($scope, monitorType, deviceTypeList, delDialogService, toastService,deviceDefines, $timeout, $rootScope, Paginator, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
 
     $scope.$on('$stateChangeSuccess', function() {
@@ -33,7 +33,7 @@ function deviceDefineCtrl($scope, monitorType, deviceTypeList, delDialogService,
         $scope.alarmLevel = alarmLevel;
         if (obj) {
             if (obj[DeviceField.MNT_TYPE_ID]) {
-                $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.TYPE_ID][DeviceField.TYPE_ID] });
+                $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.ID] });
                 $scope.selected.monitor = obj[DeviceField.MNT_TYPE_ID];
             } else {
                 $state.go("ibuildweb.category.content.edit");
@@ -115,6 +115,7 @@ function deviceDefineCtrl($scope, monitorType, deviceTypeList, delDialogService,
                 query[DeviceField.TYPE_ID] = angular.copy($scope.selectedData);
                 $rootScope.query = query;
             }
+            toastService();
             $scope.showData._load()
         });
     }

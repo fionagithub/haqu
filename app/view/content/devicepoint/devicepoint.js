@@ -1,7 +1,7 @@
 angular.module('content.devicePoint', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('devicePointCtrl', devicePointCtrl)
 
-function devicePointCtrl($scope, delDialogService, monitorType, devicePoint, $rootScope, Paginator, $timeout, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+function devicePointCtrl($scope, delDialogService,toastService, monitorType, devicePoint, $rootScope, Paginator, $timeout, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
@@ -73,12 +73,13 @@ function devicePointCtrl($scope, delDialogService, monitorType, devicePoint, $ro
     };
 
     $scope.save = function(obj, type) {
-        obj[DeviceField.MNT_TYPE_ID] = $scope.selected.data[DeviceField.MNT_TYPE_ID];
+        obj[DeviceField.MNT_TYPE_ID] = $scope.selected.data;
         devicePoint.saveOne(obj, type, function() {
             if ($scope.selectedData) {
                 query[DeviceField.MNT_TYPE_ID] = angular.copy($scope.selectedData[DeviceField.MNT_TYPE_ID]);
                 $rootScope.query = query;
             }
+            toastService();
             $scope.showData._load()
         });
     }

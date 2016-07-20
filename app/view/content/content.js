@@ -1,5 +1,6 @@
 angular.module('content', ['ibuildweb.factorys.services', 'ibuildweb.factorys'])
     .config(stateConfig)
+    .factory('toastService', toastService)
     .factory('delDialogService', delDialogService)
     .factory('Paginator', Paginator)
     .directive('paginationSection', paginationSection)
@@ -53,6 +54,19 @@ function stateConfig($stateProvider) {
                 }
             }
         });
+}
+
+function toastService($mdToast) {
+    return function() {
+        var pinTo = 'bottom';
+        console.log('-=-', pinTo);
+        $mdToast.show(
+            $mdToast.simple()
+            .textContent('save success!')
+            .position(pinTo)
+            .hideDelay(3000)
+        );
+    }
 }
 
 function delDialogService($mdDialog) {

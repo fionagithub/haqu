@@ -7,10 +7,10 @@
         <md-list>
             <md-input-container flex class="md-block">
                 <label> 大类名称</label>
-                <input ng-model=" systypeFieldName[DeviceField.SYS_TYPE_NAME]">
+                <input ng-model="data.edit[DeviceField.SYS_TYPE_NAME]">
             </md-input-container>
         </md-list>
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(systypeFieldName,'save')">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(data.edit,'save')">
             保存
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

@@ -5,7 +5,7 @@ angular.module('content.deviceGroupDefine', ['ibuildweb.factorys', 'ngMaterial',
     .directive("smartySuggestions", smartySuggestions)
     .directive("smartySuggestionsBox", smartySuggestionsBox)
 
-function deviceGroupDefineCtrl($scope, $timeout, $document, $window, $q, $log, $element, deviceGroupDefine, deviceInfo, delDialogService, $rootScope, Paginator, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+function deviceGroupDefineCtrl($scope, $timeout, $document, $window, $q, $log, $element, deviceGroupDefine, deviceInfo, delDialogService,toastService, $rootScope, Paginator, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
     var _this = this;
     _this.selected = -1;
     _this.selectionMade = false;
@@ -16,11 +16,11 @@ function deviceGroupDefineCtrl($scope, $timeout, $document, $window, $q, $log, $
     _this.suggestionPicked = suggestionPicked;
     _this.selectedRow = selectedRow;
     _this.getSelectedText = getSelectedText;
-    _this.cancel = cancel;
     _this.toggleRight = toggleRight;
     _this.deleteData = deleteData;
 
     _this.save = save;
+    _this.cancel = cancel;
     _this.setSelected = setSelected;
     _this.search = search;
 
@@ -154,7 +154,10 @@ function deviceGroupDefineCtrl($scope, $timeout, $document, $window, $q, $log, $
     function save(obj, type) {
         obj[DeviceField.DEVICE_ID] = _this.prefix;
         obj[DeviceField.SUBDEVICE_ID] = _this.subData.item;
-        deviceGroupDefine.saveOne(obj, type, function() { _this.showData._load() });
+        deviceGroupDefine.saveOne(obj, type, function() {
+            toastService();
+            _this.showData._load()
+        });
     }
 
     function cancel() {

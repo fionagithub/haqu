@@ -10,26 +10,28 @@
       "id": true,
       "required": true
     },
+    "autoid": {
+      "type": "number"
+    },
     "devicename": {
       "type": "string"
     },
     "devicetypeid": {
-      "type": "number",
-      "id": true
+      "type": "number"
     },
     "mapid": {
       "type": "number"
     },
     "maptype": {
-      "type": "string"
-    },
-    "autoid": {
       "type": "number"
     },
     "axisx": {
       "type": "number"
     },
     "axisy": {
+      "type": "number"
+    },
+    "axisz": {
       "type": "number"
     },
     "deviceno": {

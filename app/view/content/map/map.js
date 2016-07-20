@@ -17,7 +17,7 @@
            };
        }])
 
-   function mapCtrl(Paginator, map, $http, $timeout, deviceInfo, config, DeviceField, $rootScope, delDialogService, $scope, $log, $mdSidenav, $state, $mdComponentRegistry) {
+   function mapCtrl(Paginator, map, $http, $timeout, deviceInfo, config, DeviceField, $rootScope, toastService, delDialogService, $scope, $log, $mdSidenav, $state, $mdComponentRegistry) {
 
        $scope.$on('$stateChangeSuccess', function() {
            if ($state.current.name == "ibuildweb.category.content") {
@@ -137,23 +137,13 @@
        };
 
        $scope.save = function(obj, type) {
-           if (type === 'save') {
-               map.isExists(obj).then(function(data) {
-                   if (data.data.exists) {
-                       console.log('数据已存在...')
-                   } else {
-                       save(obj, type);
-                   }
-               })
-           } else {
-               save(obj, type);
-           }
-       }
 
-       function save(obj, type) {
            obj[DeviceField.SOURCE] = $scope.filename;
            obj[DeviceField.MAP_ID] = $scope.selected.map[DeviceField.MAP_ID];
-           map.saveOne(obj, type, function() { load(); });
+           map.saveOne(obj, type, function() {
+               toastService();
+               load();
+           });
        }
 
 

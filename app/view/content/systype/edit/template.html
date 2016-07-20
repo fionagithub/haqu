@@ -2,16 +2,16 @@
     <md-toolbar class="md-theme-indigo">
         <h1 class="md-toolbar-tools">大类</h1>
     </md-toolbar>
-    <!-- ng-controller="editSysCtrl" -->
+    <!-- ng-controller="editSysCtrl" deviceTypeFieldName-->
     <md-content layout-padding="">
         <md-list>
             <md-input-container flex class="md-block">
                 <label> 大类名称</label>
-                <p class="form-control-static hide">{{deviceTypeFieldName[DeviceField.SYS_TYPE_ID]}}</p>
-                <input ng-model="deviceTypeFieldName[DeviceField.SYS_TYPE_NAME]">
+                <p class="form-control-static hide">{{data.edit[DeviceField.SYS_TYPE_ID]}}</p>
+                <input ng-model="data.edit[DeviceField.SYS_TYPE_NAME]">
             </md-input-container>
         </md-list>
-        <md-button class="md-raised demo-dialog-open-button" ng-click="save(deviceTypeFieldName,'resave')">     更新
+        <md-button class="md-raised demo-dialog-open-button" ng-click="save(data.edit,'resave')">     更新
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">  
             取消

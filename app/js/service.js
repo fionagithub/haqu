@@ -57,14 +57,14 @@ function monitorType(Resources, API_URI, DeviceField) {
 function deviceMonitor(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.DEVICE_MONITOR,
-        param: DeviceField.MNT_GROUP_ID
+        param: DeviceField.TYPE_ID
     })
 }
 /*DeviceField.MAP_TYPE,*/
 function deviceInfo(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.DEVICE_INFO,
-        param: DeviceField.MAP_ID,
+        param: DeviceField.DEVICE_ID,
         paramId: DeviceField.DEVICE_ID
     })
 }
@@ -72,14 +72,14 @@ function deviceInfo(Resources, API_URI, DeviceField) {
 function devicePoint(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.DEVICE_POINT,
-        param: DeviceField.MNT_TYPE_ID
+        param: DeviceField.DEVICE_ID
     })
 }
 
 function deviceDefines(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.DEVICE_DEFINES,
-        param: DeviceField.TYPE_ID
+        param: DeviceField.ID
     })
 }
 

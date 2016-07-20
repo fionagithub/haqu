@@ -1,49 +1,44 @@
 {
-  "name": "V_DevicePointList",
-  "base": "PersistedModel",
-  "idInjection": true,
-  "options": {
-    "validateUpsert": true
-  },
-  "properties": {
-    "autoid": {
-      "type": "number",
-      "id": true
+    "name": "V_DevicePointList",
+    "base": "PersistedModel",
+    "idInjection": true,
+    "options": {
+        "validateUpsert": true
     },
-    "deviceid": {
-      "type": "string",
-      "required": true
+    "properties": {
+        "monitor": {
+            "type": "string",
+            "required": true,
+            "id": true
+        },
+        "deviceid": {
+            "type": "string",
+            "required": true,
+            "id": true
+        },
+        "devicename": {
+            "type": "string",
+            "required": true
+        },
+        "devicetypeid": {
+            "type": "number",
+            "required": true
+        },
+        "axisx": {
+            "type": "Boolean"
+        },
+        "axisy": {
+            "type": "Boolean"
+        },
+        "mapid": {
+            "type": "Boolean"
+        },
+        "deviceno": {
+            "type": "string"
+        }
     },
-    "devicename": {
-      "type": "string",
-      "required": true
-    },
-    "devicetypeid": {
-      "type": "number",
-      "required": true
-    },
-    "axisx": {
-      "type": "number"
-    },
-    "axisy": {
-      "type": "number"
-    },
-    "mapid": {
-      "type": "number"
-    },
-    "deviceno": {
-      "type": "string"
-    },
-    "monitor": {
-      "type": "string",
-      "required": true
-    },
-    "cmdname": {
-      "type": "string"
-    }
-  },
-  "validations": [],
-  "relations": {},
-  "acls": [],
-  "methods": []
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": []
 }

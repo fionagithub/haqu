@@ -1,7 +1,7 @@
 angular.module('content.deviceInfo', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('deviceInfoCtrl', deviceInfoCtrl)
 
-function deviceInfoCtrl($scope, $rootScope, devicePoint, delDialogService, deviceInfo, map, deviceTypeList, Paginator, $timeout, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
+function deviceInfoCtrl($scope, $rootScope, devicePoint, delDialogService,toastService, deviceInfo, map, deviceTypeList, Paginator, $timeout, $log, $mdSidenav, $state, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
@@ -74,6 +74,7 @@ function deviceInfoCtrl($scope, $rootScope, devicePoint, delDialogService, devic
                 query[DeviceField.TYPE_ID] = angular.copy($scope.selected.data[DeviceField.TYPE_ID]);
                 $rootScope.query = query;
             }
+            toastService();
             $scope.showData._load()
         });
 
@@ -132,34 +133,4 @@ function deviceInfoCtrl($scope, $rootScope, devicePoint, delDialogService, devic
         $scope.groupFieldName = angular.copy(obj);
     };
 
-}
-/*
-    $scope.$watch('showData.data', sysIdMap);
-
-    function sysIdMap() {
-        angular.forEach($scope.showData.data, function(data, index) {
-            if (data[DeviceField.TYPE_ID] && typeof data[DeviceField.TYPE_ID] == 'number') {
-                query[DeviceField.TYPE_ID] = data[DeviceField.TYPE_ID];
-                $rootScope.query = query;
-                deviceTypeList.filter(null, null, function(_data) {
-                    data[DeviceField.TYPE_ID] = _data[0];
-                    delete query[DeviceField.TYPE_ID];
-                });
-            }
-
-
-        });
-        angular.forEach($scope.showData.data, function(data, index) {
-            delete query[DeviceField.TYPE_ID];
-
-            if (data[DeviceField.MAP_ID] && typeof data[DeviceField.MAP_ID] == 'number') {
-                query[DeviceField.MAP_ID] = data[DeviceField.MAP_ID];
-                $rootScope.query = query;
-                map.filter(null, null, function(_data) {
-                    data[DeviceField.MAP_ID] = _data[0];
-                    delete query[DeviceField.MAP_ID];
-                });
-            }
-        });
-    }
-*/
+} 

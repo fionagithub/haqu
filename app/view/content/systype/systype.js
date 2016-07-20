@@ -1,6 +1,7 @@
 angular.module('content.systype', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
-    .controller('systypeCtrl', systypeCtrl) 
-function systypeCtrl($scope, $state, $rootScope,  delDialogService, deviceSysTypeList, $mdSidenav, deviceTypeList, Paginator, $mdComponentRegistry, DeviceField) {
+    .controller('systypeCtrl', systypeCtrl)
+
+function systypeCtrl($scope, $state, $rootScope, delDialogService, toastService, deviceSysTypeList, $mdSidenav, deviceTypeList, Paginator, $mdComponentRegistry, DeviceField) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
@@ -10,6 +11,9 @@ function systypeCtrl($scope, $state, $rootScope,  delDialogService, deviceSysTyp
     var query = {};
 
     function load() {
+        $scope.data = { 
+            edit: null
+        };
         $rootScope.query = null;
         $scope.showData = Paginator(deviceSysTypeList.filter, 10);
         $scope.DeviceField = DeviceField;
@@ -28,24 +32,29 @@ function systypeCtrl($scope, $state, $rootScope,  delDialogService, deviceSysTyp
         }
     });
 
+
     $scope.search = function() {
         $rootScope.query = query;
         $scope.showData._load(0);
-    } 
-    $scope.save = function(obj, type) {
-        deviceSysTypeList.saveOne(obj, type, function() { $scope.showData._load() });
     }
-  
+
+    $scope.save = function(obj, type) {
+        deviceSysTypeList.saveOne(obj, type, function() {
+            toastService();
+            $scope.showData._load()
+        });
+    }
+
 
     $scope.deleteData = function(obj) {
         delDialogService(function() {
             console.log('delete...');
             deviceSysTypeList.deleteOne(obj).then(function(data) { $scope.showData._load() })
-        
+
         })
     };
     $scope._oldSelectedRowObj = [];
-    // 自定义设备 查看列表数据 
+    //deviceTypeFieldName 自定义设备 查看列表数据 
     $scope.selectedRow = function(index, obj) {
         if ($scope._oldSelectedRowObj.length > 0) {
             $scope._oldSelectedRowObj.pop();
@@ -64,23 +73,26 @@ function systypeCtrl($scope, $state, $rootScope,  delDialogService, deviceSysTyp
             })
             /*    */
     };
-
-
     $scope.cancel = function() {
+        $scope.data = { 
+            edit: null
+        };
         $mdSidenav('right').close();
     };
     $scope.toggleRight = function(obj) {
         if (obj) {
             $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.SYS_TYPE_ID] });
+            $scope.data.edit = angular.copy(obj);
         } else {
             $state.go("ibuildweb.category.content.create");
+            $scope.data = { 
+                edit: null
+            };
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
             it.toggle();
         });
-        $scope.deviceTypeFieldName = angular.copy(obj);
-        $scope._deviceTypeFieldName = angular.copy(obj);
     };
 
 }

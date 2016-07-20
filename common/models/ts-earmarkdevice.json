@@ -1,21 +1,23 @@
 {
-  "name": "ts_earmarkdevice",
-  "base": "PersistedModel",
-  "options": {
-    "validateUpsert": true
-  },
-  "properties": {
-    "deviceid": {
-      "type": "number",
-      "id": true,
-      "required": true
+    "name": "ts_earmarkdevice",
+    "base": "PersistedModel",
+    "options": {
+        "validateUpsert": true
     },
-    "monitor": {
-      "type": "string"
-    }
-  },
-  "validations": [],
-  "relations": {},
-  "acls": [],
-  "methods": {}
+    "properties": {
+        "autoid": {
+            "type": "number",
+            "id": true
+        },
+        "deviceid": {
+            "type": "number"
+        },
+        "monitor": {
+            "type": "string"
+        }
+    },
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
 }

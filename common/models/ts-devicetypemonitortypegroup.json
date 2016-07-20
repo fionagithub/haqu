@@ -1,21 +1,16 @@
 {
-  "name": "ts_devicetypemonitortypegroup",
-  "base": "PersistedModel",
-  "options": {
-    "validateUpsert": true
-  },
-  "properties": {
-    "devicetypeid": {
-      "type": "number",
-      "id": true
+    "name": "ts_devicetypemonitortypegroup",
+    "base": "PersistedModel",
+    "properties": {
+        "devicetypeid": {
+            "type": "number"
+        },
+        "monitortypegroupid": {
+            "type": "number"
+        }
     },
-    "monitortypegroupid": {
-      "type": "number",
-      "id": true
-    }
-  },
-  "validations": [],
-  "relations": {},
-  "acls": [],
-  "methods": {}
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
 }

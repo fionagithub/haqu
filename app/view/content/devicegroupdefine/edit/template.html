@@ -22,10 +22,10 @@
                 <input ng-model="dgdCtrl.groupFieldName[dgdCtrl.DeviceField.TMP_NAME]">
             </md-input-container>
         </md-list>
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(dgdCtrl.groupFieldName,'resave')">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="dgdCtrl.save(dgdCtrl.groupFieldName,'resave')">
             更新
         </md-button>
-        <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">
+        <md-button class="md-raised demo-dialog-close-button" ng-click="dgdCtrl.cancel()">
             取消
         </md-button>
     </md-content>

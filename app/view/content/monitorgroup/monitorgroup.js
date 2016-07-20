@@ -1,7 +1,7 @@
 angular.module('content.monitorgroup', ['ibuildweb.factorys', 'ibuildweb.factorys.services'])
     .controller('monitorgroupCtrl', monitorgroupCtrl)
 
-function monitorgroupCtrl($rootScope, delDialogService, Paginator, $scope, $log, DeviceField, monitorGroup, monitorType, $mdSidenav, $state, $mdComponentRegistry) {
+function monitorgroupCtrl($rootScope, toastService, delDialogService, Paginator, $scope, $log, DeviceField, monitorGroup, monitorType, $mdSidenav, $state, $mdComponentRegistry) {
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ibuildweb.category.content") {
             load();
@@ -12,6 +12,9 @@ function monitorgroupCtrl($rootScope, delDialogService, Paginator, $scope, $log,
     var query = {};
 
     function load() {
+        $scope.data = {
+            edit: null
+        };
         $rootScope.query = null;
         $scope.DeviceField = DeviceField;
         $scope.selectedData = null;
@@ -33,25 +36,12 @@ function monitorgroupCtrl($rootScope, delDialogService, Paginator, $scope, $log,
     }
 
     $scope.save = function(obj, type) {
-        if (type === 'save') {
-            monitorGroup.isExists(obj).then(function(data) {
-                if (data.data.exists) {
-                    console.log('数据已存在...')
-                } else {
-                    save(obj, type);
-                }
-            })
-        } else {
-            save(obj, type);
-        }
-    }
-
-    function save(obj, type) {
         monitorGroup.saveOne(obj, type, function() {
             if ($scope.selectedData) {
                 query[DeviceField.MNT_GROUP_ID] = obj[DeviceField.MNT_GROUP_ID];
                 $rootScope.query = query;
             }
+            toastService();
             $scope.showData._load()
         });
     }
@@ -60,7 +50,7 @@ function monitorgroupCtrl($rootScope, delDialogService, Paginator, $scope, $log,
     $scope.deleteData = function(obj) {
         delDialogService(function() {
             console.log('delete...');
-               monitorGroup.deleteOne(obj).then(function(data) {
+            monitorGroup.deleteOne(obj).then(function(data) {
                 if ($scope.selectedData) {
                     query[DeviceField.MNT_GROUP_ID] = obj[DeviceField.MNT_GROUP_ID];
                     $rootScope.query = query;
@@ -69,11 +59,11 @@ function monitorgroupCtrl($rootScope, delDialogService, Paginator, $scope, $log,
             })
         })
     };
- 
+
     // 自定义设备 查看列表数据 
     $scope._oldSelectedRowObj = [];
     $scope.selectedRow = function(index, obj) {
-        if ($scope._oldSelectedRowObj.length > 1) {
+        if ($scope._oldSelectedRowObj.length > 0) {
             $scope._oldSelectedRowObj.pop();
         }
         $scope._oldSelectedRowObj.unshift(obj);
@@ -88,27 +78,32 @@ function monitorgroupCtrl($rootScope, delDialogService, Paginator, $scope, $log,
                     $scope.isDel = true;
                 }
                 delete query[DeviceField.MNT_GROUP_ID];
-            })
-            /*    */
+            }) 
     };
 
 
     $scope.cancel = function() {
+        $scope.data = {
+            edit: null
+        };
         $mdSidenav('right').close();
     };
     $scope.toggleRight = function(obj) {
         if (obj) {
             $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.MNT_GROUP_ID] });
-
+            $scope.data = {
+                edit: angular.copy(obj)
+            };
         } else {
             $state.go("ibuildweb.category.content.create");
-
+            $scope.data = {
+                edit: null
+            };
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
             it.toggle();
         });
-        $scope.groupFieldName = angular.copy(obj);
     };
 
 

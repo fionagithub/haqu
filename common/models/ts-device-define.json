@@ -5,9 +5,12 @@
         "validateUpsert": true
     },
     "properties": {
-        "devicetypeid": {
+        "autoid": {
             "type": "number",
             "id": true
+        },
+        "devicetypeid": {
+            "type": "number"
         },
         "monitortypeid": {
             "type": "number"

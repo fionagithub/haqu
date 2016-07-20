@@ -6,23 +6,22 @@
         <md-list>
             <md-input-container flex class="md-block">
                 <label>系统 </label>
-                <md-select ng-model="selected.device">
+                <md-select ng-model="data.deviceSys">
                     <md-optgroup>
-                        <md-option ng-value="sysTypeData[DeviceField.SYS_TYPE_ID]" ng-repeat="sysTypeData in DeviceSysTypeList">{{ sysTypeData[DeviceField.SYS_TYPE_ID] + ':' + sysTypeData[DeviceField.SYS_TYPE_NAME]}}</md-option>
+                        <md-option ng-value="data[DeviceField.SYS_TYPE_ID]" ng-repeat="data in DeviceSysTypeList">{{ data[DeviceField.SYS_TYPE_ID] + ':' + data[DeviceField.SYS_TYPE_NAME]}}</md-option>
                     </md-optgroup>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label>小类名称</label>
-                <p class="form-control-static hide">{{deviceTypeFieldName[DeviceField.TYPE_ID]}}</p>
-                <input ng-model="deviceTypeFieldName[DeviceField.TYPE_NAME]">
+                <label>小类名称</label> 
+                <input ng-model="data.deviceTypeField[DeviceField.TYPE_NAME]">
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>图标 </label>
-                <input ng-model="deviceTypeFieldName[DeviceField.ICON_SRC]">
+                <input ng-model="data.deviceTypeField[DeviceField.ICON_SRC]">
             </md-input-container>
         </md-list>
-        <md-button class="md-raised demo-dialog-open-button" ng-click="save(deviceTypeFieldName,'resave')">
+        <md-button class="md-raised demo-dialog-open-button" ng-click="save(data.deviceTypeField,'resave')">
             更新
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

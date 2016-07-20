@@ -1,5 +1,5 @@
-# ibuildWeb
-## IBMS 点位部署工具，由loopback提供数据接口
+# AMS
+## AMS项目，由loopback提供数据接口
 
 ---
 
@@ -35,15 +35,12 @@
 ### 如何将真实数据导入到模拟库？
 按以下步骤操作：
 
-1. 通过正式库 api explorer 获取api列表，例如：`http://api.hostname.com:9000/explorer` 
+1. 通过正式库 api explorer 获取api列表，例如：`http://api.hostname.com:3000/explorer` 
 2. 通过正式库 api 获得数据（一般为JSON格式的数组），保存备用
-3. 通过本地 api explorer（如：`http://localhost:9000/explorer` ） 将之前保存的数据`post`到开发库中，
-4. 重启iBuildWeb系统
+3. 通过本地 api explorer（如：`http://localhost:3000/explorer` ） 将之前保存的数据`post`到开发库中，
+4. 重启AMS系统
 
 ### StrongLoop API 过滤器语法
 1、查询范例
-  `{"limit":10,"where":{"deviceid":{"like":"0301%"}}}`
-
-### build
-   `gulp`
-
+  `_params={"limit":10,"offset":10,"where":{"deviceid":{"like":"0301%"}}};
+   $http.get(options.uri,{ params: { filter:  _params } } ) ` 

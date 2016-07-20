@@ -7,7 +7,7 @@ function Resources($http, DeviceField, $rootScope) {
 
         var dataInfo = {
             exists: null,
-            //   maxID: null,
+            maxID: null,
             paramsSysId: null, //最大ID号或者是
             filter: function(offset, limit, callback) {
                 var _obj = {},
@@ -36,7 +36,7 @@ function Resources($http, DeviceField, $rootScope) {
                     dataInfo.exists = data.exists;
                 });
             },
-            getMaxID: function(callback) {
+            getMaxID: function() {
                 var _obj = {},
                     _where = {},
                     _params = {};
@@ -54,7 +54,19 @@ function Resources($http, DeviceField, $rootScope) {
                 if (options.paramId) {
                     _obj = { params: { filter: _params } };
                 }
-                $http.get(options.uri, _obj).success(callback);
+                return $http.get(options.uri, _obj).success(function(data) {
+                    var autoId = parseInt(dataInfo.paramsSysId);
+                    if (data[0]) {
+                        var _data = data[0][options.paramId];
+                        if (autoId && parseInt(_data / Math.pow(10, 2)) / autoId === 1) {
+                            dataInfo.maxID = parseInt(_data) + 1;
+                        } else {
+                            dataInfo.maxID = parseInt(_data) + 1;
+                        }
+                    } else {
+                        dataInfo.maxID = Math.pow(10, 2) * autoId + 1;
+                    }
+                });
             },
             saveOne: function(obj, type, callback) {
                 var saveUri = {
@@ -62,25 +74,12 @@ function Resources($http, DeviceField, $rootScope) {
                     'resave': options.uri + '/' + obj[options.param]
                 };
                 /*    var saveUri = options.uri;*/
-                if (type == 'save') {
-                    this.getMaxID(function(data) {
-                        var autoId = dataInfo.paramsSysId;
-                        if (data[0]) {
-                            var _data = data[0][options.paramId];
-                            if (autoId && parseInt(_data / Math.pow(10, 2)) / autoId === 1) {
-                                obj[options.paramId] = parseInt(_data) + 1;
-                            } else {
-                                obj[options.paramId] = parseInt(_data) + 1;
-                            }
-                        } else {
-                            obj[options.paramId] = Math.pow(10, 2) * autoId + 1;
-                        }
-                    });
+                this.getMaxID().then(function() {
+                    if (options.paramId) {
+                        obj[options.paramId] = obj[options.paramId] || dataInfo.maxID;
+                    }
                     $http.put(saveUri[type], obj).success(callback);
-                } else {
-                    $http.put(saveUri[type], obj).success(callback);
-
-                }
+                });
             },
             deleteOne: function(obj) {
                 return $http.delete(options.uri + '/' + obj[options.param]).success(function(_data) {
@@ -96,19 +95,3 @@ function Resources($http, DeviceField, $rootScope) {
 }
 
 Resources.$injector = ['$http'];
-/*      saveOne: function(obj, type) {
-                var saveUri = {
-                    'save': options.uri,
-                    'resave': options.uri + '/' + obj[options.param]
-                };
-                return $http.put(saveUri[type], obj).success(function(data) {
-                    console.log('save one success!'); 
-                });
-            },
-            getMaxID:function(callback){
-          var _obj={}, _params = {};
-                _params.order = options.param+'DESC';
-                _params.limit = limit;
-                _obj = { params: { filter: _params } };
-                $http.get(options.uri, _obj).success(callback);
-            }*/

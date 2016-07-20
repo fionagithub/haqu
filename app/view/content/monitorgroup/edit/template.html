@@ -6,11 +6,11 @@
         <md-list> 
             <md-input-container flex class="md-block">
                <label> 描述</label>
-                <p class="form-control-static hide">{{groupFieldName[DeviceField.MNT_GROUP_ID]}}</p>
-                <input ng-model="groupFieldName[DeviceField.DESC]">
+                <p class="form-control-static hide">{{data.edit[DeviceField.MNT_GROUP_ID]}}</p>
+                <input ng-model="data.edit[DeviceField.DESC]">
             </md-input-container>
         </md-list>
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(data.edit,'resave')">
             更新
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

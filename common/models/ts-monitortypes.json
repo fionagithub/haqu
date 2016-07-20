@@ -10,12 +10,10 @@
       "id": true
     },
     "monitortypegroupid": {
-      "type": "number",
-      "id": true
+      "type": "number"
     },
     "devtypeid": {
-      "type": "number",
-      "id": true
+      "type": "number"
     },
     "cmdname": {
       "type": "string"

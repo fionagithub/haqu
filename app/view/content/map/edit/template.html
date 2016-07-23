@@ -23,9 +23,9 @@
                 <input ng-model="groupFieldName[DeviceField.MAP_NAME] ">
             </md-input-container>
             <md-input-container flex class="md-block">
-                <p ng-hide="myFile"> {{showImgUri}} </p>
-                <input type="file" file-model="myFile" />
-                <md-button ng-show="myFile" ng-click="uploadFile()" class="md-raised demo-dialog-open-button">上传文件
+                <p ng-hide="map.file"> {{showImgUri}} </p>
+                <input type="file" file-model="map.file" />
+                <md-button ng-show="map.file" ng-click="uploadFile()" class="md-raised demo-dialog-open-button">上传文件
                 </md-button>
             </md-input-container>
             <md-input-container flex class="md-block">
@@ -33,7 +33,7 @@
                 <input ng-model=" groupFieldName[DeviceField.MAP_TYPE]">
             </md-input-container>
         </form>
-        <md-button class="md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')" ng-disabled="editList.$invalid" ng-hide='myFile'>
+        <md-button class="md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')" ng-disabled="editList.$invalid">
             更新
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

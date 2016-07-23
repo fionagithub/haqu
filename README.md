@@ -8,7 +8,7 @@
 
 ## 安装
 `npm install`
-
+`bower install`
 
 ## 启动
 `node .`

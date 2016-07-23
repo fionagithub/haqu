@@ -1227,7 +1227,7 @@
       "340": "{\"mapid\":340,\"mapname\":\"6区\",\"mapno\":null,\"maplocation\":null,\"maptype\":1,\"source\":null}",
       "341": "{\"mapid\":341,\"mapname\":\"7区(酒店区)\",\"mapno\":null,\"maplocation\":null,\"maptype\":1,\"source\":null}",
       "342": "{\"mapid\":342,\"mapname\":\"8区(塔冠区)\",\"mapno\":null,\"maplocation\":null,\"maptype\":1,\"source\":null}",
-      "344": "{\"mapid\":344,\"mapname\":\"B1F\",\"mapno\":\"334\",\"maplocation\":\"B区\",\"maptype\":1,\"source\":\"maps/B1F.png\",\"open\":true}",
+      "344": "{\"mapid\":344,\"mapname\":\"B1F\",\"mapno\":\"334\",\"maplocation\":\"B区\",\"maptype\":1,\"source\":\"maps/145759395796.jpg\",\"open\":false}",
       "345": "{\"mapid\":345,\"mapname\":\"B2F\",\"mapno\":\"334\",\"maplocation\":\"B区\",\"maptype\":1,\"source\":\"maps/B2F.png\"}",
       "346": "{\"mapid\":346,\"mapname\":\"B3F\",\"mapno\":\"334\",\"maplocation\":\"B区\",\"maptype\":1,\"source\":\"maps/B3F.png\"}",
       "347": "{\"mapid\":347,\"mapname\":\"B4F\",\"mapno\":\"334\",\"maplocation\":\"B区\",\"maptype\":1,\"source\":\"maps/B4F.png\"}",

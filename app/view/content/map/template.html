@@ -1,10 +1,7 @@
-<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="mapCtrl">
+<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="MapCtrl">
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
         <md-button ng-click="toggleRight()" class="md-raised demo-dialog-open-button">新增
         </md-button>
-        <!--      <input type="file" file-model="myFile" />
-   <md-button ng-click="uploadFile()" class="md-raised demo-dialog-open-button">上传
-   </md-button> -->
     </section>
     <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
         <div layout="row">
@@ -13,7 +10,9 @@
         open: showData[data[DeviceField.MAP_ID]]&& data.open }" ng-include="'view/content/map/floordata.html'">
                 </li>
             </ul>
-            <img flex="33" style='height:600px;' ng-src="{{showMapUri}}">
+            <div flex="33">
+                <img style='height:600px;' ng-src="{{showMapUri}}">
+            </div>
         </div>
     </md-content>
     <ui-view>

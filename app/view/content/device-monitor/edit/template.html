@@ -1,0 +1,37 @@
+<md-sidenav class="md-sidenav-right" md-component-id="right">
+    <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">设备与 监控</h1>
+    </md-toolbar>
+    <md-content layout-padding="">
+        <form name="editList">
+             <md-input-container flex class="md-block">
+                <label>监测点组</label>
+                <md-select name="monitorgroupname" required ng-model="selected.monitor">
+                    <md-optgroup>
+                        <md-option ng-value=" data[DeviceField.MNT_GROUP_ID]" ng-repeat="data in MonitorGroupList">{{ data[DeviceField.MNT_GROUP_ID] + ':' + data[DeviceField.DESC]}}</md-option>
+                    </md-optgroup>
+                </md-select>
+                <div ng-messages="editList.monitorgroupname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label>设备类型ID</label>
+                <md-select name="typename" required ng-model="selected.device">
+                    <md-optgroup>
+                        <md-option ng-value=" data[DeviceField.TYPE_ID]" ng-repeat="data in DeviceTypeList">{{ data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
+                    </md-optgroup>
+                </md-select>
+                <div ng-messages="editList.typename.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+        </form>
+         <md-button class="  md-raised demo-dialog-open-button" ng-click="save('resave')" ng-disabled="editList.$invalid">
+            更新
+        </md-button>
+        <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">
+            取消
+        </md-button>
+    </md-content>
+</md-sidenav>

@@ -1,17 +1,31 @@
-angular.module('ibuildweb.factorys.services', ['ibuildweb.factorys.resources', 'ibuildweb.factorys'])
+angular.module('ams.factorys.services', ['ams.factorys.resources', 'ams.factorys'])
+    .factory('map', map)
     .factory('deviceSysTypeList', deviceSysTypeList)
     .factory('monitorGroup', monitorGroup)
     .factory('monitorType', monitorType)
     .factory('deviceMonitor', deviceMonitor)
-    .factory('map', map)
     .factory('deviceInfo', deviceInfo)
     .factory('devicePoint', devicePoint)
     .factory('deviceDefines', deviceDefines)
     .factory('deviceGroupDefine', deviceGroupDefine)
+    .factory('uploadService', uploadService)
+    .factory('fileService', fileService)
+    .factory('deviceTypeList', deviceTypeList);
 
-.factory('deviceTypeList', deviceTypeList);
+// imgUir Config
+function fileService(Resources, API_URI) {
+    return new Resources({
+        uri: API_URI.FILE
+    })
+}
+// imgUir UPLOAD
+function uploadService(Resources, API_URI) {
+    return new Resources({
+        uri: API_URI.UPLOAD
+    })
+}
 
- 
+
 function map(Resources, API_URI, DeviceField) {
     return new Resources({
         uri: API_URI.MAP,

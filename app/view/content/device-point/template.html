@@ -1,0 +1,46 @@
+<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="DevicePointCtrl">
+    <md-input-container flex class="md-block">
+        <label>监控类</label> 
+        <md-select ng-model="selectedData">
+            <md-optgroup>
+                <md-option ng-value="data" ng-repeat="data in MonitorType">{{data[DeviceField.MNT_TYPE_ID] + ':' + data[DeviceField.DESC]}}</md-option>
+            </md-optgroup>
+        </md-select>
+    </md-input-container>
+    <section layout-sm="column" flex layout-align="center center" layout-wrap="">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="search()">搜索
+        </md-button>
+        <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
+        </md-button>
+    </section>
+    <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
+        <table class="md-api-table">
+            <thead>
+                <tr>
+                    <th>设备ID</th>
+                    <th>CMD名称</th>
+                    <th> 监控类型 </th>
+                    <th>来源</th>
+                    <th>监控</th>
+                    <th> 操作 </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat='data in showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
+                    <td>{{data[DeviceField.DEVICE_ID]}} </td>
+                    <td>{{data[DeviceField.CMD_NAME]}} </td>
+                    <td>{{monitorMap[data[DeviceField.MNT_TYPE_ID]]}} </td>
+                    <td>{{data[DeviceField.SOURCE]}} </td>
+                    <td> {{data[DeviceField.MONITOR]}} </td>
+                    <td>
+                                  <inline-tools open="toggleRight(data)" delete='deleteData( data)' old='_oldSelectedRowObj' data='data' del='isDel'></inline-tools>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-section> </pagination-section>
+    </md-content>
+    <ui-view>
+        <!--  left side  -->
+    </ui-view>
+</div>

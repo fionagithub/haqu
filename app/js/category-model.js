@@ -1,4 +1,4 @@
-angular.module('ibuildweb.models.category', [])
+angular.module('ams.models.category', [])
     .service('category', category);
 
 function category() {
@@ -9,11 +9,11 @@ function category() {
         children: [{
             label: "大类",
             iconClasses: "fa",
-            url: "#/systype"
+            url: "#/device-systype"
         }, {
             label: "小类",
             iconClasses: "fa",
-            url: "#/type"
+            url: "#/device-type"
         }]
     }, {
         label: "监控点位类型",
@@ -21,16 +21,16 @@ function category() {
         children: [{
             label: "组类型",
             iconClasses: "fa",
-            url: "#/monitorgroup"
+            url: "#/monitor-group"
         }, {
             label: "关联设备与监控",
             iconClasses: "fa",
-            url: "#/device_monitor"
+            url: "#/device-monitor"
 
         }, {
             label: "常规类型",
             iconClasses: "fa",
-            url: "#/monitortype"
+            url: "#/monitor-type"
 
         }]
     }, {
@@ -43,22 +43,22 @@ function category() {
         children: [{
             label: "设备表",
             iconClasses: "fa",
-            url: "#/deviceinfo"
+            url: "#/device-info"
 
         }, {
             label: " 点位表",
             iconClasses: "fa",
-            url: "#/devicepoint"
+            url: "#/device-point"
 
         }, {
             label: " 设备点位状态",
             iconClasses: "fa",
-            url: "#/devicedefine"
+            url: "#/device-define"
 
         }, {
             label: "设备组",
             iconClasses: "fa",
-            url: "#/devicegroupdefine"
+            url: "#/devicegroup-define"
 
         }]
     }];

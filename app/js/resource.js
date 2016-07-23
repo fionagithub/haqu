@@ -1,4 +1,4 @@
-angular.module('ibuildweb.factorys.resources', ['ibuildweb.factorys'])
+angular.module('ams.factorys.resources', ['ams.factorys'])
     .factory('Resources', Resources);
 
 function Resources($http, DeviceField, $rootScope) {
@@ -7,8 +7,25 @@ function Resources($http, DeviceField, $rootScope) {
 
         var dataInfo = {
             exists: null,
-            maxID: null,
+            maxID: null, 
             paramsSysId: null, //最大ID号或者是
+            fileConfig: function() {
+                return $http.get(options.uri).success(function(result) { 
+                        console.log("图片路径",result);
+                })
+            },
+            post: function(obj) {
+                return $http.post(options.uri, obj, {
+                        transformRequest: angular.identity,
+                        headers: { 'Content-Type': undefined }
+                    })
+                    .success(function() {
+                        console.log("上传成功!!");
+                    })
+                    .error(function() {
+                        console.log("上传失败!!");
+                    });
+            },
             filter: function(offset, limit, callback) {
                 var _obj = {},
                     _params = {};

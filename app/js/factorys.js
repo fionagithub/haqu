@@ -9,7 +9,7 @@ function DeviceField() {
         ID: "autoid",
         NAME: "devicename",
         DEVICE_ID: "deviceid",
-        DEVICE_NO: "deviceno", // 回路号
+        DEVICE_NO: "deviceno", // 回路号 valuecompareoprator
         X: "axisx",
         Y: "axisy",
         TYPE_ID: "devicetypeid",

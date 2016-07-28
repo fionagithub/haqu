@@ -6,9 +6,11 @@
         <form name="editList">
             <md-input-container flex class="md-block">
                 <label>区域</label>
-                <md-select name="map" required ng-model="selected.map">
+                <md-select name="map" required ng-model="data.groupFieldName[data.relatedData.DeviceField.MAP_NO]">
                     <md-optgroup>
-                        <md-option ng-value="data" ng-repeat='data in showData.null '>{{data[DeviceField.MAP_ID] + ':' +data[DeviceField.MAP_NAME]}}</md-option>
+                        <md-option ng-value="item[data.relatedData.DeviceField.MAP_ID]" ng-repeat="item in data.relatedData.showAreaData">
+                            {{item[data.relatedData.DeviceField.MAP_ID]+ ':' + item[data.relatedData.DeviceField.MAP_NAME]}}
+                        </md-option>
                     </md-optgroup>
                 </md-select>
                 <div ng-messages="editList.map.$error">
@@ -17,7 +19,10 @@
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>地图名称 </label>
-                <input ng-model="addData[DeviceField.MAP_NAME] ">
+                <input name="mapname" required ng-minlength="2" ng-model="data.groupFieldName[data.relatedData.DeviceField.MAP_NAME]">
+                <div ng-messages="editList.mapname.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <input type="file" file-model="myFile" />
@@ -26,10 +31,10 @@
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label> 地图类别 </label>
-                <input ng-model=" addData[DeviceField.MAP_TYPE]">
+                <input ng-model="data.groupFieldName[data.relatedData.DeviceField.MAP_TYPE]">
             </md-input-container>
         </form>
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(addData,'save')" ng-disabled="editList.$invalid" ng-hide='myFile'>
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(data.groupFieldName,'save')" ng-disabled="editList.$invalid" ng-hide='myFile'>
             保存
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

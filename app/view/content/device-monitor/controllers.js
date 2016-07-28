@@ -1,7 +1,7 @@
 angular.module('content.deviceMonitor', ['ams.factorys', 'ams.factorys.services'])
     .controller('DeviceMonitorCtrl', DeviceMonitorCtrl)
 
-function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $mdSidenav, $mdComponentRegistry) {
+function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ams.category.content") {
             load();
@@ -11,16 +11,10 @@ function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, 
 
     var query = {};
 
-    $scope.deviceMap = {};
-    $scope.monitorMap = {};
-    var k, v;
-
     function load() {
         $scope.showData = paginator(deviceMonitor.filter, 10);
         $scope.selected = {
-            data: null,
-            device: null,
-            monitor: null
+            data: null
         };
         $rootScope.query = null;
         $scope.DeviceField = DeviceField;
@@ -32,10 +26,39 @@ function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, 
         });
     }
 
+
+    $scope.toggleRight = function(obj) {
+        var uri = {
+            category: $stateParams.category
+        };
+        var relatedData = {
+            'DeviceField': $scope.DeviceField,
+            'MonitorGroupList': $scope.MonitorGroupList,
+            'DeviceTypeList': $scope.DeviceTypeList
+        };
+        $scope.$emit('relatedData', relatedData);
+
+        if (obj) {
+            uri.id = obj[DeviceField.MNT_GROUP_ID];
+            $state.go("ams.category.content.edit", uri);
+            $scope.$emit('groupFieldName', angular.copy(obj));
+        } else {
+            $state.go("ams.category.content.create");
+            $scope.$emit('reopen');
+        }
+        // 'No instance found for handle'
+        $mdComponentRegistry.when('right').then(function(it) {
+            it.toggle();
+        });
+    };
+
     $scope.search = function() {
         $rootScope.query = query;
         $scope.showData._load(0);
     }
+
+    var k, v;
+
     $scope.$watch('selected.data', function() {
         if ($scope.selected.data) {
             query[DeviceField.MNT_GROUP_ID] = angular.copy($scope.selected.data[DeviceField.MNT_GROUP_ID]);
@@ -45,6 +68,7 @@ function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, 
     });
 
     $scope.$watch('DeviceTypeList', function() {
+        $scope.deviceMap = {};
         if ($scope.DeviceTypeList) {
             for (var i in $scope.DeviceTypeList) {
                 k = $scope.DeviceTypeList[i][DeviceField.TYPE_ID];
@@ -56,6 +80,7 @@ function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, 
     });
 
     $scope.$watch('MonitorGroupList', function() {
+        $scope.monitorMap = {};
         if ($scope.MonitorGroupList) {
             for (var i in $scope.MonitorGroupList) {
                 k = $scope.MonitorGroupList[i][DeviceField.MNT_GROUP_ID];
@@ -67,10 +92,7 @@ function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, 
     });
 
     // 自定义设备 保存按钮
-    $scope.save = function(type) {
-        var obj = {};
-        obj[DeviceField.TYPE_ID] = $scope.selected.device;
-        obj[DeviceField.MNT_GROUP_ID] = $scope.selected.monitor;
+    $scope.$on("saveFromParent", function(event, obj, type) {
         deviceMonitor.saveOne(obj, type, function() {
             if ($scope.selected.data) {
                 query[DeviceField.MNT_GROUP_ID] = $scope.selected.data[DeviceField.MNT_GROUP_ID];
@@ -79,7 +101,8 @@ function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, 
             toastService();
             $scope.showData._load();
         });
-    };
+
+    });
 
     $scope.deleteData = function(obj) {
         delDialogService(function() {
@@ -95,26 +118,6 @@ function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, 
     };
 
 
-    $scope.toggleRight = function(obj) {
-        if (obj) {
-            $state.go("ams.category.content.edit", { id: obj[DeviceField.MNT_GROUP_ID] });
-            if (obj[DeviceField.TYPE_ID]) {
-                $scope.selected.device = obj[DeviceField.TYPE_ID];
-            }
-            if (obj[DeviceField.MNT_GROUP_ID]) {
-                $scope.selected.monitor = obj[DeviceField.MNT_GROUP_ID];
-            }
-            $scope.groupFieldName = angular.copy(obj);
-        } else {
-            $state.go("ams.category.content.create");
-        }
-        // 'No instance found for handle'
-        $mdComponentRegistry.when('right').then(function(it) {
-            it.toggle();
-        });
-    };
-
-
     $scope._oldSelectedRowObj = [];
     // 自定义设备 查看列表数据
     $scope.selectedRow = function(index, obj) {
@@ -125,11 +128,5 @@ function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, 
         $scope._oldSelectedRowObj.unshift(obj);
 
     };
-
-
-    $scope.cancel = function() {
-        $mdSidenav('right').close();
-    };
-
 
 }

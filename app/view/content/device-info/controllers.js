@@ -1,7 +1,7 @@
 angular.module('content.deviceInfo', ['ams.factorys', 'ams.factorys.services'])
     .controller('DeviceInfoCtrl', DeviceInfoCtrl)
 
-function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $mdSidenav, $mdComponentRegistry) {
+function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ams.category.content") {
@@ -16,9 +16,7 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
         $scope.showData = paginator(deviceInfo.filter, 10);
         $scope.DeviceField = DeviceField;
         $scope.selected = {
-            data: null,
-            device: null,
-            map: null
+            data: null
         };
 
         map.filter(null, null, function(data) {
@@ -29,10 +27,35 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
         });
     }
 
-    $scope.deviceMap = {};
-    $scope.mapMap = {};
+
+    $scope.toggleRight = function(obj) {
+        var uri = {
+            category: $stateParams.category
+        };
+        var relatedData = {
+            'DeviceField': $scope.DeviceField,
+            'mapData': $scope.mapData,
+            'DeviceTypeList': $scope.DeviceTypeList
+        };
+        $scope.$emit('relatedData', relatedData);
+
+        if (obj) {
+            uri.id = obj[DeviceField.DEVICE_ID];
+            $state.go("ams.category.content.edit", uri);
+            $scope.$emit('groupFieldName', obj);
+        } else {
+            $state.go("ams.category.content.create");
+            $scope.$emit('reopen');
+        }
+        // 'No instance found for handle'
+        $mdComponentRegistry.when('right').then(function(it) {
+            it.toggle();
+        });
+    };
+
     var k, v;
     $scope.$watch('DeviceTypeList', function() {
+        $scope.deviceMap = {};
         if ($scope.DeviceTypeList) {
             for (var i in $scope.DeviceTypeList) {
                 k = $scope.DeviceTypeList[i][DeviceField.TYPE_ID];
@@ -43,6 +66,7 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
     });
 
     $scope.$watch('mapData', function() {
+        $scope.mapMap = {};
         if ($scope.mapData) {
             for (var i in $scope.mapData) {
                 k = $scope.mapData[i][DeviceField.MAP_ID];
@@ -65,11 +89,8 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
         }
     });
 
-
-    $scope.save = function(obj, type) {
-          obj ? obj : obj = {};
-        obj[DeviceField.MAP_ID] = $scope.selected.map||null;
-        obj[DeviceField.TYPE_ID] = $scope.selected.device||null;
+    $scope.$on("saveFromParent", function(event, obj, type) {
+        obj ? obj : obj = {};
         deviceInfo.saveOne(obj, type, function() {
             if ($scope.selected.data) {
                 query[DeviceField.TYPE_ID] = angular.copy($scope.selected.data[DeviceField.TYPE_ID]);
@@ -78,12 +99,11 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
             toastService();
             $scope.showData._load()
         });
+    });
 
-    }
     $scope.deleteData = function(obj) {
         delDialogService(function() {
             console.log('delete...');
-
             deviceInfo.deleteOne(obj).then(function(data) { $scope.showData._load() })
         })
     };
@@ -110,28 +130,6 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
             }
             $rootScope.query = null;
         })
-    };
-
-    $scope.cancel = function() {
-        $mdSidenav('right').close();
-    };
-    $scope.toggleRight = function(obj) {
-        if (obj) {
-            $state.go("ams.category.content.edit", { id: obj[DeviceField.DEVICE_ID] });
-            if (obj[DeviceField.MAP_ID]) {
-                $scope.selected.map = obj[DeviceField.MAP_ID];
-            }
-            if (obj[DeviceField.TYPE_ID]) {
-                $scope.selected.device = obj[DeviceField.TYPE_ID];
-            }
-        } else {
-            $state.go("ams.category.content.create");
-        }
-        // 'No instance found for handle'
-        $mdComponentRegistry.when('right').then(function(it) {
-            it.toggle();
-        });
-        $scope.groupFieldName = angular.copy(obj);
     };
 
 }

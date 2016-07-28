@@ -6,13 +6,13 @@
         <form name="editList">
             <md-input-container flex class="md-block">
                 <label> 描述</label>
-                <input name="monitorgroupname" required ng-minlength="2" ng-model="data.edit[DeviceField.DESC]">
+                <input type="text" name="systypename" required ng-minlength="2" ng-model="data.groupFieldName[data.relatedData.DeviceField.DESC]">
                 <div ng-messages="editList.monitorgroupname.$error">
                     <div ng-message="required">This is required.</div>
                 </div>
             </md-input-container>
         </form>
-        <md-button class="md-raised demo-dialog-open-button" ng-click="save(data.edit,'save')" ng-disabled="editList.$invalid">
+        <md-button class="md-raised demo-dialog-open-button" ng-click="save(data.groupFieldName,'save')" ng-disabled="editList.$invalid">
             保存
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

@@ -7,11 +7,11 @@ function Resources($http, DeviceField, $rootScope) {
 
         var dataInfo = {
             exists: null,
-            maxID: null, 
+            maxID: null,
             paramsSysId: null, //最大ID号或者是
             fileConfig: function() {
-                return $http.get(options.uri).success(function(result) { 
-                        console.log("图片路径",result);
+                return $http.get(options.uri).success(function(result) {
+                    console.log("图片路径", result);
                 })
             },
             post: function(obj) {
@@ -93,7 +93,11 @@ function Resources($http, DeviceField, $rootScope) {
                 /*    var saveUri = options.uri;*/
                 this.getMaxID().then(function() {
                     if (options.paramId) {
-                        obj[options.paramId] = obj[options.paramId] || dataInfo.maxID;
+                        if (obj[options.paramId] && type === 'resave') {
+                            obj[options.paramId] = obj[options.paramId];
+                        } else {
+                            obj[options.paramId] = dataInfo.maxID;
+                        }
                     }
                     $http.put(saveUri[type], obj).success(callback);
                 });

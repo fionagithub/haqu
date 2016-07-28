@@ -1,7 +1,7 @@
 angular.module('content.devicePoint', ['ams.factorys', 'ams.factorys.services'])
     .controller('DevicePointCtrl', DevicePointCtrl)
 
-function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $mdSidenav, $mdComponentRegistry) {
+function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ams.category.content") {
@@ -22,6 +22,31 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
         });
     }
 
+    $scope.toggleRight = function(obj) {
+        var uri = {
+            category: $stateParams.category
+        };
+        var relatedData = {
+            'DeviceField': $scope.DeviceField,
+            'MonitorType': $scope.MonitorType
+        };
+        $scope.$emit('relatedData', relatedData);
+
+        if (obj) {
+            uri.id = obj[DeviceField.DEVICE_ID];
+            $state.go("ams.category.content.edit", uri);
+            $scope.$emit('groupFieldName', obj);
+        } else {
+            $state.go("ams.category.content.create", uri);
+            $scope.$emit('reopen');
+        }
+        // 'No instance found for handle'
+        $mdComponentRegistry.when('right').then(function(it) {
+            it.toggle();
+        });
+    };
+
+
     $scope.search = function() {
         $rootScope.query = query;
         $scope.showData._load(0);
@@ -34,9 +59,9 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
         }
     });
 
-    $scope.monitorMap = {};
     var k, v;
     $scope.$watch('MonitorType', function() {
+        $scope.monitorMap = {};
         if ($scope.MonitorType) {
             for (var i in $scope.MonitorType) {
                 k = $scope.MonitorType[i][DeviceField.MNT_TYPE_ID];
@@ -55,27 +80,8 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
         $scope._oldSelectedRowObj.unshift(obj);
     };
 
-
-    $scope.toggleRight = function(obj) {
-        if (obj) {
-            $state.go("ams.category.content.edit", { id: obj[DeviceField.DEVICE_ID] });
-            $scope.selected.data = obj[DeviceField.MNT_TYPE_ID];
-            $scope.groupFieldName = angular.copy(obj);
-        } else {
-            $state.go("ams.category.content.create");
-            $scope.selected = {
-                data: null
-            };
-        }
-        // 'No instance found for handle'
-        $mdComponentRegistry.when('right').then(function(it) {
-            it.toggle();
-        });
-    };
-
-    $scope.save = function(obj, type) {
+    $scope.$on("saveFromParent", function(event, obj, type) {
         obj ? obj : obj = {};
-        obj[DeviceField.MNT_TYPE_ID] = $scope.selected.data;
         devicePoint.saveOne(obj, type, function() {
             if ($scope.selectedData) {
                 query[DeviceField.MNT_TYPE_ID] = angular.copy($scope.selectedData[DeviceField.MNT_TYPE_ID]);
@@ -84,7 +90,7 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
             toastService();
             $scope.showData._load()
         });
-    }
+    });
 
     $scope.deleteData = function(obj) {
         delDialogService(function() {
@@ -99,9 +105,4 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
         })
     };
 
-
-
-    $scope.cancel = function() {
-        $mdSidenav('right').close();
-    };
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="AMS" ng-controller="AmsCtr">
+<html ng-app="AMS">
 
 <head>
     <meta charset="UTF-8">
@@ -21,28 +21,27 @@
     <script type="text/javascript" src="js/factorys.js"></script>
     <script type="text/javascript" src="js/category-model.js"></script>
     <script type="text/javascript" src="view/category/js/nav.js"></script>
-    <script type="text/javascript" src="view/content/content.js"></script>
     <script type="text/javascript" src="view/content/device-systype/controllers.js"></script>
     <script type="text/javascript" src="view/content/device-type/controllers.js"></script>
     <script type="text/javascript" src="view/content/monitor-group/controllers.js"></script>
     <script type="text/javascript" src="view/content/monitor-type/controllers.js"></script>
     <script type="text/javascript" src="view/content/device-monitor/controllers.js"></script>
+    
     <script type="text/javascript" src="view/content/map/controllers.js"></script>
+    <script type="text/javascript" src="view/content/content.js"></script>
     <script type="text/javascript" src="view/content/device-info/controllers.js"></script>
     <script type="text/javascript" src="view/content/device-point/controllers.js"></script>
     <script type="text/javascript" src="view/content/device-define/controllers.js"></script>
     <script type="text/javascript" src="view/content/devicegroup-define/controllers.js"></script>
 </head>
 
-<body class="docs-body layout-row" layout="row">
-    <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2 hide-print _md-closed ng-isolate-scope _md _md-locked-open" md-component-id="left" hide-print="" md-is-locked-open="$mdMedia('gt-sm')" tabindex="-1">
-        <div ui-view="category"></div>
-    </md-sidenav>
+<body class="docs-body layout-row" layout="row" ng-controller="AmsCtr">
+   <div ui-view="category"></div>
     <div layout="column" tabindex="-1" role="main" flex class="layout-column flex" style='z-index:12;'>
         <div ui-view="topnav"></div>
-        <div ui-view="content">
-        </div>
-    </div> 
+        <div ui-view="content"> </div>
+    </div>
+    <div ui-view="right" ng-controller="rightCtrl"></div>
 </body>
 
 </html>

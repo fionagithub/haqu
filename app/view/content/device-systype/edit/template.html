@@ -6,14 +6,13 @@
         <form name="editList">
             <md-input-container flex class="md-block">
                 <label> 大类名称</label>
-                <p class="form-control-static hide">{{data.edit[DeviceField.SYS_TYPE_ID]}}</p>
-                <input type="text" name="systypename" required ng-minlength="2" ng-model="data.edit[DeviceField.SYS_TYPE_NAME]">
+                <input type="text" name="systypename" required ng-minlength="2" ng-model="data.groupFieldName[data.relatedData.DeviceField.SYS_TYPE_NAME]">
                 <div ng-messages="editList.systypename.$error">
                     <div ng-message="required">This is required.</div>
                 </div>
             </md-input-container>
         </form>
-        <md-button class="md-raised demo-dialog-open-button" ng-click="save(data.edit,'resave')" ng-disabled="editList.$invalid"> 更新
+        <md-button class="md-raised demo-dialog-open-button" ng-click="save(data.groupFieldName,'resave')" ng-disabled="editList.$invalid"> 更新
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">
             取消

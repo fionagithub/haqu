@@ -6,9 +6,11 @@
         <form name="editList">
             <md-input-container flex class="md-block">
                 <label for="form-group ">设备类型 </label>
-                <md-select name="typename" required ng-model="selected.device">
+                <md-select name="typename" required ng-model="data.groupFieldName[data.relatedData.DeviceField.TYPE_ID]">
                     <md-optgroup>
-                        <md-option ng-value="data[DeviceField.TYPE_ID]" ng-repeat="data in DeviceTypeList">{{data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
+                        <md-option ng-value="item[data.relatedData.DeviceField.TYPE_ID]" ng-repeat="item in data.relatedData.DeviceTypeList">
+                            {{item[data.relatedData.DeviceField.TYPE_ID]+ ':' + item[data.relatedData.DeviceField.TYPE_NAME]}}
+                        </md-option>
                     </md-optgroup>
                 </md-select>
                 <div ng-messages="editList.typename.$error">
@@ -17,9 +19,11 @@
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>监控类型</label>
-                <md-select name="monitorgroupname" required ng-model="selected.monitor">
+                <md-select name="monitorgroupname" required ng-model="data.groupFieldName[data.relatedData.DeviceField.MNT_TYPE_ID]">
                     <md-optgroup>
-                        <md-option ng-value="data[DeviceField.MNT_TYPE_ID] " ng-repeat="data in MonitorType">{{data[DeviceField.MNT_TYPE_ID] + ':' + data[DeviceField.DESC]}}</md-option>
+                        <md-option ng-value="item[data.relatedData.DeviceField.MNT_TYPE_ID]" ng-repeat="item in data.relatedData.MonitorType">
+                            {{item[data.relatedData.DeviceField.MNT_TYPE_ID]+ ':' + item[data.relatedData.DeviceField.DESC]}}
+                        </md-option>
                     </md-optgroup>
                 </md-select>
                 <div ng-messages="editList.monitorgroupname.$error">
@@ -28,46 +32,52 @@
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label for="form-group ">状态值 </label>
-                <p class="form-control-static">{{data[DeviceField.STATUS_VAL]}}</p>
-            </md-input-container>
-            <md-input-container flex class="md-block">
-                <label>数字校验位</label>
-                <!-- 
-                <input ng-model="data[DeviceField.VAL]"> -->
-                <md-select ng-model="aaa.sel" md-selected-text="aaa.sel.n" ng-init="aaa=[{n:'1',i:1},{n:'2',i:2},{n:'3',i:3}]; aaa.sel = {n:'2'}">
-                    <md-option ng-value="a.i" ng-repeat="a in aaa">{{ a.n}}</md-option>
-                </md-select>
-                <md-select ng-model="selected.valueOpartor" md-selected-text="getSelectedText(selected.valueOpartor)">
-                    <md-option ng-value="editData" ng-repeat="editData in data.valueOpartor">{{ editData}}</md-option>
-                </md-select>
+                <input ng-model="data.groupFieldName[data.relatedData.DeviceField.STATUS_VAL]">
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>描述 </label>
-                <input ng-model="data[DeviceField.DESC]">
+                <input name="desc" required ng-minlength="2" ng-model="data.groupFieldName[data.relatedData.DeviceField.DESC]">
+                <div ng-messages="editList.desc.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label for="form-group ">报警flg </label>
-                <md-checkbox ng-model="data[DeviceField.ALARM_FLG]">
-                </md-checkbox>
-            </md-input-container>
-            <md-input-container flex class="md-block">
-                <label>报警级别</label>
-                <md-select ng-model="selected.alarmLevel" md-selected-text="getSelectedText(selected.alarmLevel)">
-                    <md-option ng-value="editData" ng-repeat="editData in data.alarmLevel">{{ editData}}</md-option>
+                <label>数字校验位</label>
+                <md-select ng-model="data.groupFieldName[data.relatedData.DeviceField.VAL]">
+                    <md-optgroup>
+                        <md-option ng-value="item" ng-repeat="item in data.relatedData.ValueOpartor">
+                            {{item}}
+                        </md-option>
+                    </md-optgroup>
                 </md-select>
             </md-input-container>
             <md-input-container flex class="md-block">
+                <label>报警级别</label>
+                <md-select ng-model="data.groupFieldName[data.relatedData.DeviceField.ALARM_LVL]">
+                    <md-optgroup>
+                        <md-option ng-value="item" ng-repeat="item in data.relatedData.AlarmLevel">
+                            {{item}}
+                        </md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+            <md-input-container flex class="md-block">
+                <label for="form-group ">报警flg </label>
+                <md-checkbox ng-model="data.relatedData.DeviceField[data.groupFieldName[data.relatedData.DeviceField.ALARM_FLG]]">
+                </md-checkbox>
+            </md-input-container>
+            <md-input-container flex class="md-block">
                 <label>isDefault </label>
-                <md-checkbox ng-model="data[DeviceField.IS_DEFAULT]">
+                <md-checkbox ng-model="data.relatedData.DeviceField[data.groupFieldName[data.relatedData.DeviceField.IS_DEFAULT]]">
                 </md-checkbox>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>isAnalogIO</label>
-                <md-checkbox ng-model="data[DeviceField.IS_ANALOGIO]">
+                <md-checkbox ng-model="data.relatedData.DeviceField[data.groupFieldName[data.relatedData.DeviceField.IS_ANALOGIO]]">
                 </md-checkbox>
             </md-input-container>
         </form>
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(data,'save')" ng-disabled="editList.$invalid">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(data.groupFieldName,'save')" ng-disabled="editList.$invalid">
             保存
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

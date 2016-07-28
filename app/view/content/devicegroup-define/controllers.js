@@ -1,93 +1,63 @@
 angular.module('content.deviceGroupDefine', ['ams.factorys', 'ams.factorys.services'])
     .controller('DeviceGroupDefineCtrl', DeviceGroupDefineCtrl)
     .directive("smartyInput", smartyInput)
-    .directive("focusMe", focusMe)
     .directive("smartySuggestions", smartySuggestions)
+    .directive("focusMe", focusMe)
     .directive("smartySuggestionsBox", smartySuggestionsBox)
 
-function DeviceGroupDefineCtrl($scope, deviceGroupDefine, deviceInfo, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $document, $mdSidenav, $mdComponentRegistry) {
+function DeviceGroupDefineCtrl($scope, deviceGroupDefine, deviceInfo, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $document, $mdSidenav, $mdComponentRegistry) {
     var _this = this;
-    _this.selected = -1;
-    _this.selectionMade = false;
-    _this.query = {};
-    _this.suggestions = [];
-    _this.subData = [];
-    _this.clickedSomewhereElse = clickedSomewhereElse;
-    _this.suggestionPicked = suggestionPicked;
     _this.selectedRow = selectedRow;
     _this.getSelectedText = getSelectedText;
     _this.toggleRight = toggleRight;
     _this.deleteData = deleteData;
 
-    _this.save = save;
-    _this.cancel = cancel;
-    _this.setSelected = setSelected;
+    _this.query = {};
     _this.search = search;
 
-
-    var prefixId = function() {
-        return _this.prefix;
-    };
-
-    _this.prefixWatch = $scope.$watch(prefixId, function(newValue, oldValue) {
-        if (newValue != oldValue) {
-            if (_this.selectionMade) {
-                _this.suggestions = [];
-            } else {
-                _this.query[DeviceField.DEVICE_ID] = { "like": '%' + _this.prefix + '%' };
-                $rootScope.query = _this.query;
-                deviceInfo.filter(null, null, function(data) {
-                    _this.suggestions = [];
-                    delete _this.query[DeviceField.DEVICE_ID];
-                    return data.map(function(_data) {
-                        return _this.suggestions = _this.suggestions.concat(_data[DeviceField.DEVICE_ID]);
-                    });
-                })
-            }
-        }
+    _this.prefix = null;
+    $scope.$on("mapFromParent", function(event, data) {
+        _this.query[DeviceField.DEVICE_ID] = { "like": '%' + data.prefix + '%' };
+        $rootScope.query = _this.query;
+        deviceInfo.filter(null, null, function(data) {
+            delete _this.query[DeviceField.DEVICE_ID];
+            $scope.$emit('suggestions', data);
+        })
     });
 
-    function suggestionPicked() {
-        _this.selectionMade = true;
+    $scope.$on("subDataFromParent", function(event, data) {
+        _this.query[DeviceField.DEVICE_ID] = { "like": '%' + parseInt(data / Math.pow(10, 2)) + '%' };
+        $rootScope.query = _this.query;
+        deviceInfo.filter(null, null, function(data) {
+            delete _this.query[DeviceField.DEVICE_ID];
+            $scope.$emit('subDatasuggestions', data);
 
-        if (_this.selected != -1 && _this.selected < _this.suggestions.length) {
-            _this.prefix = _this.suggestions[_this.selected];
+        });
+    });
 
-            _this.query[DeviceField.DEVICE_ID] = { "like": '%' + parseInt(_this.prefix / Math.pow(10, 2)) + '%' };
-            $rootScope.query = _this.query;
-            deviceInfo.filter(null, null, function(data) {
-                delete _this.query[DeviceField.DEVICE_ID];
-                return data.map(function(_data) {
-                    return _this.subData = _this.subData.concat(_data[DeviceField.DEVICE_ID]);
-                });
-            });
-        }
-        _this.suggestions = [];
-    };
+
 
     function toggleRight(obj) {
-        _this.selectionMade = false;
-        _this.prefix = null;
-        _this.suggestions = [];
-        _this.subData = [];
+        var uri = {
+            category: $stateParams.category
+        };
+        var relatedData = {
+            'DeviceField': DeviceField
+        };
+        $scope.$emit('relatedData', relatedData);
+
+        if (obj) {
+            uri.id = obj[DeviceField.DEVICE_ID];
+            $state.go("ams.category.content.edit", uri);
+            $scope.$emit('groupFieldName', angular.copy(obj));
+        } else {
+            $state.go("ams.category.content.create");
+            $scope.$emit('reopen');
+        }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
             it.toggle();
         });
-        if (obj) {
-            $state.go("ams.category.content.edit", { id: obj[DeviceField.DEVICE_ID] });
-            _this.selectionMade = true;
-            _this.prefix = obj[DeviceField.DEVICE_ID];
-            var subID = obj[DeviceField.SUBDEVICE_ID];
-            if (subID) {
-                _this.subData = subID.split(",");
-                _this.subData.item = subID.split(",");
-            }
-            _this.groupFieldName = angular.copy(obj);
-        } else {
-            $state.go("ams.category.content.create");
-        }
-
     };
 
 
@@ -125,24 +95,6 @@ function DeviceGroupDefineCtrl($scope, deviceGroupDefine, deviceInfo, paginator,
         })
     };
 
-    function clickedSomewhereElse() {
-        _this.selected = -1;
-        _this.suggestions = [];
-    };
-
-    $document.bind("click", function() {
-        $scope.$apply(clickedSomewhereElse());
-    });
-
-    function setSelected(newValue) {
-        if (newValue > _this.suggestions.length) {
-            _this.selected = 0;
-        } else if (newValue < 0) {
-            _this.selected = _this.suggestions.length;
-        } else {
-            _this.selected = newValue;
-        }
-    };
 
     function search() {
         _this.showData._load(0);
@@ -157,18 +109,31 @@ function DeviceGroupDefineCtrl($scope, deviceGroupDefine, deviceInfo, paginator,
     };
 
 
-    function save(obj, type) {
+    $scope.$on("saveFromParent", function(event, obj, type) {
         obj ? obj : obj = {};
-        obj[DeviceField.DEVICE_ID] = _this.prefix;
-        obj[DeviceField.SUBDEVICE_ID] = _this.subData.item;
+        obj[DeviceField.DEVICE_ID] = obj.prefix;
+        obj[DeviceField.TMP_NAME] = obj.tmp;
+        obj[DeviceField.SUBDEVICE_ID] = obj.subDataItem;
         deviceGroupDefine.saveOne(obj, type, function() {
             toastService();
             _this.showData._load()
         });
-    }
+    });
 
-    function cancel() {
-        $mdSidenav('right').close();
+}
+
+function focusMe() {
+    return {
+        restrict: "A",
+        link: function(scope, element, attrs) {
+            scope.$watch(attrs.focusMe, function(value) {
+                if (value === true) {
+                    element[0].focus();
+                    scope[attrs.focusMe] = false;
+                    console.log('--=value===', scope[attrs.focusMe]);
+                }
+            });
+        }
     };
 }
 
@@ -183,6 +148,7 @@ function smartyInput() {
                     break;
                 case 38: // up arrow
                     scope.$apply(function() {
+                        console.log('----', scope.index)
                         scope.select({ "x": parseInt(scope.index) - 1 });
                     });
                     break;
@@ -235,10 +201,10 @@ function smartyInput() {
 function smartySuggestionsBox() {
     return {
         restrict: "A",
-        template: '<div smarty-suggestions apply-class="dgdCtrl.setSelected(x)"' +
-            'select-suggestion="dgdCtrl.suggestionPicked()" suggestions="dgdCtrl.suggestions"' +
-            'selected="dgdCtrl.selected" clicked-elsewhere="dgdCtrl.clickedSomewhereElse()"' +
-            'ng-if="dgdCtrl.suggestions.length > 0" prefix="{{dgdCtrl.prefix}} "' +
+        template: '<div smarty-suggestions apply-class="setSelected(x)"' +
+            'select-suggestion="suggestionPicked()" clicked-elsewhere="clickedSomewhereElse()"' +
+            'selected="mapParams.selected" suggestions="mapParams.suggestions"' +
+            'ng-if="mapParams.suggestions.length > 0"' +
             'class="autocomplete-suggestions-menu ng-cloak"></div>'
     };
     // Removes the need for duplicating the scode that makes the suggestions list. 
@@ -265,26 +231,13 @@ function smartySuggestions($document) {
             'ng-class="{selected: $index == selected}" ' +
             'ng-mouseover="applyClass({x:$index})" ' +
             'ng-click="selectSuggestion()"> ' +
-            '  {{suggestion}}  ' +
+            ' {{suggestion}}' +
             '</p>'
 
     };
 }
 /*  add or show more
-
-      prefix: "@"'<p ng-mouseover="applyClass({x:suggestions.length})" ' +
+    prefix="{{map.prefix}}  "  prefix: "@"'<p ng-mouseover="applyClass({x:suggestions.length})" ' +
             'ng-class="{selected: suggestions.length == selected}" ' +
             'ng-click="selectSuggestion()" class="show-all"> ' +
             'Show all for " {{prefix}}  " &raquo;</p>'*/
-function focusMe() {
-    return {
-        restrict: "A",
-        link: function(scope, element, attrs) {
-            attrs.$observe("focusWhen", function() {
-                if (attrs.focusWhen == "true") {
-                    element[0].focus();
-                }
-            });
-        }
-    };
-}

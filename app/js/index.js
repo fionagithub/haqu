@@ -56,9 +56,9 @@ function stateConfig($stateProvider, $urlRouterProvider) {
         .state('ams.category.content.create', {
             url: '/create',
             views: {
-                '@ams.category.content': {
-                    templateUrl: function(param) {
-                        return 'view/content/' + param.category + '/create/template.html'
+                'right@': { 
+                    templateUrl: function(params) {
+                        return 'view/content/' + params.category + '/create/template.html'
                     }
 
                 }
@@ -66,11 +66,16 @@ function stateConfig($stateProvider, $urlRouterProvider) {
         })
         .state('ams.category.content.edit', {
             url: '/edit/:id',
+            resolve: {
+                id: function($stateParams) {
+                    return $stateParams.id;
+                }
+            },
             views: {
-                '@ams.category.content': {
-                    templateUrl: function(param) {
-                        return 'view/content/' + param.category + '/edit/template.html'
-                    }
+                'right@': {
+                    templateUrl: function(params) {
+                        return 'view/content/' + params.category + '/edit/template.html'
+                    } 
                 }
             }
         })

@@ -17,7 +17,7 @@
            };
        }])
 
-   function MapCtrl($scope, map, deviceInfo, fileService, uploadService, paginator, delDialogService, toastService, DeviceField, $state, $mdSidenav, $mdComponentRegistry) {
+   function MapCtrl($scope, map, deviceInfo, fileService, uploadService, paginator, delDialogService, toastService, DeviceField, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
        $scope.$on('$stateChangeSuccess', function() {
            if ($state.current.name == "ams.category.content") {
                load();
@@ -42,8 +42,42 @@
            $scope.DeviceField = DeviceField;
        }
 
-       $scope.uploadFile = function() {
-           var file = $scope.map.file;
+       $scope.toggleRight = function(obj) {
+           var uri = {
+               category: $stateParams.category
+           };
+           var relatedData = {
+               'DeviceField': $scope.DeviceField,
+               'showAreaData': $scope.showAreaData
+           };
+           $scope.$emit('relatedData', relatedData);
+
+           if (obj) {
+               uri.id = obj[DeviceField.MAP_ID];
+               $state.go("ams.category.content.edit", uri);
+               $scope.$emit('groupFieldName', obj);
+           } else {
+               $state.go("ams.category.content.create", uri);
+               $scope.$emit('reopen');
+           }
+           // 'No instance found for handle'
+           $mdComponentRegistry.when('right').then(function(it) {
+               it.toggle();
+           });
+       };
+
+
+       $scope.$on("save", function(event, obj, type) {
+           obj ? obj : obj = {};
+           obj[DeviceField.SOURCE] = $scope.filename;
+           obj[DeviceField.MAP_NO] = $scope.selected.map;
+           map.saveOne(obj, type, function() {
+               toastService();
+           });
+       });
+
+
+       $scope.$on("uploadFileFromParent", function(event, file) {
            var fd = new FormData();
            fd.append('file', file);
            $scope.filename = 'maps/' + file.name;
@@ -51,15 +85,7 @@
            uploadService.post(fd).then(function() {
                console.log('-=--ok--=-')
            })
-       };
-       $scope.save = function(obj, type) {
-        obj ? obj : obj = {};
-           obj[DeviceField.SOURCE] = $scope.filename;
-           obj[DeviceField.MAP_NO] = $scope.selected.map;
-           map.saveOne(obj, type, function() {
-               toastService();
-           });
-       }
+       });
 
        function treeMenu(o) {
            this.tree = o || [];
@@ -83,12 +109,6 @@
        };
 
 
-
-       $scope.cancel = function() {
-           $mdSidenav('right').close();
-       };
-
-
        // 自定义设备 查看列表数据 remove
        $scope.selectedRow = function(index, obj) {
            obj.open = obj.open === false;
@@ -105,21 +125,6 @@
                console.log('delete...');
                map.deleteOne(obj).then(function(data) {})
            })
-       };
-       $scope.toggleRight = function(obj) {
-           if (obj) {
-               $state.go("ams.category.content.edit", { id: obj[DeviceField.MAP_ID] });
-               $scope.selected.map = obj[DeviceField.MAP_NO];
-               $scope.showImgUri = obj[DeviceField.SOURCE];
-               $scope.groupFieldName = angular.copy(obj);
-           } else {
-               $state.go("ams.category.content.create");
-           }
-
-           // 'No instance found for handle'
-           $mdComponentRegistry.when('right').then(function(it) {
-               it.toggle();
-           });
        };
 
 

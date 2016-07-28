@@ -6,9 +6,11 @@
         <form name="editList">
             <md-input-container flex class="md-block">
                 <label>监测点组ID</label>
-                <md-select name="monitorgroupname" required ng-model="selected.monitor">
+                <md-select name="monitorgroupname" required ng-model="data.groupFieldName[data.relatedData.DeviceField.MNT_GROUP_ID]">
                     <md-optgroup>
-                        <md-option ng-value="data[DeviceField.MNT_GROUP_ID] " ng-repeat="data in MonitorGroupList">{{ data[DeviceField.MNT_GROUP_ID] + ':' + data[DeviceField.DESC]}}</md-option>
+                        <md-option ng-value="item[data.relatedData.DeviceField.MNT_GROUP_ID]" ng-repeat="item in data.relatedData.MonitorGroupList">
+                            {{item[data.relatedData.DeviceField.MNT_GROUP_ID]+ ':' + item[data.relatedData.DeviceField.DESC]}}
+                        </md-option>
                     </md-optgroup>
                 </md-select>
                 <div ng-messages="editList.monitorgroupname.$error">
@@ -17,9 +19,11 @@
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>设备类型</label>
-                <md-select name="typename" required ng-model="selected.device">
+                <md-select name="typename" required ng-model="data.groupFieldName[data.relatedData.DeviceField.TYPE_ID]">
                     <md-optgroup>
-                        <md-option ng-value="data[DeviceField.TYPE_ID] " ng-repeat="data in DeviceTypeList"> {{data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
+                        <md-option ng-value="item[data.relatedData.DeviceField.TYPE_ID]" ng-repeat="item in data.relatedData.DeviceTypeList">
+                            {{item[data.relatedData.DeviceField.TYPE_ID]+ ':' + item[data.relatedData.DeviceField.TYPE_NAME]}}
+                        </md-option>
                     </md-optgroup>
                 </md-select>
                 <div ng-messages="editList.typename.$error">
@@ -28,15 +32,14 @@
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>命令名称</label>
-                <p class="form-control-static hide">{{groupFieldName[DeviceField.MNT_TYPE_ID]}}</p>
-                <input ng-model="groupFieldName[DeviceField.CMD_NAME]">
+                <input ng-model="data.groupFieldName[data.relatedData.DeviceField.CMD_NAME]">
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>描述 </label>
-                <input ng-model="groupFieldName[DeviceField.DESC]">
+                <input ng-model="data.groupFieldName[data.relatedData.DeviceField.DESC]">
             </md-input-container>
         </form>
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')" ng-disabled="editList.$invalid">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(data.groupFieldName,'resave')" ng-disabled="editList.$invalid">
             更新
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

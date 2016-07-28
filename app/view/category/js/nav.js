@@ -16,8 +16,7 @@ function topNavCtrl($scope, $mdSidenav) {
     };
 }
 
-function navCtrl($scope, category) {
-
+function navCtrl($scope, category) { 
     $scope.goCatory = function(obj) {
         obj.open = obj.open === false;
         if (obj.url) {

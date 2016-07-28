@@ -14,35 +14,25 @@ function deviceDefineCtrl($scope, monitorType, deviceTypeList, delDialogService,
     var valueOpartor = ['<', '>', '[]'];
     var alarmLevel = ['0', '1'];
 
-
-    $scope.deleteData = function(obj) {
-        delDialogService(function() {
-            console.log('delete...');
-            deviceDefines.deleteOne(obj).then(function(data) {
-                if ($scope.selectedData) {
-                    query[DeviceField.TYPE_ID] = angular.copy($scope.selectedData);
-                    $rootScope.query = query;
-                }
-                $scope.showData._load()
-            })
-        })
-    };
+    var checkboxMap = { '0': false, '1': true, 'false': 0, 'true': 1 };
 
     $scope.toggleRight = function(obj) {
         $scope.valueOpartor = valueOpartor;
         $scope.alarmLevel = alarmLevel;
         if (obj) {
+
+            $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.TYPE_ID][DeviceField.TYPE_ID] });
             if (obj[DeviceField.MNT_TYPE_ID]) {
-                $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.ID] });
-                $scope.selected.monitor = obj[DeviceField.MNT_TYPE_ID];
-            } else {
-                $state.go("ibuildweb.category.content.edit");
+                $scope.MonitorType.editData = angular.copy(obj[DeviceField.MNT_TYPE_ID][DeviceField.MNT_TYPE_ID]);
             }
-            if (obj[DeviceField.TYPE_ID]) {
-                $scope.selected.device = obj[DeviceField.TYPE_ID];
-            }
-            $scope.valueOpartor.editData = obj[DeviceField.VAL];
-            $scope.alarmLevel.editData = obj[DeviceField.ALARM_LVL];
+            obj[DeviceField.ALARM_FLG] = checkboxMap[obj[DeviceField.ALARM_FLG]];
+            obj[DeviceField.IS_DEFAULT] = checkboxMap[obj[DeviceField.IS_DEFAULT]];
+            obj[DeviceField.IS_ANALOGIO] = checkboxMap[obj[DeviceField.IS_ANALOGIO]];
+
+            $scope.DeviceTypeList.editData = angular.copy(obj[DeviceField.TYPE_ID][DeviceField.TYPE_ID]);
+            $scope.valueOpartor.editData = angular.copy(obj[DeviceField.VAL]);
+            $scope.alarmLevel.editData = angular.copy(obj[DeviceField.ALARM_LVL]);
+
         } else {
             $state.go("ibuildweb.category.content.create");
         }
@@ -69,28 +59,39 @@ function deviceDefineCtrl($scope, monitorType, deviceTypeList, delDialogService,
             $scope.DeviceTypeList = data;
         });
     }
-    $scope.monitorMap = {};
-    $scope.deviceMap = {};
-    var k, v;
-    $scope.$watch('MonitorType', function() {
-        if ($scope.MonitorType) {
-            for (var i in $scope.MonitorType) {
-                k = $scope.MonitorType[i][DeviceField.MNT_TYPE_ID];
-                v = $scope.MonitorType[i][DeviceField.DESC];
-                $scope.monitorMap[k] = v;
-            }
-        }
-    });
 
-    $scope.$watch('DeviceTypeList', function() {
-        if ($scope.DeviceTypeList) {
-            for (var i in $scope.DeviceTypeList) {
-                k = $scope.DeviceTypeList[i][DeviceField.TYPE_ID];
-                v = $scope.DeviceTypeList[i][DeviceField.TYPE_NAME];
-                $scope.deviceMap[k] = v;
+    $scope.$watch('showData.data', sysIdMap);
+
+    /* 
+    function boolMap() {
+        for (var s in $scope.showData.data) {
+            $scope.showData.data[s][DeviceField.ALARM_FLG] = checkboxMap[$scope.showData.data[s][DeviceField.ALARM_FLG]];
+            $scope.showData.data[s][DeviceField.IS_DEFAULT] = checkboxMap[$scope.showData.data[s][DeviceField.IS_DEFAULT]];
+            $scope.showData.data[s][DeviceField.IS_ANALOGIO] = checkboxMap[$scope.showData.data[s][DeviceField.IS_ANALOGIO]];
+
+        }
+        sysIdMap();
+    }
+*/
+
+    function sysIdMap() {
+        for (var m in $scope.showData.data) {
+            for (var n in $scope.MonitorType) {
+                if ($scope.showData.data[m][DeviceField.MNT_TYPE_ID] && $scope.showData.data[m][DeviceField.MNT_TYPE_ID] == $scope.MonitorType[n][DeviceField.MNT_TYPE_ID])
+                    $scope.showData.data[m][DeviceField.MNT_TYPE_ID] = $scope.MonitorType[n];
             }
         }
-    });
+        for (var s in $scope.showData.data) {
+            for (var o in $scope.DeviceTypeList) {
+                if ($scope.showData.data[s][DeviceField.TYPE_ID] == $scope.DeviceTypeList[o][DeviceField.TYPE_ID])
+                    $scope.showData.data[s][DeviceField.TYPE_ID] = $scope.DeviceTypeList[o];
+            }
+        }
+
+
+    }
+
+
     $scope.search = function() {
         $rootScope.query = query;
         $scope.showData._load(0);
@@ -106,6 +107,14 @@ function deviceDefineCtrl($scope, monitorType, deviceTypeList, delDialogService,
 
 
     $scope.save = function(obj, type) {
+        save(obj, type);
+    }
+
+    function save(obj, type) {
+        obj[DeviceField.ALARM_FLG] = checkboxMap[obj[DeviceField.ALARM_FLG]];
+        obj[DeviceField.IS_DEFAULT] = checkboxMap[obj[DeviceField.IS_DEFAULT]];
+        obj[DeviceField.IS_ANALOGIO] = checkboxMap[obj[DeviceField.IS_ANALOGIO]];
+
         obj[DeviceField.ALARM_LVL] = $scope.alarmLevel.editData;
         obj[DeviceField.MNT_TYPE_ID] = $scope.selected.monitor[DeviceField.MNT_TYPE_ID];
         obj[DeviceField.TYPE_ID] = $scope.selected.device[DeviceField.TYPE_ID];

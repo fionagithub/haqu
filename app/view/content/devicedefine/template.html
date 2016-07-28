@@ -36,10 +36,10 @@
                     <td> {{data[DeviceField.STATUS_VAL]}} </td>
                     <td> {{data[DeviceField.VAL]}} </td>
                     <td> {{data[DeviceField.DESC]}}</td>
-                    <td> {{DeviceField[data[DeviceField.ALARM_FLG]]}} </td>
+                    <td> {{data[DeviceField.ALARM_FLG]==1?true:false}}</td>
                     <td> {{data[DeviceField.ALARM_LVL]}} </td>
-                    <td> {{DeviceField [data[DeviceField.IS_DEFAULT]]}} </td>
-                    <td> {{DeviceField[data[DeviceField.IS_ANALOGIO]]}} </td>
+                    <td> {{data[DeviceField.IS_DEFAULT]==1?true:false}} </td>
+                    <td> {{data[DeviceField.IS_ANALOGIO]==1?true:false}}</td>
                     <td>
                         <inline-tools open="toggleRight(data)" delete='deleteData( data)' old='_oldSelectedRowObj' data='data' del='isDel'></inline-tools>
                     </td>

@@ -4292,6 +4292,7 @@
       "47449": "{\"autoid\":47449,\"devicetypeid\":301,\"monitortypeid\":1,\"statusvalue\":\"0034\",\"alarmflg\":1,\"alarmlevel\":50,\"isdefault\":0,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"回路故障\"}",
       "47450": "{\"autoid\":47450,\"devicetypeid\":301,\"monitortypeid\":1,\"statusvalue\":\"0100\",\"alarmflg\":1,\"alarmlevel\":60,\"isdefault\":0,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"通讯故障\"}",
       "47451": "{\"autoid\":47451,\"devicetypeid\":301,\"monitortypeid\":1,\"statusvalue\":\"0044\",\"alarmflg\":1,\"alarmlevel\":59,\"isdefault\":0,\"isanalogio\":0,\"valuecompareoprator\":\"=\",\"description\":\"非法信号\"}"
+
     }
   }
 }

@@ -3,8 +3,8 @@
         <h1 class="md-toolbar-tools">设备</h1>
     </md-toolbar>
     <md-content layout-padding="">
-        <form name="editList" ng-controller="DeviceGroupDefineCtrl as dgdCtrl">
-            <md-input-container flex class="container-autocomplete">
+   <form name="editList">
+          <md-input-container flex class="container-autocomplete">
                 <label>设备ID </label>
                 <input name="device" required ng-model="dgdCtrl.prefix" smarty-input select="dgdCtrl.setSelected(x)" index="dgdCtrl.selected" list-items="dgdCtrl.suggestions" close="dgdCtrl.suggestionPicked()" selection-made="dgdCtrl.selectionMade"></input>
                 <div smarty-suggestions-box></div>

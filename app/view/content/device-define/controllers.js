@@ -38,9 +38,9 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
 
     $scope.toggleRight = function(obj) {
         if (obj) {
-          if (obj[DeviceField.MNT_TYPE_ID]) {
-
-                $scope.selected.monitor = obj[DeviceField.MNT_TYPE_ID];
+     $state.go("ibuildweb.category.content.edit", { systype: obj[DeviceField.TYPE_ID][DeviceField.TYPE_ID] });
+            if (obj[DeviceField.MNT_TYPE_ID]) {
+         $scope.selected.monitor = obj[DeviceField.MNT_TYPE_ID];
             }
             if (obj[DeviceField.TYPE_ID]) {
                 $scope.selected.device = obj[DeviceField.TYPE_ID];

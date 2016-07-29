@@ -1,0 +1,39 @@
+<div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="DeviceSystypeCtrl">
+    <section layout-sm="column" flex layout-align="center center" layout-wrap="">
+        <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
+        </md-button>
+    </section>
+    <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
+        <table class="md-api-table">
+            <thead>
+                <tr>
+                    <th> 大类ID</th>
+                    <th> 大类名称</th>
+                    <th> 操作 </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat='data in showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
+                    <td>{{data[DeviceField.SYS_TYPE_ID]}} </td>
+                    <td> {{data[DeviceField.SYS_TYPE_NAME]}}
+                    </td>
+                    <td>
+                        <inline-tools open="toggleRight(data)" delete='deleteData(data)' old='_oldSelectedRowObj' data='data' del='isDel'></inline-tools>
+                    </td>
+            </tbody>
+        </table>
+        <pagination-section> </pagination-section>
+    </md-content>
+    <ui-view>
+    </ui-view>
+</div>
+<!--    <md-input-container flex class="md-block">
+        <label>系统</label>
+    <md-select ng-model="deviceSysTypeData">
+      <md-optgroup>
+          <md-option ng-value="sysTypeData" ng-repeat="sysTypeData in DeviceSysTypeList">{{ sysTypeData[DeviceField.SYS_TYPE_ID] + ':' + sysTypeData[DeviceField.SYS_TYPE_NAME]}}</md-option>
+      </md-optgroup>
+  </md-select>
+    </md-input-container> -->
+<!--   <md-button class="  md-raised demo-dialog-open-button" ng-click="search()">搜索
+      </md-button> -->

@@ -1,8 +1,11 @@
 /* .docs-body {
     padding-top: 90px;
     padding-left: 320px;
-} */
-
+} 
+.md-select-menu-container.md-active{
+    left: 350px !important;
+    top:114px !important;
+}*/
 md-toolbar {
     top: 0 !important;
     background-color: #fff !important;
@@ -32,6 +35,7 @@ md-toast {
     background: #2b333d !important;
     top: 0;
     bottom: 0;
+    z-index: 89;
     height: 100%;
 }
 

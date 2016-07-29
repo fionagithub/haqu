@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html ng-app="iBuildWeb" ng-controller="iBuildWebCtr">
+<html ng-app="AMS" ng-controller="AmsCtr">
 
 <head>
     <meta charset="UTF-8">
     <title>AMS v0.4</title>
     <link rel="stylesheet" type="text/css" href="client/vendor/angular-material/angular-material.css" />
     <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <!--
+    <!--  <script src="js/svg-assets-cache.js"></script>
+     <script src="js/angular.js"></script>  -->
     <script src="client/vendor/angular/angular.js"></script>
-    -->
-    <script src="js/angular.js"></script>
-    <script src="js/svg-assets-cache.js"></script>
     <script src="client/vendor/angular-ui-router/angular-ui-router.min.js"></script>
     <script src="client/vendor/angular-aria/angular-aria.min.js"></script>
     <script src="client/vendor/angular-animate/angular-animate.min.js"></script>
     <script src="client/vendor/angular-messages/angular-messages.min.js"></script>
     <script src="client/vendor/angular-material/angular-material.js"></script>
-
+    <!-- custom -->
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/resource.js"></script>
     <script type="text/javascript" src="js/service.js"></script>
@@ -24,30 +22,27 @@
     <script type="text/javascript" src="js/category-model.js"></script>
     <script type="text/javascript" src="view/category/js/nav.js"></script>
     <script type="text/javascript" src="view/content/content.js"></script>
-    <!-- device -->
-    <script type="text/javascript" src="view/content/systype/systype.js"></script>
-    <script type="text/javascript" src="view/content/type/type.js"></script>
-    <!-- monitor
-    <script type="text/javascript" src="js/script/smarty-config.js"></script> -->
-    <script type="text/javascript" src="view/content/monitorgroup/monitorgroup.js"></script>
-    <script type="text/javascript" src="view/content/monitortype/monitortype.js"></script>
-    <script type="text/javascript" src="view/content/device_monitor/devicemonitor.js"></script>
-    <script type="text/javascript" src="view/content/map/map.js"></script>
-    <script type="text/javascript" src="view/content/deviceinfo/deviceinfo.js"></script>
-    <script type="text/javascript" src="view/content/devicepoint/devicepoint.js"></script>
-    <script type="text/javascript" src="view/content/devicedefine/devicedefine.js"></script>
-    <script type="text/javascript" src="view/content/devicegroupdefine/devicegroupdefine.js"></script>
-
+    <script type="text/javascript" src="view/content/device-systype/controllers.js"></script>
+    <script type="text/javascript" src="view/content/device-type/controllers.js"></script>
+    <script type="text/javascript" src="view/content/monitor-group/controllers.js"></script>
+    <script type="text/javascript" src="view/content/monitor-type/controllers.js"></script>
+    <script type="text/javascript" src="view/content/device-monitor/controllers.js"></script>
+    <script type="text/javascript" src="view/content/map/controllers.js"></script>
+    <script type="text/javascript" src="view/content/device-info/controllers.js"></script>
+    <script type="text/javascript" src="view/content/device-point/controllers.js"></script>
+    <script type="text/javascript" src="view/content/device-define/controllers.js"></script>
+    <script type="text/javascript" src="view/content/devicegroup-define/controllers.js"></script>
 </head>
 
 <body class="docs-body layout-row" layout="row">
     <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2 hide-print _md-closed ng-isolate-scope _md _md-locked-open" md-component-id="left" hide-print="" md-is-locked-open="$mdMedia('gt-sm')" tabindex="-1">
         <div ui-view="category"></div>
     </md-sidenav>
-    <div layout="column" tabindex="-1" role="main" flex class="layout-column flex">
+    <div layout="column" tabindex="-1" role="main" flex class="layout-column flex" style='z-index:12;'>
         <div ui-view="topnav"></div>
-        <ui-view name="content"></ui-view>
-    </div>
+        <div ui-view="content">
+        </div>
+    </div> 
 </body>
 
 </html>

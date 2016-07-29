@@ -1,11 +1,10 @@
- var config = require('ez-config-loader')('config/ibuildweb');
+ var config = require('ez-config-loader')('fileConfig/ams');
  var fileUpload = require('express-fileupload');
 
  module.exports = function(server) {
      server.use(fileUpload());
      server.post('/upload', function(req, res) {
          var _file;
-
          console.log('--filename--', req.body.filename);
          if (!req.files) {
              res.send('No files were uploaded.');
@@ -13,7 +12,7 @@
          }
 
          _file = req.files.file;
-         _file.mv('app/' + config.img_path + 'maps/' + 'req.body.filename', function(err) {
+         _file.mv('app/' + config.img_path + req.body.filename, function(err) {
              if (err) {
                  res.status(500).send(err);
              } else {

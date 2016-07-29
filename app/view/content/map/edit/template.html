@@ -3,7 +3,18 @@
         <h1 class="md-toolbar-tools">地图</h1>
     </md-toolbar>
     <md-content layout-padding="">
-        <md-list>
+        <form name="editList">
+            <md-input-container flex class="md-block">
+                <label> 区域 </label>
+                <md-select name="map" required ng-model="selected.map">
+                    <md-optgroup>
+                        <md-option ng-value="data[DeviceField.MAP_ID]" ng-repeat='data in showData.null '>{{data[DeviceField.MAP_ID] + ':' +data[DeviceField.MAP_NAME]}}</md-option>
+                    </md-optgroup>
+                </md-select>
+                <div ng-messages="editList.map.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
             <md-input-container flex class="md-block">
                 <label> 地图名称 </label>
                 <p class="form-control-static hide">
@@ -12,28 +23,17 @@
                 <input ng-model="groupFieldName[DeviceField.MAP_NAME] ">
             </md-input-container>
             <md-input-container flex class="md-block">
-                <label> 区域 </label>
-                <!--       <md-select ng-model="showData.null.data" md-selected-text="getSelectedText(showData.null.data)">
-              <md-option ng-value="data[DeviceField.MAP_ID]" ng-repeat='data in showData.null'>{{data[DeviceField.MAP_NAME]}}</md-option>
-          </md-select> -->
-                <md-select ng-model="selected.map">
-                    <md-optgroup>
-                        <md-option ng-value="data[DeviceField.MAP_ID]" ng-repeat='data in showData.null '>{{data[DeviceField.MAP_ID] + ':' +data[DeviceField.MAP_NAME]}}</md-option>
-                    </md-optgroup> 
-                </md-select>
-            </md-input-container>
-            <md-input-container flex class="md-block">
-                <p> {{showImgUri}} </p>
-                <input type="file" file-model="myFile" />
-                <md-button ng-click="uploadFile()" class="md-raised demo-dialog-open-button">上传
+                <p ng-hide="map.file"> {{showImgUri}} </p>
+                <input type="file" file-model="map.file" />
+                <md-button ng-show="map.file" ng-click="uploadFile()" class="md-raised demo-dialog-open-button">上传文件
                 </md-button>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label> 地图类别 </label>
                 <input ng-model=" groupFieldName[DeviceField.MAP_TYPE]">
             </md-input-container>
-        </md-list>
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')">
+        </form>
+        <md-button class="md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')" ng-disabled="editList.$invalid">
             更新
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

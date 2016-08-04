@@ -1,43 +1,38 @@
 angular.module('content.monitorgroup', ['ams.factorys', 'ams.factorys.services'])
     .controller('MonitorgroupCtrl', MonitorgroupCtrl)
+    .controller('MonitorGroupDetailCtrl', MonitorGroupDetailCtrl)
 
-function MonitorgroupCtrl($scope, monitorGroup, monitorType, paginator, delDialogService, toastService, DeviceField, $rootScope, $stateParams, $state, $mdSidenav, $mdComponentRegistry) {
+function MonitorgroupCtrl($scope, monitorGroup, monitorType, paginator, delDialogService,DeviceField, $rootScope, $stateParams, $state, $mdSidenav, $mdComponentRegistry) {
+    $scope.$on("loadFromParrent", load);
+
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ams.category.content") {
             load();
         }
     });
-    $scope.$on("loadFromParrent", load);
-
     var query = {};
 
     function load() {
-
-
-        $scope.DeviceField = DeviceField;
-
+        $rootScope.query = null;
+        $rootScope.groupFieldName = null;
         $scope.showData = paginator(monitorGroup.filter, 10);
-        monitorGroup.filter(null, null, function(data) {
+   /*     monitorGroup.filter(null, null, function(data) {
             $scope.MonitorGroupList = data;
-        });
+        });*/
     }
 
 
     $scope.toggleRight = function(obj) {
         var uri = {
             category: $stateParams.category
-        };
-        var relatedData = {
-            'DeviceField': $scope.DeviceField
-        };
-        $scope.$emit('relatedData', relatedData);
+        }; 
         if (obj) {
             uri.id = obj[DeviceField.MNT_GROUP_ID];
             $state.go("ams.category.content.edit", uri);
-            $scope.$emit('groupFieldName', angular.copy(obj));
+            $rootScope.groupFieldName = angular.copy(obj);
         } else {
-            $state.go("ams.category.content.create");
-            $scope.$emit('reopen');
+            $rootScope.groupFieldName = null;
+            $state.go("ams.category.content.create"); 
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
@@ -49,8 +44,7 @@ function MonitorgroupCtrl($scope, monitorGroup, monitorType, paginator, delDialo
     $scope.deleteData = function(obj) {
         delDialogService(function() {
             console.log('delete...');
-            monitorGroup.deleteOne(obj).then(function(data) {
-
+            monitorGroup.deleteOne(obj).then(function(data) { 
                 $scope.showData._load()
             })
         })
@@ -76,12 +70,24 @@ function MonitorgroupCtrl($scope, monitorGroup, monitorType, paginator, delDialo
         })
     };
 
+ 
 
-    $scope.$on("saveFromParent", function(event, obj, type) {
+}
+
+
+function MonitorGroupDetailCtrl($scope, monitorGroup, toastService, $rootScope, $mdSidenav) {
+    $scope.groupFieldName = $rootScope.groupFieldName;
+
+    $scope.save = function(obj, type) {
         monitorGroup.saveOne(obj, type, function() {
             toastService();
-            $scope.showData._load()
+            $scope.groupFieldName = null;
+            $rootScope.showData._load();
         });
-    });
+    };
 
+    $scope.cancel = function() {
+        $scope.groupFieldName = null;
+        $mdSidenav('right').close();
+    };
 }

@@ -1,23 +1,23 @@
 {
-  "name": "ts_deviceinfogroupdefine",
-  "base": "PersistedModel",
-  "options": {
-    "validateUpsert": true
-  },
-  "properties": {
-    "deviceid": {
-      "type": "number",
-      "id": true
+    "name": "ts_deviceinfogroupdefine",
+    "base": "PersistedModel",
+    "options": {
+        "validateUpsert": true
     },
-    "subdeviceid": {
-      "type": "string"
+    "properties": {
+        "deviceid": {
+            "type": "number",
+            "id": true
+        },
+        "subdeviceid": {
+            "type": "string"
+        },
+        "templatename": {
+            "type": "string"
+        }
     },
-    "templatename": {
-      "type": "string"
-    }
-  },
-  "validations": [],
-  "relations": {},
-  "acls": [],
-  "methods": {}
+    "validations": [],
+    "relations": {},
+    "acls": [],
+    "methods": {}
 }

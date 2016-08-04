@@ -1,36 +1,33 @@
 angular.module('content.deviceSystype', ['ams.factorys', 'ams.factorys.services'])
     .controller('DeviceSystypeCtrl', DeviceSystypeCtrl)
+    .controller('DeviceSystypeRightCtrl', DeviceSystypeRightCtrl)
 
-function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator, delDialogService, toastService, DeviceField, $rootScope, $state,$stateParams,  $mdSidenav, $mdComponentRegistry) {
+function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ams.category.content") {
             load();
         }
     });
-    var query = {};
 
     function load() {
         $rootScope.query = null;
+        $rootScope.groupFieldName = null;
         $scope.showData = paginator(deviceSysTypeList.filter, 10);
-        $scope.DeviceField = DeviceField;
+        $rootScope.showData = $scope.showData;
     }
+
     $scope.toggleRight = function(obj) {
         var uri = {
             category: $stateParams.category
         };
-        var relatedData = {
-            'DeviceField': $scope.DeviceField
-        };
-        $scope.$emit('relatedData', relatedData);
-
         if (obj) {
+            $rootScope.groupFieldName = angular.copy(obj);
             uri.id = obj[DeviceField.SYS_TYPE_ID];
             $state.go("ams.category.content.edit", uri);
-            $scope.$emit('groupFieldName', angular.copy(obj));
         } else {
+            $rootScope.groupFieldName = null;
             $state.go("ams.category.content.create");
-            $scope.$emit('reopen');
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
@@ -38,19 +35,14 @@ function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator,
         });
     };
 
-    $scope.$on("saveFromParent", function(event, obj, type) {
-        deviceSysTypeList.saveOne(obj, type, function() {
-            toastService();
-            $scope.showData._load()
-        });
-    });
-
     $scope.deleteData = function(obj) {
         delDialogService(function() {
             console.log('delete...');
             deviceSysTypeList.deleteOne(obj).then(function(data) { $scope.showData._load() })
         })
     };
+
+    var query = {};
     $scope._oldSelectedRowObj = [];
     //deviceTypeFieldName 自定义设备 查看列表数据 
     $scope.selectedRow = function(index, obj) {
@@ -71,4 +63,21 @@ function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator,
         })
     };
 
+}
+
+function DeviceSystypeRightCtrl($scope, deviceSysTypeList, toastService, $rootScope, $mdSidenav) {
+    $scope.groupFieldName = $rootScope.groupFieldName;
+
+    $scope.save = function(obj, type) {
+        deviceSysTypeList.saveOne(obj, type, function() {
+            toastService();
+            $scope.groupFieldName = null;
+            $rootScope.showData._load();
+        });
+    };
+
+    $scope.cancel = function() {
+        $scope.groupFieldName = null;
+        $mdSidenav('right').close();
+    };
 }

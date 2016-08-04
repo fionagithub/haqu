@@ -1,7 +1,10 @@
 angular.module('content.deviceType', ['ams.factorys', 'ams.factorys.services'])
     .controller('DeviceTypeCtrl', DeviceTypeCtrl)
+    .controller('DeviceTypeDetailCtrl', DeviceTypeDetailCtrl)
 
 function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
+    $scope.$on("loadFromParrent", load);
+
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ams.category.content") {
             load();
@@ -9,18 +12,19 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
     });
     var query = {};
 
-    $scope.$on("loadFromParrent", load);
-
     function load() {
         $rootScope.query = null;
-
-        //搜索条件
-        $scope.searchDeviceType = null;
-        $scope.deviceSysTypeData = null;
+        //搜索条件    
+        $scope.selected = {
+            searchDeviceType: null,
+            deviceSysTypeData: null
+        };
         $scope.showData = paginator(deviceTypeList.filter, 10);
-        $scope.DeviceField = DeviceField;
+        $rootScope.showData = $scope.showData;
+
         deviceSysTypeList.filter(null, null, function(data) {
             $scope.DeviceSysTypeList = data;
+            $rootScope.DeviceSysTypeList = $scope.DeviceSysTypeList;
         });
     }
 
@@ -35,20 +39,21 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
                 $scope.sysMap[k] = v;
             }
         }
-        console.log($scope.sysMap)
     });
 
-    $scope.$watch('searchDeviceType', function() {
-        if ($scope.searchDeviceType) {
-            query[DeviceField.TYPE_NAME] = { "like": '%' + angular.copy($scope.searchDeviceType) + '%' };
+    //搜索条件 
+    $scope.$watch('selected.searchDeviceType', function() {
+        if ($scope.selected.searchDeviceType) {
+            query[DeviceField.TYPE_NAME] = { "like": '%' + angular.copy($scope.selected.searchDeviceType) + '%' };
             console.log("----" + query);
         } else {
             delete query[DeviceField.TYPE_NAME];
         }
     });
-    $scope.$watch('deviceSysTypeData', function() {
-        if ($scope.deviceSysTypeData) {
-            query[DeviceField.SYS_TYPE_ID] = angular.copy($scope.deviceSysTypeData);
+
+    $scope.$watch('selected.deviceSysTypeData', function() {
+        if ($scope.selected.deviceSysTypeData) {
+            query[DeviceField.SYS_TYPE_ID] = angular.copy($scope.selected.deviceSysTypeData);
         } else {
             delete query[DeviceField.SYS_TYPE_ID];
         }
@@ -58,39 +63,33 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
         var uri = {
             category: $stateParams.category
         };
-        var relatedData = {
-            'DeviceField': $scope.DeviceField,
-            'DeviceSysTypeList': $scope.DeviceSysTypeList
-        };
-        $scope.$emit('relatedData', relatedData);
-
         if (obj) {
             uri.id = obj[DeviceField.TYPE_ID];
             $state.go("ams.category.content.edit", uri);
-            $scope.$emit('groupFieldName', angular.copy(obj));
+            $rootScope.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
-            $scope.$emit('reopen');
+            $rootScope.groupFieldName = null;
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
             it.toggle();
         });
     };
+
     $scope.deleteData = function(obj) {
         delDialogService(function() {
             console.log('delete...');
             deviceTypeList.deleteOne(obj).then(function(data) {
-                if ($scope.deviceSysTypeData) {
-                    query[DeviceField.SYS_TYPE_ID] = angular.copy($scope.deviceSysTypeData);
-                    $rootScope.query = query;
-                }
+                $rootScope.query = angular.copy(query);
                 $scope.showData._load(0);
             })
         })
     };
+
     $scope.search = function() {
-        $rootScope.query = query;
+        $rootScope.query = angular.copy(query);
+        $rootScope.search = angular.copy(query);
         $scope.showData._load(0);
     }
 
@@ -101,9 +100,9 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
             $scope._oldSelectedRowObj.pop();
         }
         $scope._oldSelectedRowObj.unshift(obj);
-        query = [];
+        query = {};
         query[DeviceField.TYPE_ID] = obj[DeviceField.TYPE_ID];
-        $rootScope.query = query;
+        $rootScope.query = angular.copy(query);
         deviceInfo.filter(null, null, function(data) {
             if (data.length > 0) {
                 $scope.isDel = false;
@@ -112,19 +111,26 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
                 $scope.isDel = true;
             }
             delete query[DeviceField.TYPE_ID];
+
         })
     };
+}
 
-    $scope.$on("saveFromParent", function(event, obj, type) {
-        obj ? obj : obj = {};
+function DeviceTypeDetailCtrl($scope, deviceTypeList, toastService, $rootScope, $mdSidenav) {
+    $scope.deviceSysTypeList = $rootScope.deviceSysTypeList;
+    $scope.groupFieldName = $rootScope.groupFieldName;
+
+    $scope.save = function(obj, type) {
         deviceTypeList.saveOne(obj, type, function() {
-            delete query[DeviceField.SYS_TYPE_ID];
-            if ($scope.deviceSysTypeData) {
-                query[DeviceField.SYS_TYPE_ID] = $scope.deviceSysTypeData;
-                $rootScope.query = query;
-            }
             toastService();
-            $scope.showData._load()
-        })
-    })
+            $scope.groupFieldName = null;
+            $rootScope.query = $rootScope.search;
+            $rootScope.showData._load();
+        });
+    };
+
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+        $scope.groupFieldName = null;
+    };
 }

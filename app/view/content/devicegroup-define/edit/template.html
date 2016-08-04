@@ -1,35 +1,38 @@
-<md-sidenav class="md-sidenav-right" md-component-id="right">
-    <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">设备</h1>
-    </md-toolbar>
-    <md-content layout-padding="">
-        <form name="editList">
-            <md-input-container flex class="container-autocomplete">
-                <label>设备ID </label>
-                <input name="device" required ng-model="map.prefix" focus-me="mapParams.selectionMade" smarty-input select="setSelected(x)" index="mapParams.selected" list-items="mapParams.suggestions" close="suggestionPicked()" selection-made="mapParams.selectionMade"></input>
-                <div smarty-suggestions-box></div>
-                <div ng-messages="editList.device.$error">
-                    <div ng-message="required">This is required.</div>
-                </div>
-            </md-input-container>
-            <md-input-container flex class="md-block">
-                <label>subDeviceId</label>
-                <md-select ng-disabled="editList.device.$invalid" ng-model="map.subDataItem" md-on-close="clearSearchTerm()" multiple>
-                    <md-optgroup label="subDeviceId">
-                        <md-option ng-value="item" ng-repeat="item in mapParams.subData track by $index">{{item}}</md-option>
-                    </md-optgroup>
-                </md-select>
-            </md-input-container>
-            <md-input-container flex class="md-block">
-                <label>templateName </label>
-                <input ng-model="map.tmp">
-            </md-input-container>
-        </form>
-        <md-button class="md-raised demo-dialog-open-button" ng-click="save(map,'resave')" ng-disabled="editList.$invalid">
-            更新
-        </md-button>
-        <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">
-            取消
-        </md-button>
-    </md-content>
-</md-sidenav>
+<div ng-controller="DeviceGroupDefineDetailCtrl">
+    <md-sidenav class="md-sidenav-right" md-component-id="right">
+        <md-toolbar class="md-theme-indigo">
+            <h1 class="md-toolbar-tools">设备</h1>
+        </md-toolbar>
+        <md-content layout-padding="">
+            <form name="editList">
+                <md-input-container flex class="container-autocomplete">
+                    <label>设备ID </label>
+                    <input name="device" required ng-model="selected.deviceid" focus-me="mapParams.selectionMade" smarty-input select="setSelected(x)" index="mapParams.selected" list-items="mapParams.suggestions" close="suggestionPicked()" selection-made="mapParams.selectionMade"></input>
+                    <div smarty-suggestions-box></div>
+                    <div ng-messages="editList.device.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex class="md-block">
+                    <label>subDeviceId</label>
+                    <md-select ng-disabled="editList.device.$invalid" ng-model="selected.subdeviceid" multiple>
+                        <md-optgroup label="subDeviceId">
+                            <md-option ng-value="item" ng-repeat="item in mapParams.subData track by $index">{{item}}</md-option>
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+                  
+                <md-input-container flex class="md-block">
+                    <label>templateName </label>
+                    <input ng-model="groupFieldName[DeviceField.TMP_NAME]">
+                </md-input-container>
+            </form>
+            <md-button class="md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')" ng-disabled="editList.$invalid">
+                更新
+            </md-button>
+            <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">
+                取消
+            </md-button>
+        </md-content>
+    </md-sidenav>
+</div>

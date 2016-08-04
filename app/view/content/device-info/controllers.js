@@ -1,7 +1,8 @@
 angular.module('content.deviceInfo', ['ams.factorys', 'ams.factorys.services'])
     .controller('DeviceInfoCtrl', DeviceInfoCtrl)
+    .controller('DeviceInfoDetailCtrl', DeviceInfoDetailCtrl)
 
-function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
+function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ams.category.content") {
@@ -20,9 +21,11 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
         };
 
         map.filter(null, null, function(data) {
+            $rootScope.mapData = angular.copy(data);
             $scope.mapData = data;
         });
         deviceTypeList.filter(null, null, function(data) {
+            $rootScope.DeviceTypeList = angular.copy(data);
             $scope.DeviceTypeList = data;
         });
     }
@@ -32,20 +35,14 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
         var uri = {
             category: $stateParams.category
         };
-        var relatedData = {
-            'DeviceField': $scope.DeviceField,
-            'mapData': $scope.mapData,
-            'DeviceTypeList': $scope.DeviceTypeList
-        };
-        $scope.$emit('relatedData', relatedData);
 
         if (obj) {
             uri.id = obj[DeviceField.DEVICE_ID];
             $state.go("ams.category.content.edit", uri);
-            $scope.$emit('groupFieldName', obj);
+            $rootScope.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
-            $scope.$emit('reopen');
+            $rootScope.groupFieldName = null;
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
@@ -76,11 +73,6 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
         }
     });
 
-    $scope.search = function() {
-        $rootScope.query = query;
-        $scope.showData._load(0);
-    }
-
     $scope.$watch('selected.data', function() {
         if ($scope.selected.data) {
             query[DeviceField.TYPE_ID] = angular.copy($scope.selected.data[DeviceField.TYPE_ID]);
@@ -89,17 +81,12 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
         }
     });
 
-    $scope.$on("saveFromParent", function(event, obj, type) {
-        obj ? obj : obj = {};
-        deviceInfo.saveOne(obj, type, function() {
-            if ($scope.selected.data) {
-                query[DeviceField.TYPE_ID] = angular.copy($scope.selected.data[DeviceField.TYPE_ID]);
-                $rootScope.query = query;
-            }
-            toastService();
-            $scope.showData._load()
-        });
-    });
+    $scope.search = function() {
+        $rootScope.query = angular.copy(query);
+        $rootScope.search = angular.copy(query);
+        $scope.showData._load(0);
+    }
+
 
     $scope.deleteData = function(obj) {
         delDialogService(function() {
@@ -107,9 +94,6 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
             deviceInfo.deleteOne(obj).then(function(data) { $scope.showData._load() })
         })
     };
-
-
-
 
     $scope._oldSelectedRowObj = [];
     // 自定义设备 查看列表数据 
@@ -132,4 +116,24 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
         })
     };
 
+}
+
+function DeviceInfoDetailCtrl($scope, deviceInfo, toastService, $rootScope, $mdSidenav) {
+    $scope.groupFieldName = $rootScope.groupFieldName;
+    $scope.mapData = $rootScope.mapData;
+    $scope.DeviceTypeList = $rootScope.DeviceTypeList;
+
+    $scope.save = function(obj, type) {
+        deviceInfo.saveOne(obj, type, function() {
+            toastService();
+            $scope.groupFieldName = null;
+            $rootScope.query = $rootScope.search;
+            $rootScope.showData._load();
+        });
+    };
+
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+        $scope.groupFieldName = null;
+    };
 }

@@ -1,4 +1,4 @@
-angular.module('category', ['ams.models.category', 'ngMaterial'])
+angular.module('category', ['ams.models.category'])
     .controller('topNavCtrl', topNavCtrl)
     .controller('navCtrl', navCtrl)
 

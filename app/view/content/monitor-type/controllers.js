@@ -1,29 +1,31 @@
    angular.module('content.monitortype', ['ams.factorys', 'ams.factorys.services'])
        .controller('MonitortypeCtrl', MonitortypeCtrl)
+       .controller('MonitorTypeDetailCtrl', MonitorTypeDetailCtrl)
 
-   function MonitortypeCtrl($scope, monitorGroup, monitorType, devicePoint, deviceTypeList, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
+   function MonitortypeCtrl($scope, monitorGroup, monitorType, devicePoint, deviceTypeList, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
+       $scope.$on("loadFromParrent", load);
+
        $scope.$on('$stateChangeSuccess', function() {
            if ($state.current.name == "ams.category.content") {
                load();
            }
        });
-       $scope.$on("loadFromParrent", load);
-
        var query = {};
 
        function load() {
            $rootScope.query = null;
-           $scope.DeviceField = DeviceField;
            $scope.selected = {
                data: null,
                keyword: null
            };
+           $scope.showData = paginator(monitorType.filter, 10);
            deviceTypeList.filter(null, null, function(data) {
                $scope.DeviceTypeList = data;
+               $rootScope.DeviceTypeList = angular.copy(data);
            });
-           $scope.showData = paginator(monitorType.filter, 10);
            monitorGroup.filter(null, null, function(data) {
                $scope.MonitorGroupList = data;
+               $rootScope.MonitorGroupList = angular.copy(data);
            });
        }
        $scope.$watch('selected.data', function() {
@@ -33,6 +35,7 @@
                delete query[DeviceField.MNT_GROUP_ID];
            }
        });
+
        $scope.$watch('selected.keyword', function() {
            if ($scope.selected.keyword) {
                query[DeviceField.DESC] = { "like": '%' + $scope.selected.keyword + '%' };
@@ -45,20 +48,14 @@
            var uri = {
                category: $stateParams.category
            };
-           var relatedData = {
-               'DeviceField': $scope.DeviceField,
-               'MonitorGroupList': $scope.MonitorGroupList,
-               'DeviceTypeList': $scope.DeviceTypeList
-           };
-           $scope.$emit('relatedData', relatedData);
 
            if (obj) {
                uri.id = obj[DeviceField.MNT_TYPE_ID];
                $state.go("ams.category.content.edit", uri);
-               $scope.$emit('groupFieldName', angular.copy(obj));
+               $rootScope.groupFieldName = angular.copy(obj);
            } else {
                $state.go("ams.category.content.create");
-               $scope.$emit('reopen');
+               $rootScope.groupFieldName = null;
            }
            // 'No instance found for handle'
            $mdComponentRegistry.when('right').then(function(it) {
@@ -66,9 +63,9 @@
            });
        };
 
-
        $scope.search = function() {
-           $rootScope.query = query;
+           $rootScope.query = angular.copy(query);
+           $rootScope.search = angular.copy(query);
            $scope.showData._load(0);
        }
 
@@ -82,8 +79,8 @@
                    $scope.deviceMap[k] = v;
                }
            }
-           console.log($scope.deviceMap)
        });
+
        $scope.$watch('MonitorGroupList', function() {
            $scope.monitorMap = {};
            if ($scope.MonitorGroupList) {
@@ -93,25 +90,7 @@
                    $scope.monitorMap[k] = v;
                }
            }
-           console.log($scope.monitorMap)
        });
-
-
-       $scope.$on("saveFromParent", function(event, obj, type) {
-           obj ? obj : obj = {};
-           /*        obj[DeviceField.MNT_GROUP_ID] = $scope.selected.monitor;
-                   obj[DeviceField.TYPE_ID] = $scope.selected.device;
-                 */
-           monitorType.saveOne(obj, type, function() {
-               if ($scope.selected.data) {
-                   query[DeviceField.MNT_GROUP_ID] = $scope.selected.data;
-                   $rootScope.query = query;
-               }
-               toastService();
-               $scope.showData._load()
-           });
-       });
-
 
        $scope.deleteData = function(obj) {
            delDialogService(function() {
@@ -137,4 +116,24 @@
            $scope.isDel = true;
        };
 
+   }
+
+   function MonitorTypeDetailCtrl($scope, monitorType, toastService, $rootScope, $mdSidenav) {
+       $scope.groupFieldName = $rootScope.groupFieldName;
+       $scope.MonitorGroupList = $rootScope.MonitorGroupList;
+       $scope.DeviceTypeList = $rootScope.DeviceTypeList;
+
+       $scope.save = function(obj, type) {
+           monitorType.saveOne(obj, type, function() {
+               toastService();
+               $scope.groupFieldName = null;
+               $rootScope.query = $rootScope.search;
+               $rootScope.showData._load();
+           });
+       };
+
+       $scope.cancel = function() {
+           $mdSidenav('right').close();
+           $scope.groupFieldName = null;
+       };
    }

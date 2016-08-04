@@ -1,58 +1,128 @@
 angular.module('content.deviceGroupDefine', ['ams.factorys', 'ams.factorys.services'])
     .controller('DeviceGroupDefineCtrl', DeviceGroupDefineCtrl)
+    .controller('DeviceGroupDefineDetailCtrl', DeviceGroupDefineDetailCtrl)
     .directive("smartyInput", smartyInput)
     .directive("smartySuggestions", smartySuggestions)
     .directive("focusMe", focusMe)
     .directive("smartySuggestionsBox", smartySuggestionsBox)
 
-function DeviceGroupDefineCtrl($scope, deviceGroupDefine, deviceInfo, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $document, $mdSidenav, $mdComponentRegistry) {
+function DeviceGroupDefineDetailCtrl($scope, deviceGroupDefine, deviceInfo, toastService, $rootScope, DeviceField, $document, $mdSidenav) {
+    $scope.mapParams = {
+        selected: -1,
+        selectionMade: false,
+        suggestions: [],
+        subData: []
+    };
+    $scope.selected = {
+        deviceid: null,
+        subdeviceid: null
+    };
+
+    $scope.$watch(function() {
+        return $rootScope.groupFieldName;
+    }, function(newValue, oldValue) {
+        if ($rootScope.groupFieldName) {
+            $scope.groupFieldName = $rootScope.groupFieldName;
+            $scope.selected.deviceid = $rootScope.groupFieldName[DeviceField.DEVICE_ID];
+            var subID = $rootScope.groupFieldName[DeviceField.SUBDEVICE_ID];
+            if (subID) {
+                $scope.selected.subdeviceid = subID.split(",");
+                $scope.mapParams.subData = subID.split(",");
+            }
+        }
+    });
+
+    var query = {};
+
+    $scope.$watch(function() {
+        return $scope.selected.deviceid;
+    }, function(newValue, oldValue) {
+        if (newValue != oldValue) {
+            if ($scope.mapParams.selectionMade) {
+                $scope.mapParams.suggestions = [];
+            } else {
+                query[DeviceField.DEVICE_ID] = { "like": '%' + newValue + '%' };
+                $rootScope.query = query;
+                $scope.mapParams.suggestions = [];
+                deviceInfo.filter(null, null, function(data) {
+                    delete query[DeviceField.DEVICE_ID];
+                    data.map(function(_data) {
+                        $scope.mapParams.suggestions = $scope.mapParams.suggestions.concat(_data[DeviceField.DEVICE_ID]);
+                    });
+                })
+            };
+        };
+    });
+    $scope.clickedSomewhereElse = function() {
+        $scope.mapParams.selected = -1;
+        $scope.mapParams.suggestions = [];
+    };
+
+    /*    $document.bind("click", function() {
+            $scope.$apply($scope.clickedSomewhereElse());
+        });*/
+
+    $scope.save = function(obj, type) {
+        deviceGroupDefine.saveOne(obj, type, function() {
+            toastService();
+            $scope.selected.deviceid = null;
+            $rootScope.showData._load();
+        });
+    };
+
+
+    $scope.setSelected = function(index) {
+        if (index > $scope.mapParams.suggestions.length) {
+            $scope.mapParams.selected = 0;
+        } else if (index < 0) {
+            $scope.mapParams.selected = $scope.mapParams.suggestions.length;
+        } else {
+            $scope.mapParams.selected = index;
+        }
+    };
+
+    $scope.suggestionPicked = function() {
+        $scope.mapParams.selectionMade = true;
+        if ($scope.mapParams.selected != -1 && $scope.mapParams.selected < $scope.mapParams.suggestions.length) {
+            $scope.selected.deviceid = $scope.mapParams.suggestions[$scope.mapParams.selected];
+            query[DeviceField.DEVICE_ID] = { "like": '%' + parseInt($scope.selected.deviceid / Math.pow(10, 2)) + '%' };
+            $rootScope.query = query;
+            $scope.mapParams.subData = [];
+            deviceInfo.filter(null, null, function(data) {
+                delete query[DeviceField.DEVICE_ID];
+                data.map(function(_data) {
+                    $scope.mapParams.subData = $scope.mapParams.subData.concat(_data[DeviceField.DEVICE_ID]);
+                });
+            });
+
+        }
+    };
+
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+        $scope.groupFieldName = null;
+    };
+}
+
+
+function DeviceGroupDefineCtrl($scope, deviceGroupDefine, paginator, delDialogService, toastService, $rootScope, $state, $stateParams, $document, $mdSidenav, $mdComponentRegistry) {
     var _this = this;
     _this.selectedRow = selectedRow;
     _this.getSelectedText = getSelectedText;
     _this.toggleRight = toggleRight;
     _this.deleteData = deleteData;
 
-    _this.query = {};
-    _this.search = search;
-
-    _this.prefix = null;
-    $scope.$on("mapFromParent", function(event, data) {
-        _this.query[DeviceField.DEVICE_ID] = { "like": '%' + data.prefix + '%' };
-        $rootScope.query = _this.query;
-        deviceInfo.filter(null, null, function(data) {
-            delete _this.query[DeviceField.DEVICE_ID];
-            $scope.$emit('suggestions', data);
-        })
-    });
-
-    $scope.$on("subDataFromParent", function(event, data) {
-        _this.query[DeviceField.DEVICE_ID] = { "like": '%' + parseInt(data / Math.pow(10, 2)) + '%' };
-        $rootScope.query = _this.query;
-        deviceInfo.filter(null, null, function(data) {
-            delete _this.query[DeviceField.DEVICE_ID];
-            $scope.$emit('subDatasuggestions', data);
-
-        });
-    });
-
-
-
     function toggleRight(obj) {
         var uri = {
             category: $stateParams.category
         };
-        var relatedData = {
-            'DeviceField': DeviceField
-        };
-        $scope.$emit('relatedData', relatedData);
-
         if (obj) {
             uri.id = obj[DeviceField.DEVICE_ID];
             $state.go("ams.category.content.edit", uri);
-            $scope.$emit('groupFieldName', angular.copy(obj));
+            $rootScope.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
-            $scope.$emit('reopen');
+            $rootScope.groupFieldName = null;
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
@@ -69,13 +139,8 @@ function DeviceGroupDefineCtrl($scope, deviceGroupDefine, deviceInfo, paginator,
     });
 
     function load() {
-        $rootScope.query = null;
         _this.showData = paginator(deviceGroupDefine.filter, 10);
-        //   
-        _this.DeviceField = DeviceField;
-        _this.sysTypeData = null;
-        _this.subData = [];
-        _this.subData.propertyIsEnumerable.item = [];
+        $rootScope.showData = _this.showData;
     }
 
     _this._oldSelectedRowObj = [];
@@ -95,11 +160,6 @@ function DeviceGroupDefineCtrl($scope, deviceGroupDefine, deviceInfo, paginator,
         })
     };
 
-
-    function search() {
-        _this.showData._load(0);
-    }
-
     function getSelectedText(o) {
         if (o) {
             return o;
@@ -108,17 +168,6 @@ function DeviceGroupDefineCtrl($scope, deviceGroupDefine, deviceInfo, paginator,
         }
     };
 
-
-    $scope.$on("saveFromParent", function(event, obj, type) {
-        obj ? obj : obj = {};
-        obj[DeviceField.DEVICE_ID] = obj.prefix;
-        obj[DeviceField.TMP_NAME] = obj.tmp;
-        obj[DeviceField.SUBDEVICE_ID] = obj.subDataItem;
-        deviceGroupDefine.saveOne(obj, type, function() {
-            toastService();
-            _this.showData._load()
-        });
-    });
 
 }
 

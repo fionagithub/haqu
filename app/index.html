@@ -26,7 +26,6 @@
     <script type="text/javascript" src="view/content/monitor-group/controllers.js"></script>
     <script type="text/javascript" src="view/content/monitor-type/controllers.js"></script>
     <script type="text/javascript" src="view/content/device-monitor/controllers.js"></script>
-    
     <script type="text/javascript" src="view/content/map/controllers.js"></script>
     <script type="text/javascript" src="view/content/content.js"></script>
     <script type="text/javascript" src="view/content/device-info/controllers.js"></script>
@@ -36,12 +35,12 @@
 </head>
 
 <body class="docs-body layout-row" layout="row" ng-controller="AmsCtr">
-   <div ui-view="category"></div>
+    <div ui-view="category"></div>
     <div layout="column" tabindex="-1" role="main" flex class="layout-column flex" style='z-index:12;'>
         <div ui-view="topnav"></div>
         <div ui-view="content"> </div>
     </div>
-    <div ui-view="right" ng-controller="rightCtrl"></div>
+    <div ui-view="right"></div>
 </body>
 
 </html>

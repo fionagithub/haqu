@@ -1,9 +1,9 @@
 angular.module('content.deviceDefine', ['ams.factorys', 'ams.factorys.services'])
     .controller('DeviceDefineCtrl', DeviceDefineCtrl)
+    .controller('DeviceDefineDetailCtrl', DeviceDefineDetailCtrl)
 
 function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
     $scope.$on("loadFromParrent", load);
-
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ams.category.content") {
             load();
@@ -15,12 +15,14 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
     function load() {
         $rootScope.query = null;
         $scope.showData = paginator(deviceDefines.filter, 10);
-        $scope.DeviceField = DeviceField;
+        $rootScope.showData = $scope.showData;
 
         monitorType.filter(null, null, function(data) {
+            $rootScope.MonitorType = angular.copy(data);
             $scope.MonitorType = data;
         });
         deviceTypeList.filter(null, null, function(data) {
+            $rootScope.DeviceTypeList = angular.copy(data);
             $scope.DeviceTypeList = data;
         });
     }
@@ -29,30 +31,22 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
         var uri = {
             category: $stateParams.category
         };
-        var relatedData = {
-            'DeviceField': $scope.DeviceField,
-            'MonitorType': $scope.MonitorType,
-            'DeviceTypeList': $scope.DeviceTypeList,
-            'ValueOpartor': ['<', '>','=', '[]'],
-            'AlarmLevel': ['0', '1']
-        };
-        $scope.$emit('relatedData', relatedData);
 
         if (obj) {
             uri.id = obj[DeviceField.ID];
             $state.go("ams.category.content.edit", uri);
-            $scope.$emit('groupFieldName',angular.copy(obj));
+            $rootScope.groupFieldName = angular.copy(obj);
         } else {
-            $state.go("ams.category.content.create", uri);
-            $scope.$emit('reopen');
+            $state.go("ams.category.content.create");
+            $rootScope.groupFieldName = null;
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
             it.toggle();
         });
     };
-    var k, v;
 
+    var k, v;
     $scope.$watch('MonitorType', function() {
         $scope.monitorMap = {};
         if ($scope.MonitorType) {
@@ -75,8 +69,10 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
         }
     });
 
+
     $scope.search = function() {
-        $rootScope.query = query;
+        $rootScope.query = angular.copy(query);
+        $rootScope.search = angular.copy(query);
         $scope.showData._load(0);
     }
 
@@ -86,18 +82,6 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
         } else {
             delete query[DeviceField.TYPE_ID];
         }
-    });
-
-    $scope.$on("saveFromParent", function(event, obj, type) {
-        obj ? obj : obj = {};
-        deviceDefines.saveOne(obj, type, function() {
-            if ($scope.selectedData) {
-                query[DeviceField.TYPE_ID] = angular.copy($scope.selectedData);
-                $rootScope.query = query;
-            }
-            toastService();
-            $scope.showData._load()
-        });
     });
 
     $scope.getSelectedText = function(o) {
@@ -117,6 +101,7 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
         }
         $scope._oldSelectedRowObj.unshift(obj);
     };
+
     $scope.deleteData = function(obj) {
         delDialogService(function() {
             console.log('delete...');
@@ -130,4 +115,26 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
         })
     };
 
+}
+
+function DeviceDefineDetailCtrl($scope, deviceDefines, toastService, $rootScope, $mdSidenav) {
+    $scope.groupFieldName = $rootScope.groupFieldName;
+    $scope.MonitorType = $rootScope.MonitorType;
+    $scope.DeviceTypeList = $rootScope.DeviceTypeList;
+
+    $scope.ValueOpartor = ['<', '>', '=', '[]'];
+    $scope.AlarmLevel = ['0', '1'];
+    $scope.save = function(obj, type) {
+        deviceDefines.saveOne(obj, type, function() {
+            toastService();
+            $scope.groupFieldName = null;
+            $rootScope.query = $rootScope.search;
+            $rootScope.showData._load();
+        });
+    };
+
+    $scope.cancel = function() {
+        $mdSidenav('right').close();
+        $scope.groupFieldName = null;
+    };
 }

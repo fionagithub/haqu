@@ -9,6 +9,7 @@ function DeviceField() {
         ID: "autoid",
         NAME: "devicename",
         DEVICE_ID: "deviceid",
+        SUBDEVICE_ID: "subdeviceid",
         DEVICE_NO: "deviceno", // 回路号 valuecompareoprator
         X: "axisx",
         Y: "axisy",
@@ -20,7 +21,6 @@ function DeviceField() {
         MNT_GROUP_ID: "monitortypegroupid",
         MNT_TYPE_ID: "monitortypeid",
         TMP_NAME: "templatename",
-        SUBDEVICE_ID: "subdeviceid",
         MONITOR: "monitor",
         MAP_ID: "mapid",
         MAP_NO: "mapno",

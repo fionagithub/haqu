@@ -1,5 +1,5 @@
 angular.module('AMS', [
-    'ui.router',
+    'ui.router', 'ngMaterial',
     'category',
     'content',
     'content.deviceSystype',
@@ -56,7 +56,7 @@ function stateConfig($stateProvider, $urlRouterProvider) {
         .state('ams.category.content.create', {
             url: '/create',
             views: {
-                'right@': { 
+                'right@': {
                     templateUrl: function(params) {
                         return 'view/content/' + params.category + '/create/template.html'
                     }
@@ -75,7 +75,7 @@ function stateConfig($stateProvider, $urlRouterProvider) {
                 'right@': {
                     templateUrl: function(params) {
                         return 'view/content/' + params.category + '/edit/template.html'
-                    } 
+                    }
                 }
             }
         })

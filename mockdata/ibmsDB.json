@@ -7,8 +7,8 @@
     "Role": 1,
     "ts_map": 1273,
     "ts_deviceinfo": 33301011001075096,
-    "ts_devicetype": 1103333133402,
-    "ts_devicesystype": 87655704,
+    "ts_devicetype": 1103333133403,
+    "ts_devicesystype": 87655708,
     "V_DevicePointList": 240316,
     "ts_newmonitortypegroup": 90053,
     "ts_monitortypes": 901046,
@@ -1155,11 +1155,12 @@
       "911": "{\"devicetypeid\":911,\"devicetypename\":\"消防酒店转换电梯\",\"devicesystemtypeid\":9,\"iconsrc\":null}",
       "912": "{\"devicetypeid\":912,\"devicetypename\":\"312312\",\"devicesystemtypeid\":null}",
       "1101": "{\"devicetypeid\":1101,\"devicetypename\":\"---tes9999-==-\",\"devicesystemtypeid\":11}",
-      "1106": "{\"devicetypeid\":1106,\"devicetypename\":\"---==\",\"devicesystemtypeid\":11}",
-      "1107": "{\"devicetypeid\":1107,\"devicetypename\":\"-==-\",\"devicesystemtypeid\":11}",
-      "1108": "{\"devicetypeid\":1108,\"devicetypename\":\"---=\",\"devicesystemtypeid\":11}",
-      "1109": "{\"devicetypeid\":1109,\"devicetypename\":\"--2332---\",\"devicesystemtypeid\":11}",
-      "1110": "{\"devicetypeid\":1110,\"devicetypename\":\"999\",\"devicesystemtypeid\":11,\"iconsrc\":\"\"}",
+      "1106": "{\"devicetypeid\":1106,\"devicetypename\":\"--aaa-==\",\"devicesystemtypeid\":11}",
+      "1107": "{\"devicetypeid\":1107,\"devicetypename\":\"-=999=-\",\"devicesystemtypeid\":11}",
+      "1108": "{\"devicetypeid\":1108,\"devicetypename\":\"---ee=\",\"devicesystemtypeid\":11}",
+      "1109": "{\"devicetypeid\":1109,\"devicetypename\":\"--test--\",\"devicesystemtypeid\":11}",
+      "1110": "{\"devicetypeid\":1110,\"devicetypename\":\"---999====\",\"devicesystemtypeid\":11,\"iconsrc\":\"\"}",
+      "1111": "{\"devicetypeid\":1111,\"devicetypename\":\"-999[]-=\",\"devicesystemtypeid\":11}",
       "1122": "{\"devicetypeid\":1122,\"devicetypename\":\"121\"}",
       "1154": "{\"devicetypeid\":1154,\"devicetypename\":\"dfsa\"}",
       "1156": "{\"devicetypeid\":1156,\"devicetypename\":\"dddd==\"}",
@@ -1187,9 +1188,9 @@
     },
     "ts_devicesystype": {
       "0": "{\"devicesystemtypeid\":0,\"devicesystemtypename\":\"--请选择设备系统类型--\"}",
-      "1": "{\"devicesystemtypeid\":1,\"devicesystemtypename\":\"54r45\"}",
+      "1": "{\"devicesystemtypeid\":1,\"devicesystemtypename\":\"test\"}",
       "2": "{\"devicesystemtypeid\":2,\"devicesystemtypename\":\"一卡通系统\"}",
-      "3": "{\"devicesystemtypeid\":3,\"devicesystemtypename\":\"999\"}",
+      "3": "{\"devicesystemtypeid\":3,\"devicesystemtypename\":\"--test---\"}",
       "4": "{\"devicesystemtypeid\":4,\"devicesystemtypename\":\"多能源管理系统\"}",
       "5": "{\"devicesystemtypeid\":5,\"devicesystemtypename\":\"楼宇自控系统\"}",
       "6": "{\"devicesystemtypeid\":6,\"devicesystemtypename\":\"能源及环境管理\"}",
@@ -1201,8 +1202,11 @@
       "12": "{\"devicesystemtypeid\":12,\"devicesystemtypename\":\"---999---\"}",
       "14": "{\"devicesystemtypeid\":14,\"devicesystemtypename\":\"三星\"}",
       "17": "{\"devicesystemtypeid\":17,\"devicesystemtypename\":\"---test-=-0\"}",
-      "26": "{\"devicesystemtypeid\":26,\"devicesystemtypename\":\"test0999\"}",
-      "27": "{\"devicesystemtypeid\":27,\"devicesystemtypename\":\"5555\"}"
+      "26": "{\"devicesystemtypeid\":26,\"devicesystemtypename\":\"--test0999---\"}",
+      "27": "{\"devicesystemtypeid\":27,\"devicesystemtypename\":\"5555\"}",
+      "28": "{\"devicesystemtypeid\":28,\"devicesystemtypename\":\"00\"}",
+      "29": "{\"devicesystemtypeid\":29,\"devicesystemtypename\":\"12\"}",
+      "30": "{\"devicesystemtypeid\":30,\"devicesystemtypename\":\"244\"}"
     },
     "ts_map": {
       "334": "{\"mapid\":334,\"mapname\":\"B区\",\"mapno\":null,\"maplocation\":null,\"maptype\":1,\"source\":null,\"open\":true}",
@@ -1359,8 +1363,6 @@
       "1272": "{\"mapid\":1272,\"mapno\":null}"
     },
     "ts_deviceinfo": {
-      "10101": "{\"deviceid\":10101,\"devicetypeid\":null,\"mapid\":null,\"devicename\":\"\"}",
-      "10102": "{\"deviceid\":10102,\"devicetypeid\":null,\"mapid\":null}",
       "140101": "{\"deviceid\":140101,\"devicetypeid\":101,\"mapid\":334,\"maptype\":0,\"deviceno\":\"出水电费水电费\",\"devicename\":\"热污染是否是否\"}",
       "166095": "{\"autoid\":166095,\"deviceid\":\"030101010903058028\",\"devicename\":\"B3F湿式报警阀间烟感L58-28\",\"devicetypeid\":301,\"axisx\":null,\"axisy\":null,\"mapid\":346,\"deviceno\":\"L58-28\"}",
       "167252": "{\"autoid\":167252,\"deviceid\":\"030101010903066063\",\"devicename\":\"B3F烟感L66-63\",\"devicetypeid\":301,\"axisx\":null,\"axisy\":null,\"mapid\":346,\"deviceno\":\"L66-63\"}",
@@ -3864,7 +3866,8 @@
       "50201011024010420": "{\"deviceid\":50201011024010420,\"subdeviceid\":50201011024010420,\"templatename\":null}",
       "50301011024013900": "{\"deviceid\":50301011024013900,\"subdeviceid\":50301011024013900,\"templatename\":null}",
       "50401011024013900": "{\"deviceid\":50401011024013900,\"subdeviceid\":50401011024013900,\"templatename\":null}",
-      "30101010903022004": "{\"deviceid\":30101010903022004,\"subdeviceid\":\"30101010903022004,30101010903022016\",\"templatename\":\"--==999=-\",\"undefined\":null,\"prefix\":30101010903022004,\"subDataItem\":[\"30101010903022004\",\"30101010903022016\"],\"tmp\":\"--==999=-\"}"
+      "30101010903022004": "{\"deviceid\":30101010903022004,\"subdeviceid\":\"30101010903022004,30101010903022016\",\"templatename\":\"--==999=-\",\"undefined\":null,\"prefix\":30101010903022004,\"subDataItem\":[\"30101010903022004\",\"30101010903022016\"],\"tmp\":\"--==999=-\"}",
+      "30101010903030050": "{\"deviceid\":30101010903030050,\"subdeviceid\":null}"
     },
     "ts_devicepoint": {
       "10101010901001000": "{\"deviceid\":10101010901001000,\"cmdname\":\"JK-B1F-001\",\"monitortypeid\":101002,\"datasource\":null,\"monitor\":\"10.2.1.2\"}",

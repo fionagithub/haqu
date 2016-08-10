@@ -66,11 +66,6 @@ function stateConfig($stateProvider, $urlRouterProvider) {
         })
         .state('ams.category.content.edit', {
             url: '/edit/:id',
-            resolve: {
-                id: function($stateParams) {
-                    return $stateParams.id;
-                }
-            },
             views: {
                 'right@': {
                     templateUrl: function(params) {

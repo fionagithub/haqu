@@ -10,9 +10,10 @@ function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator,
         }
     });
 
+    var query = {};
+
     function load() {
         $rootScope.query = null;
-        $rootScope.groupFieldName = null;
         $scope.showData = paginator(deviceSysTypeList.filter, 10);
         $rootScope.showData = $scope.showData;
     }
@@ -26,7 +27,6 @@ function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator,
             uri.id = obj[DeviceField.SYS_TYPE_ID];
             $state.go("ams.category.content.edit", uri);
         } else {
-            $rootScope.groupFieldName = null;
             $state.go("ams.category.content.create");
         }
         // 'No instance found for handle'
@@ -42,7 +42,6 @@ function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator,
         })
     };
 
-    var query = {};
     $scope._oldSelectedRowObj = [];
     //deviceTypeFieldName 自定义设备 查看列表数据 
     $scope.selectedRow = function(index, obj) {
@@ -65,19 +64,18 @@ function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator,
 
 }
 
-function DeviceSystypeRightCtrl($scope, deviceSysTypeList, toastService, $rootScope, $mdSidenav) {
-    $scope.groupFieldName = $rootScope.groupFieldName;
 
+function DeviceSystypeRightCtrl($scope, deviceSysTypeList, toastService, $rootScope, $mdSidenav) {
     $scope.save = function(obj, type) {
         deviceSysTypeList.saveOne(obj, type, function() {
             toastService();
-            $scope.groupFieldName = null;
+            $rootScope.groupFieldName = null;
             $rootScope.showData._load();
         });
     };
 
     $scope.cancel = function() {
-        $scope.groupFieldName = null;
+        $rootScope.groupFieldName = null;
         $mdSidenav('right').close();
     };
 }

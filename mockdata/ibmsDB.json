@@ -8,7 +8,7 @@
     "ts_map": 1273,
     "ts_deviceinfo": 33301011001075096,
     "ts_devicetype": 1103333133403,
-    "ts_devicesystype": 87655708,
+    "ts_devicesystype": 87655709,
     "V_DevicePointList": 240316,
     "ts_newmonitortypegroup": 90053,
     "ts_monitortypes": 901046,
@@ -1188,7 +1188,7 @@
     },
     "ts_devicesystype": {
       "0": "{\"devicesystemtypeid\":0,\"devicesystemtypename\":\"--请选择设备系统类型--\"}",
-      "1": "{\"devicesystemtypeid\":1,\"devicesystemtypename\":\"test\"}",
+      "1": "{\"devicesystemtypeid\":1,\"devicesystemtypename\":\"--test\"}",
       "2": "{\"devicesystemtypeid\":2,\"devicesystemtypename\":\"一卡通系统\"}",
       "3": "{\"devicesystemtypeid\":3,\"devicesystemtypename\":\"--test---\"}",
       "4": "{\"devicesystemtypeid\":4,\"devicesystemtypename\":\"多能源管理系统\"}",
@@ -1201,12 +1201,8 @@
       "11": "{\"devicesystemtypeid\":11,\"devicesystemtypename\":\"eleven--\"}",
       "12": "{\"devicesystemtypeid\":12,\"devicesystemtypename\":\"---999---\"}",
       "14": "{\"devicesystemtypeid\":14,\"devicesystemtypename\":\"三星\"}",
-      "17": "{\"devicesystemtypeid\":17,\"devicesystemtypename\":\"---test-=-0\"}",
-      "26": "{\"devicesystemtypeid\":26,\"devicesystemtypename\":\"--test0999---\"}",
-      "27": "{\"devicesystemtypeid\":27,\"devicesystemtypename\":\"5555\"}",
-      "28": "{\"devicesystemtypeid\":28,\"devicesystemtypename\":\"00\"}",
-      "29": "{\"devicesystemtypeid\":29,\"devicesystemtypename\":\"12\"}",
-      "30": "{\"devicesystemtypeid\":30,\"devicesystemtypename\":\"244\"}"
+      "26": "{\"devicesystemtypeid\":26,\"devicesystemtypename\":\"--==98555588==---\"}",
+      "27": "{\"devicesystemtypeid\":27,\"devicesystemtypename\":\"---new-===--\"}"
     },
     "ts_map": {
       "334": "{\"mapid\":334,\"mapname\":\"B区\",\"mapno\":null,\"maplocation\":null,\"maptype\":1,\"source\":null,\"open\":true}",

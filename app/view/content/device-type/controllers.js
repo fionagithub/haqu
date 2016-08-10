@@ -4,12 +4,12 @@ angular.module('content.deviceType', ['ams.factorys', 'ams.factorys.services'])
 
 function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
     $scope.$on("loadFromParrent", load);
-
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ams.category.content") {
             load();
         }
     });
+
     var query = {};
 
     function load() {
@@ -21,12 +21,27 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
         };
         $scope.showData = paginator(deviceTypeList.filter, 10);
         $rootScope.showData = $scope.showData;
-
         deviceSysTypeList.filter(null, null, function(data) {
             $scope.DeviceSysTypeList = data;
-            $rootScope.DeviceSysTypeList = $scope.DeviceSysTypeList;
         });
     }
+
+    $scope.toggleRight = function(obj) {
+        var uri = {
+            category: $stateParams.category
+        };
+        if (obj) {
+            uri.id = obj[DeviceField.TYPE_ID];
+            $state.go("ams.category.content.edit", uri);
+            $rootScope.groupFieldName = angular.copy(obj);
+        } else {
+            $state.go("ams.category.content.create");
+        }
+        // 'No instance found for handle'
+        $mdComponentRegistry.when('right').then(function(it) {
+            it.toggle();
+        });
+    };
 
     //数据列表中匹配父名称
     $scope.$watch('DeviceSysTypeList', function() {
@@ -40,6 +55,17 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
             }
         }
     });
+
+
+    $scope.deleteData = function(obj) {
+        delDialogService(function() {
+            console.log('delete...');
+            deviceTypeList.deleteOne(obj).then(function(data) {
+                $rootScope.query = angular.copy(query);
+                $scope.showData._load(0);
+            })
+        })
+    };
 
     //搜索条件 
     $scope.$watch('selected.searchDeviceType', function() {
@@ -58,35 +84,6 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
             delete query[DeviceField.SYS_TYPE_ID];
         }
     });
-
-    $scope.toggleRight = function(obj) {
-        var uri = {
-            category: $stateParams.category
-        };
-        if (obj) {
-            uri.id = obj[DeviceField.TYPE_ID];
-            $state.go("ams.category.content.edit", uri);
-            $rootScope.groupFieldName = angular.copy(obj);
-        } else {
-            $state.go("ams.category.content.create");
-            $rootScope.groupFieldName = null;
-        }
-        // 'No instance found for handle'
-        $mdComponentRegistry.when('right').then(function(it) {
-            it.toggle();
-        });
-    };
-
-    $scope.deleteData = function(obj) {
-        delDialogService(function() {
-            console.log('delete...');
-            deviceTypeList.deleteOne(obj).then(function(data) {
-                $rootScope.query = angular.copy(query);
-                $scope.showData._load(0);
-            })
-        })
-    };
-
     $scope.search = function() {
         $rootScope.query = angular.copy(query);
         $rootScope.search = angular.copy(query);
@@ -117,20 +114,18 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
 }
 
 function DeviceTypeDetailCtrl($scope, deviceTypeList, toastService, $rootScope, $mdSidenav) {
-    $scope.deviceSysTypeList = $rootScope.deviceSysTypeList;
-    $scope.groupFieldName = $rootScope.groupFieldName;
-
     $scope.save = function(obj, type) {
         deviceTypeList.saveOne(obj, type, function() {
             toastService();
-            $scope.groupFieldName = null;
-            $rootScope.query = $rootScope.search;
+            $rootScope.groupFieldName = null;
+            $rootScope.query = angular.copy($rootScope.search);
+            $rootScope.search = null;
             $rootScope.showData._load();
         });
     };
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
-        $scope.groupFieldName = null;
+        $rootScope.groupFieldName = null;
     };
 }

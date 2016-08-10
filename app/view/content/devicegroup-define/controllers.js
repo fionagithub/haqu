@@ -100,7 +100,7 @@ function DeviceGroupDefineDetailCtrl($scope, deviceGroupDefine, deviceInfo, toas
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
-        $scope.groupFieldName = null;
+        $rootScope.groupFieldName = null;
     };
 }
 
@@ -108,7 +108,7 @@ function DeviceGroupDefineDetailCtrl($scope, deviceGroupDefine, deviceInfo, toas
 function DeviceGroupDefineCtrl($scope, deviceGroupDefine, paginator, delDialogService, toastService, $rootScope, $state, $stateParams, $document, $mdSidenav, $mdComponentRegistry) {
     var _this = this;
     _this.selectedRow = selectedRow;
-    _this.getSelectedText = getSelectedText;
+ /*   _this.getSelectedText = getSelectedText;*/
     _this.toggleRight = toggleRight;
     _this.deleteData = deleteData;
 
@@ -122,7 +122,6 @@ function DeviceGroupDefineCtrl($scope, deviceGroupDefine, paginator, delDialogSe
             $rootScope.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
-            $rootScope.groupFieldName = null;
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
@@ -160,13 +159,13 @@ function DeviceGroupDefineCtrl($scope, deviceGroupDefine, paginator, delDialogSe
         })
     };
 
-    function getSelectedText(o) {
+ /*   function getSelectedText(o) {
         if (o) {
             return o;
         } else {
             return " ";
         }
-    };
+    };*/
 
 
 }

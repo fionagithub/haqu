@@ -18,11 +18,9 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
         $rootScope.showData = $scope.showData;
 
         monitorType.filter(null, null, function(data) {
-            $rootScope.MonitorType = angular.copy(data);
             $scope.MonitorType = data;
         });
         deviceTypeList.filter(null, null, function(data) {
-            $rootScope.DeviceTypeList = angular.copy(data);
             $scope.DeviceTypeList = data;
         });
     }
@@ -38,7 +36,6 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
             $rootScope.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
-            $rootScope.groupFieldName = null;
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
@@ -84,14 +81,6 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
         }
     });
 
-    $scope.getSelectedText = function(o) {
-        if (o) {
-            return o;
-        } else {
-            return " ";
-        }
-    };
-
     $scope._oldSelectedRowObj = [];
     // 自定义设备 查看列表数据 
     $scope.selectedRow = function(index, obj) {
@@ -118,23 +107,21 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
 }
 
 function DeviceDefineDetailCtrl($scope, deviceDefines, toastService, $rootScope, $mdSidenav) {
-    $scope.groupFieldName = $rootScope.groupFieldName;
-    $scope.MonitorType = $rootScope.MonitorType;
-    $scope.DeviceTypeList = $rootScope.DeviceTypeList;
-
     $scope.ValueOpartor = ['<', '>', '=', '[]'];
     $scope.AlarmLevel = ['0', '1'];
+
     $scope.save = function(obj, type) {
         deviceDefines.saveOne(obj, type, function() {
             toastService();
-            $scope.groupFieldName = null;
-            $rootScope.query = $rootScope.search;
+            $rootScope.groupFieldName = null;
+            $rootScope.query = angular.copy($rootScope.search);
+            $rootScope.search = null;
             $rootScope.showData._load();
         });
     };
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
-        $scope.groupFieldName = null;
+        $rootScope.groupFieldName = null;
     };
 }

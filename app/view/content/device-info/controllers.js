@@ -13,19 +13,17 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
     var query = {};
 
     function load() {
-        $rootScope.query = null;
-        $scope.showData = paginator(deviceInfo.filter, 10);
-        $scope.DeviceField = DeviceField;
         $scope.selected = {
             data: null
         };
+        $rootScope.query = null;
+        $scope.showData = paginator(deviceInfo.filter, 10);
+        $rootScope.showData = $scope.showData;
 
         map.filter(null, null, function(data) {
-            $rootScope.mapData = angular.copy(data);
             $scope.mapData = data;
         });
         deviceTypeList.filter(null, null, function(data) {
-            $rootScope.DeviceTypeList = angular.copy(data);
             $scope.DeviceTypeList = data;
         });
     }
@@ -42,7 +40,6 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
             $rootScope.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
-            $rootScope.groupFieldName = null;
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
@@ -119,21 +116,18 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
 }
 
 function DeviceInfoDetailCtrl($scope, deviceInfo, toastService, $rootScope, $mdSidenav) {
-    $scope.groupFieldName = $rootScope.groupFieldName;
-    $scope.mapData = $rootScope.mapData;
-    $scope.DeviceTypeList = $rootScope.DeviceTypeList;
-
     $scope.save = function(obj, type) {
         deviceInfo.saveOne(obj, type, function() {
             toastService();
-            $scope.groupFieldName = null;
-            $rootScope.query = $rootScope.search;
+            $rootScope.groupFieldName = null;
+            $rootScope.query = angular.copy($rootScope.search);
+            $rootScope.search = null;
             $rootScope.showData._load();
         });
     };
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
-        $scope.groupFieldName = null;
+        $rootScope.groupFieldName = null;
     };
 }

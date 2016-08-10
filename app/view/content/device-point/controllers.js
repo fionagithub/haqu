@@ -2,13 +2,14 @@ angular.module('content.devicePoint', ['ams.factorys', 'ams.factorys.services'])
     .controller('DevicePointCtrl', DevicePointCtrl)
     .controller('DevicePointDetailCtrl', DevicePointDetailCtrl)
 
-function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogService,  DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
+function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
     $scope.$on("loadFromParrent", load);
     $scope.$on('$stateChangeSuccess', function() {
         if ($state.current.name == "ams.category.content") {
             load();
         }
     });
+
     var query = {};
 
     function load() {
@@ -17,24 +18,22 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
         };
         $rootScope.query = null;
         $scope.showData = paginator(devicePoint.filter, 10);
-        $scope.DeviceField = DeviceField;
+        $rootScope.showData = $scope.showData;
         monitorType.filter(null, null, function(data) {
             $scope.MonitorType = data;
-            $rootScope.MonitorType = angular.copy(data);
         });
     }
 
     $scope.toggleRight = function(obj) {
         var uri = {
             category: $stateParams.category
-        }; 
+        };
         if (obj) {
-            uri.id = obj[DeviceField.DEVICE_ID]; 
+            uri.id = obj[DeviceField.DEVICE_ID];
             $state.go("ams.category.content.edit", uri);
             $rootScope.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
-            $rootScope.groupFieldName = null;
         }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
@@ -47,7 +46,7 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
         $rootScope.search = angular.copy(query);
         $scope.showData._load(0);
     }
-    
+
     $scope.$watch('selectedData', function() {
         if ($scope.selectedData) {
             query[DeviceField.MNT_TYPE_ID] = angular.copy($scope.selectedData[DeviceField.MNT_TYPE_ID]);
@@ -91,23 +90,20 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
     };
 
 }
+
 function DevicePointDetailCtrl($scope, devicePoint, toastService, $rootScope, $mdSidenav) {
-    $scope.groupFieldName = $rootScope.groupFieldName;
-    $scope.MonitorType = $rootScope.MonitorType; 
- 
     $scope.save = function(obj, type) {
         devicePoint.saveOne(obj, type, function() {
             toastService();
-            $scope.groupFieldName = null;
-            $rootScope.query = $rootScope.search;
+            $rootScope.groupFieldName = null;
+            $rootScope.query = angular.copy($rootScope.search);
+            $rootScope.search = null;
             $rootScope.showData._load();
         });
     };
- 
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
-        $scope.groupFieldName = null;
+        $rootScope.groupFieldName = null;
     };
 }
-

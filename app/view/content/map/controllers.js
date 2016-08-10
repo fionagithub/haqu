@@ -5,8 +5,6 @@
        .directive('fileModel', fileModel)
 
    function MapDetailCtrl($scope, map, uploadService, toastService, $rootScope, $mdSidenav) {
-       $scope.groupFieldName = $rootScope.groupFieldName;
-
        $scope.uploadFile = function() {
            var file = $scope.myFile;
            var fd = new FormData();
@@ -20,25 +18,25 @@
        $scope.save = function(obj, type) {
            map.saveOne(obj, type, function() {
                toastService();
-               $scope.groupFieldName = null;
-               $rootScope.showData._load();
+               $rootScope.groupFieldName = null;
+            /*   $rootScope.showData._load();*/
            });
        };
 
        $scope.cancel = function() {
            $mdSidenav('right').close();
-           $scope.groupFieldName = null;
+           $rootScope.groupFieldName = null;
        };
    }
 
    function MapCtrl($scope, map, fileService, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
        $scope.$on("loadFromParrent", load);
-
        $scope.$on('$stateChangeSuccess', function() {
            if ($state.current.name == "ams.category.content") {
                load();
            }
        });
+
 
        $scope.map = {
            file: null
@@ -52,7 +50,7 @@
                var _data = new treeMenu(data).init();
                $scope.showData = _data;
                $scope.showAreaData = _data[null];
-               $rootScope.showData = angular.copy(_data);
+             /*  $rootScope.showData = angular.copy(_data);*/
                $rootScope.showAreaData = angular.copy(_data[null]);
            });
        }
@@ -69,7 +67,6 @@
                $rootScope.groupFieldName = angular.copy(obj);
            } else {
                $state.go("ams.category.content.create");
-               $rootScope.groupFieldName = null;
            }
            // 'No instance found for handle'
            $mdComponentRegistry.when('right').then(function(it) {
@@ -116,10 +113,6 @@
                }
            }
        };
-
-
-
-
    }
 
    function mapInlineTools($templateRequest, $compile) {

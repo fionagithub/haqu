@@ -1,36 +1,29 @@
-# AMS
-## AMS项目，由loopback提供数据接口
+# AMS项目 
+项目英文全称：administrator management system ， 主要有设备类别，监控，地图与设备基础信息模块，维护对应模块的数据。对数据的操作主要有以下功能：增加，删除，查找，更新，浏览。
 
----
+## 安装引用包
+设置私有镜像npm set registry http://r.npm.jkr3.com
++ `npm install`
++ `bower install`
 
-> 关于 loopback 相关说明，请参考 [loopback-example-angular](https://github.com/strongloop/loopback-example-angular)。
-> 
-
-## 安装
-`npm install`
-
-
-## 启动
+## 启动项目
 `node .`
 
-使用不同配置启动，参考：[如何使用本地模拟数据开发？](#develop-event)
-
+## loopback提供数据接口
+根据环境变量调用不同资源，参考：[如何使用本地模拟数据开发？](#develop-event)。关于 loopback 相关说明，请参考 [loopback-example-angular](https://github.com/strongloop/loopback-example-angular)。
 ## 配置
 
 ### 如何配置loopback数据对象？
-数据对象配置涉及到数据源配置文件：`/server/datasources.json` 和模块配置文件`server/model-config.json`、`/common/models/{modelname}.json`
+1. loopback模型的配置文件：`server/model-config.json`
+2. 配置数据源：`/server/datasources.json` 
+3. 存储自己定义数据模型，字段名称也要和数据库中相同:`/common/models/{modelname}.json`
 
-1. 在数据源配置文件中配置数据源
-2. 在模块配置文件中配置字段。
-3. 每个模块名称对应数据库的一个表名，字段名称也要和数据库中相同。
-
-> 最快捷的方式是使用 slc (StrongLoop Controller) 命令来快速配置数据对象，`slc loopback:model`
-> [详细教程](https://docs.strongloop.com/display/public/LB/Tutorial%3A+model+relations#Tutorial:modelrelations-Createmodels)
+最快捷的方式是使用 slc (StrongLoop Controller) 命令来快速配置数据对象，`slc loopback:model`
+[详细教程](https://docs.strongloop.com/display/public/LB/Tutorial%3A+model+relations#Tutorial:modelrelations-Createmodels)
 
 
-### <span id = "develop-event">如何使用本地模拟数据开发？</span>
-将环境变量 `NODE_ENV` 设置成 `develop`，然后启动 iBuildWeb，或者使用临时设置变量启动 `NODE_ENV=develop node .` 。
->loopback系统会自动根据这个环境变量调用对应的数据源配置文件，配置文件的命名规则为：`datasources.{env}.json`，因此，上述设置会调用`datasources.develop.json`。也就是说，只要将`NODE_ENV`设置成不同的字符串就可调用不同的数据源配置。
+### 如何使用本地模拟数据开发？
+在项目启动文件中，将环境变量 `NODE_ENV` 设置成 `develop`（ process.env.NODE_ENV = 'develop'; ）;或者使用命令设置临时变量 `SET NODE_ENV=develop` ，然后启动 AMS项目 `node .`。loopback根据配置的环境变量调用common文件夹对应的数据源文件。数据源文件的命名规则为：`datasources.{NODE_ENV}.json`。
 
 ### 如何将真实数据导入到模拟库？
 按以下步骤操作：
@@ -42,5 +35,32 @@
 
 ### StrongLoop API 过滤器语法
 1、查询范例
-  `_params={"limit":10,"offset":10,"where":{"deviceid":{"like":"0301%"}}};
-   $http.get(options.uri,{ params: { filter:  _params } } ) ` 
+  `_params={"limit":10,"offset":10,"where":{"deviceid":{"like":"0301%"}}};`
+` $http.get(options.uri,{ params: { filter:  _params } } ) ` 
+## 框架
+基于Material Design 的应用在外观、交互性和动画效果等方面都有很好的用户体验。angular-material 是 AngularJS 的一个子项目，用来提供实现了 Material Design 风格的组件.[详细教程][http://material.angularjs.org]
+
+## ui-router路由管理 
+
+ui-router 的工作原理非常类似于 Angular 的路由控制器，但它只关注状态。
+
++ 在应用程序的整个用户界面和导航中，一个状态对应于一个页面位置
++ 通过定义controller、template和view等属性，来定义指定位置的用户界面和界面行为
++ 通过嵌套的方式来解决页面中的一些重复出现的部位 
+
+[详细教程]
+
+1. [ https://github.com/angular-ui/ui-router/wiki]
+2. [ http://bubkoo.com/2014/01/01/angular/ui-router/guide/state-manager/] 
+
+## 插件
+
+#### ​Express文件上传插件 
+[详细教程] [https://www.npmjs.com/package/express-fileupload]
+#### 调用不用资源插件ez-config-loader
+根据环境变量 `NODE_ENV` 加载不同的配置文件，用于方便开发环境与生产环境调用不同的资源.
+[详细教程][https://www.npmjs.com/package/ez-config-loader]
+
+## 帮助文档
+
+[http://www.baidu.com]

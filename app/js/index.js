@@ -2,6 +2,7 @@ angular.module('AMS', [
     'ui.router',
     'category',
     'content',
+    'common.directives',
     'content.deviceSystype',
     'content.deviceType',
     'content.deviceMonitor',
@@ -9,7 +10,7 @@ angular.module('AMS', [
     'content.deviceDefine', 'content.deviceGroupDefine', 'content.devicePoint'
 ])
 
-.config(stateConfig)
+    .config(stateConfig)
     .factory('toastService', toastService)
     .factory('delDialogService', delDialogService)
     .factory('paginator', paginator)
@@ -162,7 +163,8 @@ function toastService($mdToast) {
 function delDialogService($mdDialog) {
     return function(delEvent) {
         var confirm = $mdDialog.confirm()
-            .title('确定要删除这条数据么?')
+            .title('提示')
+            .textContent('确定要删除这条数据么?')
             .ok('确定')
             .cancel('取消');
 

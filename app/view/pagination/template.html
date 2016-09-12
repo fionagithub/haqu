@@ -1,7 +1,9 @@
-<div layout="row" ng-show='showData.isPagination'>
+
+ <div class="col-sm-8 col-sm-offset-3">
+    <div layout="row" ng-show='showData.isPagination'>
     <md-button class="md-raised demo-dialog-open-button" ng-disabled='showData.checkLoadTop()' ng-click="showData.previousPage()">
         上页
     </md-button>
     <md-button class="md-raised demo-dialog-open-button" ng-disabled='showData.checkLoadEnd()' ng-click="showData.nextPage()">下页
     </md-button>
-</div>
+</div>   </div>

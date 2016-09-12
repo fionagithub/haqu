@@ -1,8 +1,6 @@
 <span ng-class="{'inline-tools':old.indexOf(data)!==-1}" ng-show="old.indexOf(data)!==-1">
-	<md-button ng-click="toggleRight(data)" class="md-fab md-mini" >
-         <md-icon  class="glyphicon glyphicon-pencil" ></md-icon>
-      </md-button>
-       <md-button class="md-fab md-mini" ng-show='isDel' class="btn btn-danger btn-xs" ng-click="deleteData( data)">
-         <md-icon class="glyphicon glyphicon-remove" ></md-icon>
-        </md-button>
-       </span>
+     <a ng-click="toggleRight(data)" class="btn btn-white btn-sm"><i class="glyphicon glyphicon-pencil" ></i>  </a>
+     <a ng-click="deleteData(data)" ng-show='isDel' class="btn btn-white btn-sm"><i class="glyphicon glyphicon-remove" ></i>  </a>
+  <!--    <md-icon ng-click="toggleRight(data)"  class="glyphicon glyphicon-pencil"  class="btn btn-xs"></md-icon>
+  <md-icon ng-show='isDel'ng-click="deleteData( data)" class="glyphicon glyphicon-remove" ></md-icon>     -->  
+</span>

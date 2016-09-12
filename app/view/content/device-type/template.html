@@ -1,22 +1,26 @@
 <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="DeviceTypeCtrl as type">
-    <md-input-container flex class="md-block">
-        <label>系统</label>
-        <md-select ng-model="deviceSysTypeData">
-            <md-optgroup>  
-                <md-option ng-value="sysTypeData[DeviceField.SYS_TYPE_ID]" ng-repeat="sysTypeData in DeviceSysTypeList track by $index">{{ tmp=DeviceSysTypeList[sysTypeData[DeviceField.SYS_TYPE_ID]][DeviceField.SYS_TYPE_NAME] }}</md-option> 
-            </md-optgroup>
-        </md-select>
-    </md-input-container>
-    <md-input-container flex class="md-block">
-        <label>小类名称</label>
-        <input ng-model="searchDeviceType">
-    </md-input-container>
-    <section layout-sm="column" flex layout-align="center center" layout-wrap="">
+    <form role="form" class="form-inline">
+        <div class="form-group">
+            <md-input-container flex class="md-block">
+                <label>系统</label>
+                <md-select ng-model="deviceSysTypeData">
+                    <md-optgroup>
+                        <md-option ng-value="sysTypeData[DeviceField.SYS_TYPE_ID]" ng-repeat="sysTypeData in DeviceSysTypeList track by $index">{{ tmp=DeviceSysTypeList[sysTypeData[DeviceField.SYS_TYPE_ID]][DeviceField.SYS_TYPE_NAME] }}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div class="form-group">
+            <md-input-container flex class="md-block">
+                <label>小类名称</label>
+                <input ng-model="searchDeviceType">
+            </md-input-container>
+        </div>
         <md-button class="md-raised demo-dialog-open-button" ng-click="search()">搜索
-        </md-button> 
+        </md-button>
         <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
         </md-button>
-    </section>
+    </form>
     <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
         <table class="md-api-table">
             <thead>
@@ -43,10 +47,9 @@
                         <inline-tools open="toggleRight(data)" delete='deleteData( data)' old='_oldSelectedRowObj' data='data' del='isDel'></inline-tools>
                     </td>
             </tbody>
-        </table>      
-              <pagination-section>      
+        </table>
+        <pagination-section>
     </md-content>
-    <ui-view>
-    </ui-view>
-       
+     <ui-view>
+        </ui-view> 
 </div>

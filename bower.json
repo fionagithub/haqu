@@ -1,23 +1,26 @@
 {
-  "name": "loopback-example-angular",
-  "license": "MIT",
-  "version": "0.0.0",
-  "homepage": "https://github.com/strongloop/loopback-example-angular",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "app/client/vendor",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular-resource": "~1.3.15",
-    "angular-ui-router": "~0.2.13",
-    "bootstrap": "~3.3.4",
-    "angular-smarty": "*",
-    "jquery": "^3.1.0",
-    "angular-messages": "^1.5.7",
-    "angular-file-upload": "^2.3.4",
-    "angular-aria": "^1.5.7"
-  }
+    "name": "loopback-example-angular",
+    "license": "MIT",
+    "version": "0.0.0",
+    "homepage": "https://github.com/strongloop/loopback-example-angular",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "app/client/vendor",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "angular": "1.5.7",
+        "angular-animate": "1.5.6",
+        "angular-aria": "^1.5.7",
+        "angular-file-upload": "^2.3.4",
+        "angular-material": "1.0.9",
+        "angular-messages": "^1.5.7",
+        "angular-resource": "~1.3.15",
+        "angular-smarty": "*",
+        "angular-ui-router": "0.2.18",
+        "bootstrap": "~3.3.4",
+        "jquery": "^3.1.0"
+    }
 }

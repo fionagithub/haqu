@@ -2,8 +2,7 @@
      .run(['$templateCache', function($templateCache) {
          $templateCache.put('partials/menu-toggle.tmpl.html',
              '<md-button class="md-button-toggle"\n' +
-             '  ng-class="{\'selected\' : isOpen()}"\n' +
-             '  ng-click="toggle()"\n' +
+             '  ng-click="toggle($event)"\n' +
              '  aria-controls="docs-menu-{{section.name | nospace}}"\n' +
              '  flex layout="row"\n' +
              '  aria-expanded="{{isOpen()}}">\n' +
@@ -20,8 +19,8 @@
      }])
      .run(['$templateCache', function($templateCache) {
          $templateCache.put('partials/menu-link.tmpl.html',
-             '<md-button ng-class="{\'{{section.icon}}\' : true,\'selected\' :  isPageSelected()}" \n' +
-             '   ng-click="focusSection()">\n' +
+             '<md-button ng-class="{\'{{section.icon}}\' : true}" \n' +
+             '   ng-click="focusSection($event)">\n' +
              '  {{section | humanizeDoc}}\n' +
              '</md-button>\n' +
              '');
@@ -35,30 +34,31 @@
              templateUrl: 'partials/menu-toggle.tmpl.html',
              link: function(scope, element) {
                  var _scope = element.parent().scope();
-                 scope.isOpen = function() {
-                     return _scope.isOpen(scope.section);
+                 scope.isOpen = function(obj) {
+                     return _scope.isOpen(obj|| scope.section);
                  };
-                 scope.toggle = function() {
-                     clearSelectCss();
+                 scope.toggle = function(e) {
+                     var p = angular.element(e.currentTarget.parentNode).find('button')[0];
+                     if (scope.isOpen()) {
+                         clearCss();
+                          angular.element(p).addClass('md-selected');
+                     } else {
+                          angular.element(p).removeClass('md-selected');
+                     }
                      _scope.toggleOpen(scope.section);
                  };
                  scope.setSelectPage = function(page) {
-                     clearSelectCss();
                      _scope.setSelectPage(page);
-                 };
-                 scope.isPageSelected = function(page) {
-                     return _scope.isPageSelected(page);
-                 };
-
-                 function clearSelectCss() {
-                     var _elt = angular.element(document.querySelector('.selected'));
-                     _elt.removeClass('selected');
-                 }
+                 }; 
 
                  var parentNode = element[0].parentNode.parentNode.parentNode;
                  if (parentNode.classList.contains('parent-list-item')) {
                      var heading = parentNode.querySelector('h2');
                      element[0].firstChild.setAttribute('aria-describedby', heading.id);
+                 }
+                 function clearCss() {
+                     var _elt = angular.element(document.querySelector('.md-selected'));
+                     _elt.removeClass('md-selected');
                  }
              }
          };
@@ -69,17 +69,26 @@
                  section: '='
              },
              templateUrl: 'partials/menu-link.tmpl.html',
-             link: function($scope, $element) {
-                 var _scope = $element.parent().scope();
-                 $scope.isPageSelected = function() {
-                     return _scope.isPageSelected(_scope.page);
-                 };
-                 $scope.focusSection = function() {
+             link: function(scope, element) {
+                 var _scope = element.parent().scope(); 
+                 scope.mouseActived = true;
+                 scope.focusSection = function(e) {
                      // set flag to be used later when
-                     // $locationChangeSuccess calls openPage()  
-                     _scope.setSelectPage(_scope.page);
+                     // locationChangeSuccess calls openPage()  
+                     if (scope.mouseActived && e.target.nodeName == 'BUTTON') {
+                         clearCss();
+                         angular.element(e.target).addClass('md-selected');
+                         scope.mouseActived = false;
+                     } else {
+                         angular.element(e.target).removeClass('md-selected');
+                     }
+                     _scope.setSelectPage(scope.section);
                      _scope.autoFocusContent = true;
                  };
+                 function clearCss() {
+                     var _elt = angular.element(document.querySelector('.md-selected'));
+                     _elt.removeClass('md-selected');
+                 }
              }
          };
      })

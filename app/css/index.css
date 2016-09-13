@@ -4,14 +4,17 @@
      line-height: 1.46153846;
  }
  
+ .form-group {
+     min-width: 430px;
+ }
+ 
  .site-sidenav md-content {
      background: transparent;
  }
  
- .site-sidenav .selected {
-     border: 1px solid #3eafb5;
-     z-index: 99;
+ .site-sidenav .md-selected {
      background: #02a2aa;
+     border: 1px solid #3eafb5;
  }
  
  .site-sidenav h3 span {

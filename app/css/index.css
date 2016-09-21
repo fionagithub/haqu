@@ -7,7 +7,10 @@
  .form-group {
      min-width: 430px;
  }
- 
+  .md-selected {
+     background: #02a2aa;
+     border: 1px solid #3eafb5;
+ }
  .site-sidenav md-content {
      background: transparent;
  }

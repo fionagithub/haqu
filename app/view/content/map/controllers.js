@@ -32,12 +32,59 @@
        $scope.selected = {
            map: null
        };
+       $scope.setSelectPage = setSelectPage;
+       $scope.isOpen = isOpen;
+       $scope.toggleOpen = toggleOpen;
+
+       var self = {};
+       $scope.focusMap = {
+           name: null
+       };
+
+       function setSelectPage(obj) {
+           if (obj[DeviceField.SOURCE]) {
+               fileService.fileConfig().then(function(data) {
+                   $scope.showMapUri = data.data.img_path + obj[DeviceField.SOURCE];
+                   console.log('---' + data.data) // imgUir Config
+               })
+           }
+       };
+
+       function isOpen(section) {
+           return self.openedSection === section;
+       }
+
+       function toggleOpen(section) {
+           self.openedSection = (self.openedSection === section ? null : section);
+       }
 
        function load() {
            map.filter(null, null, function(data) {
                var _data = new treeMenu(data).init();
                $scope.showData = _data;
                $scope.showAreaData = _data[null];
+
+               $scope.toggelData = [];
+               angular.forEach($scope.showAreaData, function(data) {
+                   var sections = {
+                       name: data.mapname,
+                       icon: "fa",
+                       type: 'toggle'
+                   };
+                   if ($scope.showData[data.mapid]) {
+                       sections.pages = [];
+                       $scope.showData[data.mapid].map(function(data) {
+                           var pages = [{
+                               name: data.mapname,
+                               icon: "fa",
+                               source: data.source,
+                               type: 'link'
+                           }];
+                           sections.pages = sections.pages.concat(pages);
+                       })
+                   }
+                   $scope.toggelData = $scope.toggelData.concat(sections);
+               })
            });
            $scope.DeviceField = DeviceField;
        }
@@ -53,13 +100,26 @@
            })
        };
        $scope.save = function(obj, type) {
-        obj ? obj : obj = {};
+           obj ? obj : obj = {};
            obj[DeviceField.SOURCE] = $scope.filename;
            obj[DeviceField.MAP_NO] = $scope.selected.map;
            map.saveOne(obj, type, function() {
                toastService();
            });
        }
+
+
+       $scope.cancel = function() {
+           $mdSidenav('right').close();
+       };
+
+
+       $scope.deleteData = function(obj) {
+           delDialogService(function() {
+               console.log('delete...');
+               map.deleteOne(obj).then(function(data) {})
+           })
+       };
 
        function treeMenu(o) {
            this.tree = o || [];
@@ -82,30 +142,6 @@
            }
        };
 
-
-
-       $scope.cancel = function() {
-           $mdSidenav('right').close();
-       };
-
-
-       // 自定义设备 查看列表数据 remove
-       $scope.selectedRow = function(index, obj) {
-           obj.open = obj.open === false;
-           if (obj[DeviceField.SOURCE]) {
-               fileService.fileConfig().then(function(data) {
-                   $scope.showMapUri = data.data.img_path + obj[DeviceField.SOURCE];
-                   console.log('---' + data.data) // imgUir Config
-               })
-           }
-       };
-
-       $scope.deleteData = function(obj) {
-           delDialogService(function() {
-               console.log('delete...');
-               map.deleteOne(obj).then(function(data) {})
-           })
-       };
        $scope.toggleRight = function(obj) {
            if (obj) {
                $state.go("ams.category.content.edit", { id: obj[DeviceField.MAP_ID] });

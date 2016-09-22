@@ -23,15 +23,17 @@ function navCtrl($scope, category) {
     $scope.toggleOpen = toggleOpen;
     $scope.isPageSelected = isPageSelected;
     $scope.setSelectPage = setSelectPage;
-    $scope.autoFocusContent = false; 
+    $scope.autoFocusContent = false;
     $scope.currentSection = {};
     $scope.status = {
         isFirstOpen: true,
         isFirstDisabled: false
     };
-       $scope.focusCategory = {
-           name: null
-       };
+    $scope.focusCategory = {
+        isContent: false,
+        name: null
+    };
+
     function isOpen(section) {
         return category.isSectionSelected(section);
     }
@@ -40,12 +42,12 @@ function navCtrl($scope, category) {
         category.toggleSelectSection(section);
     }
 
-    function isPageSelected( page) {
-        return category.isPageSelected( page);
+    function isPageSelected(page) {
+        return category.isPageSelected(page);
     }
 
-    function setSelectPage( page) {
-        category.setSelectPage( page);
+    function setSelectPage(page) {
+        category.setSelectPage(page);
     }
 
 }

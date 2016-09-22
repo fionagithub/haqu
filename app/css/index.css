@@ -3,7 +3,31 @@
      font-size: 15px;
      line-height: 1.46153846;
  }
- 
+ .map{
+     height:800px;
+     width: 200px;
+     overflow-y: scroll;
+ }
+ .map::-webkit-scrollbar {
+    width: 10px;
+    background-color: #F5F5F5;
+}
+.map::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}.map::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 10px;
+}
+.map::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+}
+ .map button{
+     min-width:130px; 
+ }
  .form-group {
      min-width: 430px;
  }
@@ -14,26 +38,19 @@
  .site-sidenav md-content {
      background: transparent;
  }
- 
- .site-sidenav .md-selected {
-     background: #02a2aa;
-     border: 1px solid #3eafb5;
- }
+  
  
  .site-sidenav h3 span {
      font-color: #e24329;
  }
- 
- .docs-menu,
- .docs-menu ul {
+  ul {
      list-style: none;
      padding: 0;
      max-width: 100%;
      cursor: pointer;
      overflow-x: hidden;
  }
- 
- .docs-menu > li {
+  li {
      list-style-position: inside;
  }
  
@@ -354,6 +371,14 @@
      text-align: left;
  }
  
+ .selected .inline-tools {
+     display: inline-block;
+ }
+ 
+ .selected .inline-tools a {
+     text-decoration: none;
+ }
+ 
  table.md-api-table .selected td {
      background-color: #ff0 !important;
  }
@@ -388,14 +413,6 @@
  
  .glyphicon-pencil:before {
      content: "\270f";
- }
- 
- .selected .inline-tools {
-     display: inline-block;
- }
- 
- .selected .inline-tools a {
-     text-decoration: none;
  }
  
  .demo-md-panel {

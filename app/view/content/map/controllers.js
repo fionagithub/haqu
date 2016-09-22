@@ -1,6 +1,5 @@
    angular.module('content.map', ['ams.factorys.services', 'ams.factorys'])
        .controller('MapCtrl', MapCtrl)
-       .directive('mapInlineTools', mapInlineTools)
        .directive('fileModel', ['$parse', function($parse) {
            return {
                restrict: 'A',
@@ -38,6 +37,7 @@
 
        var self = {};
        $scope.focusMap = {
+           isContent: true,
            name: null
        };
 
@@ -67,7 +67,10 @@
                $scope.toggelData = [];
                angular.forEach($scope.showAreaData, function(data) {
                    var sections = {
-                       name: data.mapname,
+                       id: data[DeviceField.MAP_ID],
+                       name: data[DeviceField.MAP_NAME],
+                       source: data[DeviceField.SOURCE],
+                       maptype: data[DeviceField.MAP_TYPE],
                        icon: "fa",
                        type: 'toggle'
                    };
@@ -75,9 +78,12 @@
                        sections.pages = [];
                        $scope.showData[data.mapid].map(function(data) {
                            var pages = [{
-                               name: data.mapname,
+                               id: data[DeviceField.MAP_ID],
+                               name: data[DeviceField.MAP_NAME],
+                               no: data[DeviceField.MAP_NO],
+                               source: data[DeviceField.SOURCE],
+                               maptype: data[DeviceField.MAP_TYPE],
                                icon: "fa",
-                               source: data.source,
                                type: 'link'
                            }];
                            sections.pages = sections.pages.concat(pages);
@@ -88,6 +94,34 @@
            });
            $scope.DeviceField = DeviceField;
        }
+       $scope.deleteData = function(obj) {
+           delDialogService(function() {
+               console.log('delete...');
+               map.deleteOne(obj).then(function(data) {})
+           })
+       };
+       $scope.toggleRight = function(obj) {
+           if (obj) {
+               var data = {};
+               data[DeviceField.MAP_ID] = obj.id;
+               data[DeviceField.MAP_NAME] = obj.name;
+               data[DeviceField.MAP_NO] = obj.no;
+               data[DeviceField.SOURCE] = obj.source;
+
+               $state.go("ams.category.content.edit", { id: data[DeviceField.MAP_ID] });
+               $scope.selected.map = data[DeviceField.MAP_NO];
+               $scope.showImgUri = data[DeviceField.SOURCE];
+               $scope.groupFieldName = angular.copy(data);
+           } else {
+               $state.go("ams.category.content.create");
+           }
+
+           // 'No instance found for handle'
+           $mdComponentRegistry.when('right').then(function(it) {
+               it.toggle();
+           });
+       };
+
 
        $scope.uploadFile = function() {
            var file = $scope.map.file;
@@ -114,13 +148,6 @@
        };
 
 
-       $scope.deleteData = function(obj) {
-           delDialogService(function() {
-               console.log('delete...');
-               map.deleteOne(obj).then(function(data) {})
-           })
-       };
-
        function treeMenu(o) {
            this.tree = o || [];
            this.groups = {};
@@ -142,40 +169,6 @@
            }
        };
 
-       $scope.toggleRight = function(obj) {
-           if (obj) {
-               $state.go("ams.category.content.edit", { id: obj[DeviceField.MAP_ID] });
-               $scope.selected.map = obj[DeviceField.MAP_NO];
-               $scope.showImgUri = obj[DeviceField.SOURCE];
-               $scope.groupFieldName = angular.copy(obj);
-           } else {
-               $state.go("ams.category.content.create");
-           }
-
-           // 'No instance found for handle'
-           $mdComponentRegistry.when('right').then(function(it) {
-               it.toggle();
-           });
-       };
 
 
-   }
-
-   function mapInlineTools($templateRequest, $compile) {
-       return {
-           scope: true,
-           restrict: 'C',
-           link: function(scope, element) {
-               element.on("click", function(event) {
-                   angular.element(document.querySelector('.map .selected')).removeClass('selected');
-                   angular.element(element).addClass('selected');
-                   scope.$apply(function() {
-                       $templateRequest("../view/content/map/tool.html").then(function(html) {
-                           angular.element(document.querySelector('.tools')).remove($compile(html)(scope));
-                           angular.element(element).append($compile(html)(scope));
-                       });
-                   })
-               });
-           }
-       }
    }

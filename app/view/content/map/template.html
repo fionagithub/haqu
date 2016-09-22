@@ -10,7 +10,7 @@
              open: showData[data[DeviceField.MAP_ID]]&& data.open }" ng-include="'view/content/map/floordata.html'">
          </li>
      </ul> -->
-   <ul class='map' flex="33">
+   <ul class='map'>
         <li ng-repeat="section in toggelData" class="parent-list-item">
             <menu-link section="section" linkdata="focusMap" ng-if="section.type === 'link'"></menu-link>
             <menu-toggle section="section" toggledata="focusMap" ng-if="section.type === 'toggle'"></menu-toggle>

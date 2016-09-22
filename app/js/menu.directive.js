@@ -1,13 +1,31 @@
  angular.module('common.directives', [])
-     .run(['$templateCache', function($templateCache) {
+
+ .directive("mapInlineTools", function() {
+     return {
+         restrict: "AE",
+         templateUrl: "../view/content/map/tool.html",
+         link: function(scope, element) {
+             element.on('click', function(e){ 
+                    e.stopPropagation()
+                });
+             var _scope = element.parent().scope();
+             scope.toggleRight = function() {
+                 _scope.toggleRight( scope.section);
+             };
+         }
+     };
+ })
+
+ .run(['$templateCache', function($templateCache) {
          $templateCache.put('partials/menu-toggle.tmpl.html',
              '<md-button class="md-button-toggle"\n' +
              '  ng-click="toggle($index)"\n' +
-             '  ng-class="{\'md-selected\' :toggledata.name==section.name&& toggledata.name }" \n' +
+             '  ng-class="{\'md-selected\' :isToggled()}" \n' +
              '  aria-controls="docs-menu-{{section.name | nospace}}"\n' +
              '  flex layout="row"\n' +
              '  aria-expanded="{{isOpen()}}">\n' +
-             '  {{section.name}}\n' + 
+             '  {{section.name}}\n' +
+             '  <map-inline-tools ng-show="isToggled()&& toggledata.isContent"></map-inline-tools>\n' +
              '  <span aria-hidden="true" class=" pull-right fa fa-chevron-down md-toggle-icon"\n' +
              '  ng-class="{\'toggled\' : isOpen()}"></span>\n' +
              '</md-button>\n' +
@@ -20,9 +38,10 @@
      }])
      .run(['$templateCache', function($templateCache) {
          $templateCache.put('partials/menu-link.tmpl.html',
-             '<md-button ng-class="{\'{{section.icon}}\' : true,\'md-selected\' :linkdata.name==section.name&& linkdata.name }" \n' +
+             '<md-button ng-class="{\'{{section.icon}}\' : true,\'md-selected\' :isLinked()}" \n' +
              '   ng-click="focusSection()">\n' +
              '  {{section | humanizeDoc}}\n' +
+             '  <map-inline-tools ng-show="isLinked()&& linkdata.isContent"></map-inline-tools>\n' +
              '</md-button>\n' +
              '');
      }])
@@ -42,6 +61,14 @@
                  scope.toggle = function(o) {
                      scope.toggledata.name = scope.section.name;
                      _scope.toggleOpen(scope.section);
+                 };
+                 scope.isToggled = function() {
+                     if (scope.toggledata.name ) {
+                         return scope.toggledata.name == scope.section.name;
+                     }
+                 };
+                 scope.toggleRight = function(obj) {
+                     _scope.toggleRight(obj);
                  };
                  scope.setSelectPage = function(i, page) {
                      _scope.setSelectPage(i, page);
@@ -65,6 +92,14 @@
              link: function(scope, element) {
                  var _scope = element.parent().scope();
                  scope.mouseActived = true;
+                 scope.isLinked = function() {
+                     if (scope.linkdata.name) {
+                         return scope.linkdata.name == scope.section.name;
+                     }
+                 };
+                 scope.toggleRight = function(obj) {
+                     _scope.toggleRight(obj);
+                 };
                  scope.focusSection = function() {
                      scope.linkdata.name = scope.section.name;
                      _scope.setSelectPage(scope.section);

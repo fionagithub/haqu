@@ -11,11 +11,12 @@ function AmsCtr($scope, $rootScope, DeviceField, $mdSidenav, $mdComponentRegistr
         $scope.$broadcast("selectedMenuFromParent", msg);
     });
 
-    $scope.goCatory = function(obj) {
+    $scope.editData = {};
+    /*   $scope.goCatory = function(obj) {
         $scope.$emit('load');
         $scope.$emit('selectedMenu', obj);
     };
-
+*/
     $rootScope.$watch(function() {
         var isOpen = $mdComponentRegistry.get('right') ? $mdSidenav('right').isOpen() : false;
         console.log('---', isOpen);

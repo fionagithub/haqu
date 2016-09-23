@@ -7,9 +7,9 @@
               <form name="editList">
             <md-input-container flex class="md-block">
                 <label> 监控类型</label>
-                <md-select name="monitorgroupname" required ng-model="groupFieldName[DeviceField.MNT_TYPE_ID]">
+                <md-select name="monitorgroupname" required ng-model="editData.groupFieldName[DeviceField.MNT_TYPE_ID]">
                     <md-optgroup>
-                        <md-option ng-value="item[DeviceField.MNT_TYPE_ID]" ng-repeat="item in MonitorType">
+                        <md-option ng-value="item[DeviceField.MNT_TYPE_ID]" ng-repeat="item in editData.MonitorType">
                             {{item[DeviceField.MNT_TYPE_ID]+ ':' + item[DeviceField.DESC]}}
                         </md-option>
                     </md-optgroup>
@@ -18,24 +18,20 @@
                     <div ng-message="required">This is required.</div>
                 </div>
             </md-input-container>
-           <!--  <md-input-container flex class="md-block">
-               <label for="form-group ">设备ID </label>
-               <input ng-model="groupFieldName[DeviceField.DEVICE_ID]">
-           </md-input-container> -->
             <md-input-container flex class="md-block">
                 <label>CMD名称</label>
-                <input ng-model="groupFieldName[DeviceField.CMD_NAME]">
+                <input ng-model="editData.groupFieldName[DeviceField.CMD_NAME]">
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>监控 </label>
-                <input ng-model="groupFieldName[DeviceField.MONITOR]">
+                <input ng-model="editData.groupFieldName[DeviceField.MONITOR]">
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>来源 </label>
-                <input ng-model="groupFieldName[DeviceField.SOURCE]">
+                <input ng-model="editData.groupFieldName[DeviceField.SOURCE]">
             </md-input-container>
         </form>
-        <md-button class="md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'save')" ng-disabled="editList.$invalid">
+        <md-button class="md-raised demo-dialog-open-button" ng-click="save(editData.groupFieldName,'save')" ng-disabled="editList.$invalid">
             保存
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

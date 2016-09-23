@@ -7,9 +7,9 @@
         <form name="editList">
             <md-input-container flex class="md-block">
                 <label>地图</label>
-                <md-select ng-model="groupFieldName[DeviceField.MAP_ID]">
+                <md-select ng-model="editData.groupFieldName[DeviceField.MAP_ID]">
                     <md-optgroup>
-                        <md-option ng-value="item[DeviceField.MAP_ID]" ng-repeat="item in mapData">
+                        <md-option ng-value="item[DeviceField.MAP_ID]" ng-repeat="item in editData.mapData">
                             {{item[DeviceField.MAP_ID]+ ':' + item[DeviceField.MAP_NAME]}}
                         </md-option>
                     </md-optgroup>
@@ -17,9 +17,9 @@
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label> 设备类型</label>
-                <md-select name="typename" required ng-model="groupFieldName[DeviceField.TYPE_ID]">
+                <md-select name="typename" required ng-model="editData.groupFieldName[DeviceField.TYPE_ID]">
                     <md-optgroup>
-                        <md-option ng-value="item[DeviceField.TYPE_ID]" ng-repeat="item in DeviceTypeList">
+                        <md-option ng-value="item[DeviceField.TYPE_ID]" ng-repeat="item in editData.DeviceTypeList">
                             {{item[DeviceField.TYPE_ID]+ ':' + item[DeviceField.TYPE_NAME]}}
                         </md-option>
                     </md-optgroup>
@@ -30,24 +30,24 @@
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>设备名称</label>
-                <input name="devicename" required ng-minlength="2" ng-model="groupFieldName[DeviceField.NAME]">
+                <input name="devicename" required ng-minlength="2" ng-model="editData.groupFieldName[DeviceField.NAME]">
                 <div ng-messages="editList.devicename.$error">
                     <div ng-message="required">This is required.</div>
                 </div>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>设备编号</label>
-                <input name="deviceno" required ng-minlength="2" ng-model="groupFieldName[DeviceField.DEVICE_NO]">
+                <input name="deviceno" required ng-minlength="2" ng-model="editData.groupFieldName[DeviceField.DEVICE_NO]">
                 <div ng-messages="editList.deviceno.$error">
                     <div ng-message="required">This is required.</div>
                 </div>
             </md-input-container>
             <md-input-container flex class="md-block">
                 <label>地图类型 </label>
-                <input ng-model="groupFieldName[DeviceField.MAP_TYPE]">
+                <input ng-model="editData.groupFieldName[DeviceField.MAP_TYPE]">
             </md-input-container>
         </form>
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(groupFieldName,'resave')" ng-disabled="editList.$invalid">
+        <md-button class="  md-raised demo-dialog-open-button" ng-click="save(editData.groupFieldName,'resave')" ng-disabled="editList.$invalid">
             更新
         </md-button>
         <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

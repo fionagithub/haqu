@@ -17,14 +17,13 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
             data: null
         };
         $rootScope.query = null;
-        $scope.showData = paginator(deviceInfo.filter, 10);
-        $rootScope.showData = $scope.showData;
+        $scope.editData.showData = paginator(deviceInfo.filter, 10);
 
         map.filter(null, null, function(data) {
-            $scope.mapData = data;
+            $scope.editData.mapData = data;
         });
         deviceTypeList.filter(null, null, function(data) {
-            $scope.DeviceTypeList = data;
+            $scope.editData.DeviceTypeList = data;
         });
     }
 
@@ -37,7 +36,7 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
         if (obj) {
             uri.id = obj[DeviceField.DEVICE_ID];
             $state.go("ams.category.content.edit", uri);
-            $rootScope.groupFieldName = angular.copy(obj);
+            $scope.editData.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
         }
@@ -48,23 +47,23 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
     };
 
     var k, v;
-    $scope.$watch('DeviceTypeList', function() {
+    $scope.$watch('editData.DeviceTypeList', function() {
         $scope.deviceMap = {};
-        if ($scope.DeviceTypeList) {
-            for (var i in $scope.DeviceTypeList) {
-                k = $scope.DeviceTypeList[i][DeviceField.TYPE_ID];
-                v = $scope.DeviceTypeList[i][DeviceField.TYPE_NAME];
+        if ($scope.editData.DeviceTypeList) {
+            for (var i in $scope.editData.DeviceTypeList) {
+                k = $scope.editData.DeviceTypeList[i][DeviceField.TYPE_ID];
+                v = $scope.editData.DeviceTypeList[i][DeviceField.TYPE_NAME];
                 $scope.deviceMap[k] = v;
             }
         }
     });
 
-    $scope.$watch('mapData', function() {
+    $scope.$watch('editData.mapData', function() {
         $scope.mapMap = {};
-        if ($scope.mapData) {
-            for (var i in $scope.mapData) {
-                k = $scope.mapData[i][DeviceField.MAP_ID];
-                v = $scope.mapData[i][DeviceField.MAP_NAME];
+        if ($scope.editData.mapData) {
+            for (var i in $scope.editData.mapData) {
+                k = $scope.editData.mapData[i][DeviceField.MAP_ID];
+                v = $scope.editData.mapData[i][DeviceField.MAP_NAME];
                 $scope.mapMap[k] = v;
             }
         }
@@ -80,15 +79,15 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
 
     $scope.search = function() {
         $rootScope.query = angular.copy(query);
-        $rootScope.search = angular.copy(query);
-        $scope.showData._load(0);
+        $scope.editData.search = angular.copy(query);
+        $scope.editData.showData._load(0);
     }
 
 
     $scope.deleteData = function(obj) {
         delDialogService(function() {
             console.log('delete...');
-            deviceInfo.deleteOne(obj).then(function(data) { $scope.showData._load() })
+            deviceInfo.deleteOne(obj).then(function(data) { $scope.editData.showData._load() })
         })
     };
 
@@ -119,15 +118,15 @@ function DeviceInfoDetailCtrl($scope, deviceInfo, toastService, $rootScope, $mdS
     $scope.save = function(obj, type) {
         deviceInfo.saveOne(obj, type, function() {
             toastService();
-            $rootScope.groupFieldName = null;
-            $rootScope.query = angular.copy($rootScope.search);
-            $rootScope.search = null;
-            $rootScope.showData._load();
+            $rootScope.query = angular.copy($scope.editData.search);
+            $scope.editData.groupFieldName = null;
+            $scope.editData.search = null;
+            $rootScope.editData.showData._load();
         });
     };
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
-        $rootScope.groupFieldName = null;
+        $scope.editData.groupFieldName = null;
     };
 }

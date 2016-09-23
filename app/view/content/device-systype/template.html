@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat='data in showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
+                <tr ng-repeat='data in editData.showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
                     <td>{{data[DeviceField.SYS_TYPE_ID]}} </td>
                     <td> {{data[DeviceField.SYS_TYPE_NAME]}}
                     </td>
@@ -22,18 +22,6 @@
                     </td>
             </tbody>
         </table>
-        <pagination-section> </pagination-section>
+        <pagination-section>
     </md-content>
-<!--     <ui-view>
-</ui-view> -->
-<!--    <md-input-container flex class="md-block">
-        <label>系统</label>
-    <md-select ng-model="deviceSysTypeData">
-      <md-optgroup>
-          <md-option ng-value="sysTypeData" ng-repeat="sysTypeData in DeviceSysTypeList">{{ sysTypeData[DeviceField.SYS_TYPE_ID] + ':' + sysTypeData[DeviceField.SYS_TYPE_NAME]}}</md-option>
-      </md-optgroup>
-  </md-select>
-    </md-input-container> -->
-<!--   <md-button class="  md-raised demo-dialog-open-button" ng-click="search()">搜索
-      </md-button> -->
 </div>

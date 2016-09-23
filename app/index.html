@@ -4,12 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <title>AMS v0.4</title>
+    <link rel="stylesheet" type="text/css" href="client/vendor/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="client/vendor/angular-material/angular-material.css" />
+    <link rel="stylesheet" type="text/css" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+    <!--     <link rel="stylesheet" type="text/css" href="client/vendor/font-awesome/4.3.0/css/font-awesome.min.css" /> -->
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <!--  <script src="js/svg-assets-cache.js"></script>
      <script src="js/angular.js"></script>  -->
     <script src="client/vendor/angular/angular.js"></script>
-    <script src="client/vendor/angular-ui-router/angular-ui-router.min.js"></script>
+    <script src="client/vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="client/vendor/angular-aria/angular-aria.min.js"></script>
     <script src="client/vendor/angular-animate/angular-animate.min.js"></script>
     <script src="client/vendor/angular-messages/angular-messages.min.js"></script>
@@ -19,7 +22,8 @@
     <script type="text/javascript" src="js/resource.js"></script>
     <script type="text/javascript" src="js/service.js"></script>
     <script type="text/javascript" src="js/factorys.js"></script>
-    <script type="text/javascript" src="js/category-model.js"></script>
+    <script type="text/javascript" src="js/menu.directive.js"></script>
+    <script type="text/javascript" src="js/category.model.js"></script>
     <script type="text/javascript" src="view/category/js/nav.js"></script>
     <script type="text/javascript" src="view/content/device-systype/controllers.js"></script>
     <script type="text/javascript" src="view/content/device-type/controllers.js"></script>
@@ -35,7 +39,9 @@
 </head>
 
 <body class="docs-body layout-row" layout="row" ng-controller="AmsCtr">
-    <div ui-view="category"></div>
+    <md-sidenav class="site-sidenav md-sidenav-left md-whiteframe-z2 hide-print _md-closed ng-isolate-scope _md _md-locked-open" md-component-id="left" hide-print="" md-is-locked-open="$mdMedia('gt-sm')" tabindex="-1">
+        <div ui-view="category"></div>
+    </md-sidenav>
     <div layout="column" tabindex="-1" role="main" flex class="layout-column flex" style='z-index:12;'>
         <div ui-view="topnav"></div>
         <div ui-view="content"> </div>

@@ -6,6 +6,71 @@ angular.module('content.deviceGroupDefine', ['ams.factorys', 'ams.factorys.servi
     .directive("focusMe", focusMe)
     .directive("smartySuggestionsBox", smartySuggestionsBox)
 
+function DeviceGroupDefineCtrl($scope, deviceGroupDefine, paginator, delDialogService, toastService,DeviceField, $state, $stateParams, $document, $mdSidenav, $mdComponentRegistry) {
+    var _this = this;
+    _this.selectedRow = selectedRow;
+    /*   _this.getSelectedText = getSelectedText;*/
+    _this.toggleRight = toggleRight;
+    _this.deleteData = deleteData;
+
+    function toggleRight(obj) {
+        var uri = {
+            category: $stateParams.category
+        };
+        if (obj) {
+            uri.id =obj[DeviceField.DEVICE_ID];
+            console.log('---', uri.id);
+            $scope.editData.groupFieldName = angular.copy(obj);
+            $state.go("ams.category.content.edit", uri);
+        } else {
+            $state.go("ams.category.content.create");
+        }
+        // 'No instance found for handle'
+        $mdComponentRegistry.when('right').then(function(it) {
+            it.toggle();
+        });
+    };
+
+
+    $scope.$on("loadFromParrent", load);
+    $scope.$on('$stateChangeSuccess', function() {
+        if ($state.current.name == "ams.category.content") {
+            load();
+        }
+    });
+
+    function load() {
+        _this.showData = paginator(deviceGroupDefine.filter, 10);
+        $scope.editData.showData = _this.showData;
+    }
+
+    _this._oldSelectedRowObj = [];
+
+    function selectedRow(index, obj) {
+        _this.isDel = true;
+        if (_this._oldSelectedRowObj.length > 0) {
+            _this._oldSelectedRowObj.pop();
+        }
+        _this._oldSelectedRowObj.unshift(obj);
+    };
+
+    function deleteData(obj) {
+        delDialogService(function() {
+            console.log('delete...');
+            deviceGroupDefine.deleteOne(obj).then(function(data) { _this.showData._load() })
+        })
+    };
+
+    /*   function getSelectedText(o) {
+           if (o) {
+               return o;
+           } else {
+               return " ";
+           }
+       };*/
+
+}
+
 function DeviceGroupDefineDetailCtrl($scope, deviceGroupDefine, deviceInfo, toastService, $rootScope, DeviceField, $document, $mdSidenav) {
     $scope.mapParams = {
         selected: -1,
@@ -19,12 +84,11 @@ function DeviceGroupDefineDetailCtrl($scope, deviceGroupDefine, deviceInfo, toas
     };
 
     $scope.$watch(function() {
-        return $rootScope.groupFieldName;
+        return $scope.editData.groupFieldName;
     }, function(newValue, oldValue) {
-        if ($rootScope.groupFieldName) {
-            $scope.groupFieldName = $rootScope.groupFieldName;
-            $scope.selected.deviceid = $rootScope.groupFieldName[DeviceField.DEVICE_ID];
-            var subID = $rootScope.groupFieldName[DeviceField.SUBDEVICE_ID];
+        if ($scope.editData.groupFieldName) {
+            $scope.selected.deviceid = $scope.editData.groupFieldName[DeviceField.DEVICE_ID];
+            var subID = $scope.editData.groupFieldName[DeviceField.SUBDEVICE_ID];
             if (subID) {
                 $scope.selected.subdeviceid = subID.split(",");
                 $scope.mapParams.subData = subID.split(",");
@@ -66,7 +130,7 @@ function DeviceGroupDefineDetailCtrl($scope, deviceGroupDefine, deviceInfo, toas
         deviceGroupDefine.saveOne(obj, type, function() {
             toastService();
             $scope.selected.deviceid = null;
-            $rootScope.showData._load();
+            $scope.editData.showData._load();
         });
     };
 
@@ -100,75 +164,10 @@ function DeviceGroupDefineDetailCtrl($scope, deviceGroupDefine, deviceInfo, toas
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
-        $rootScope.groupFieldName = null;
+        $scope.editData.groupFieldName = null;
     };
 }
 
-
-function DeviceGroupDefineCtrl($scope, deviceGroupDefine, paginator, delDialogService, toastService, $rootScope, $state, $stateParams, $document, $mdSidenav, $mdComponentRegistry) {
-    var _this = this;
-    _this.selectedRow = selectedRow;
- /*   _this.getSelectedText = getSelectedText;*/
-    _this.toggleRight = toggleRight;
-    _this.deleteData = deleteData;
-
-    function toggleRight(obj) {
-        var uri = {
-            category: $stateParams.category
-        };
-        if (obj) {
-            uri.id = obj[DeviceField.DEVICE_ID];
-            $state.go("ams.category.content.edit", uri);
-            $rootScope.groupFieldName = angular.copy(obj);
-        } else {
-            $state.go("ams.category.content.create");
-        }
-        // 'No instance found for handle'
-        $mdComponentRegistry.when('right').then(function(it) {
-            it.toggle();
-        });
-    };
-
-
-    $scope.$on("loadFromParrent", load);
-    $scope.$on('$stateChangeSuccess', function() {
-        if ($state.current.name == "ams.category.content") {
-            load();
-        }
-    });
-
-    function load() {
-        _this.showData = paginator(deviceGroupDefine.filter, 10);
-        $rootScope.showData = _this.showData;
-    }
-
-    _this._oldSelectedRowObj = [];
-
-    function selectedRow(index, obj) {
-        _this.isDel = true;
-        if (_this._oldSelectedRowObj.length > 0) {
-            _this._oldSelectedRowObj.pop();
-        }
-        _this._oldSelectedRowObj.unshift(obj);
-    };
-
-    function deleteData(obj) {
-        delDialogService(function() {
-            console.log('delete...');
-            deviceGroupDefine.deleteOne(obj).then(function(data) { _this.showData._load() })
-        })
-    };
-
- /*   function getSelectedText(o) {
-        if (o) {
-            return o;
-        } else {
-            return " ";
-        }
-    };*/
-
-
-}
 
 function focusMe() {
     return {

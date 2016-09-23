@@ -18,13 +18,12 @@
                data: null,
                keyword: null
            };
-           $scope.showData = paginator(monitorType.filter, 10);
-           $rootScope.showData = $scope.showData;
+           $scope.editData.showData = paginator(monitorType.filter, 10);
            deviceTypeList.filter(null, null, function(data) {
-               $scope.DeviceTypeList = data;
+               $scope.editData.DeviceTypeList = data;
            });
            monitorGroup.filter(null, null, function(data) {
-               $scope.MonitorGroupList = data;
+               $scope.editData.MonitorGroupList = data;
            });
        }
        $scope.$watch('selected.data', function() {
@@ -52,7 +51,7 @@
            if (obj) {
                uri.id = obj[DeviceField.MNT_TYPE_ID];
                $state.go("ams.category.content.edit", uri);
-               $rootScope.groupFieldName = angular.copy(obj);
+               $scope.editData.groupFieldName = angular.copy(obj);
            } else {
                $state.go("ams.category.content.create");
            }
@@ -64,28 +63,28 @@
 
        $scope.search = function() {
            $rootScope.query = angular.copy(query);
-           $rootScope.search = angular.copy(query);
-           $scope.showData._load(0);
+           $scope.editData.search = angular.copy(query);
+           $scope.editData.showData._load(0);
        }
 
        var k, v;
-       $scope.$watch('DeviceTypeList', function() {
+       $scope.$watch('editData.DeviceTypeList', function() {
            $scope.deviceMap = {};
-           if ($scope.DeviceTypeList) {
-               for (var i in $scope.DeviceTypeList) {
-                   k = $scope.DeviceTypeList[i][DeviceField.TYPE_ID];
-                   v = $scope.DeviceTypeList[i][DeviceField.TYPE_NAME];
+           if ($scope.editData.DeviceTypeList) {
+               for (var i in $scope.editData.DeviceTypeList) {
+                   k = $scope.editData.DeviceTypeList[i][DeviceField.TYPE_ID];
+                   v = $scope.editData.DeviceTypeList[i][DeviceField.TYPE_NAME];
                    $scope.deviceMap[k] = v;
                }
            }
        });
 
-       $scope.$watch('MonitorGroupList', function() {
+       $scope.$watch('editData.MonitorGroupList', function() {
            $scope.monitorMap = {};
-           if ($scope.MonitorGroupList) {
-               for (var i in $scope.MonitorGroupList) {
-                   k = $scope.MonitorGroupList[i][DeviceField.MNT_GROUP_ID];
-                   v = $scope.MonitorGroupList[i][DeviceField.DESC];
+           if ($scope.editData.MonitorGroupList) {
+               for (var i in $scope.editData.MonitorGroupList) {
+                   k = $scope.editData.MonitorGroupList[i][DeviceField.MNT_GROUP_ID];
+                   v = $scope.editData.MonitorGroupList[i][DeviceField.DESC];
                    $scope.monitorMap[k] = v;
                }
            }
@@ -99,7 +98,7 @@
                        query[DeviceField.MNT_GROUP_ID] = $scope.selected.data;
                        $rootScope.query = query;
                    }
-                   $scope.showData._load();
+                   $scope.editData.showData._load();
                })
            })
        }
@@ -121,15 +120,15 @@
        $scope.save = function(obj, type) {
            monitorType.saveOne(obj, type, function() {
                toastService();
-               $rootScope.groupFieldName = null;
-               $rootScope.query = angular.copy($rootScope.search);
-               $rootScope.search = null;
-               $rootScope.showData._load();
+               $scope.editData.groupFieldName = null;
+               $rootScope.query = angular.copy($scope.editData.search);
+               $scope.editData.search = null;
+               $scope.editData.showData._load();
            });
        };
 
        $scope.cancel = function() {
            $mdSidenav('right').close();
-           $rootScope.groupFieldName = null;
+           $scope.editData.groupFieldName = null;
        };
    }

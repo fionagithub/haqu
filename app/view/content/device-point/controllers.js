@@ -17,10 +17,9 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
             data: null
         };
         $rootScope.query = null;
-        $scope.showData = paginator(devicePoint.filter, 10);
-        $rootScope.showData = $scope.showData;
+        $scope.editData.showData = paginator(devicePoint.filter, 10);
         monitorType.filter(null, null, function(data) {
-            $scope.MonitorType = data;
+            $scope.editData.MonitorType = data;
         });
     }
 
@@ -31,7 +30,7 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
         if (obj) {
             uri.id = obj[DeviceField.DEVICE_ID];
             $state.go("ams.category.content.edit", uri);
-            $rootScope.groupFieldName = angular.copy(obj);
+            $scope.editData.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
         }
@@ -43,8 +42,8 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
 
     $scope.search = function() {
         $rootScope.query = angular.copy(query);
-        $rootScope.search = angular.copy(query);
-        $scope.showData._load(0);
+        $scope.editData.search = angular.copy(query);
+        $scope.editData.showData._load(0);
     }
 
     $scope.$watch('selectedData', function() {
@@ -56,12 +55,12 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
     });
 
     var k, v;
-    $scope.$watch('MonitorType', function() {
+    $scope.$watch('editData.MonitorType', function() {
         $scope.monitorMap = {};
-        if ($scope.MonitorType) {
-            for (var i in $scope.MonitorType) {
-                k = $scope.MonitorType[i][DeviceField.MNT_TYPE_ID];
-                v = $scope.MonitorType[i][DeviceField.DESC];
+        if ($scope.editData.MonitorType) {
+            for (var i in $scope.editData.MonitorType) {
+                k = $scope.editData.MonitorType[i][DeviceField.MNT_TYPE_ID];
+                v = $scope.editData.MonitorType[i][DeviceField.DESC];
                 $scope.monitorMap[k] = v;
             }
         }
@@ -84,7 +83,7 @@ function DevicePointCtrl($scope, devicePoint, monitorType, paginator, delDialogS
                     query[DeviceField.MNT_TYPE_ID] = angular.copy($scope.selectedData[DeviceField.MNT_TYPE_ID]);
                     $rootScope.query = query;
                 }
-                $scope.showData._load()
+                $scope.editData.showData._load()
             })
         })
     };
@@ -95,15 +94,15 @@ function DevicePointDetailCtrl($scope, devicePoint, toastService, $rootScope, $m
     $scope.save = function(obj, type) {
         devicePoint.saveOne(obj, type, function() {
             toastService();
-            $rootScope.groupFieldName = null;
-            $rootScope.query = angular.copy($rootScope.search);
-            $rootScope.search = null;
-            $rootScope.showData._load();
+            $rootScope.query = angular.copy($scope.editData.search);
+            $scope.editData.groupFieldName = null;
+            $scope.editData.search = null;
+            $scope.editData.showData._load();
         });
     };
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
-        $rootScope.groupFieldName = null;
+        $scope.editData.groupFieldName = null;
     };
 }

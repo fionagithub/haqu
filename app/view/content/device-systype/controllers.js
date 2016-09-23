@@ -9,13 +9,11 @@ function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator,
             load();
         }
     });
-
     var query = {};
 
     function load() {
         $rootScope.query = null;
-        $scope.showData = paginator(deviceSysTypeList.filter, 10);
-        $rootScope.showData = $scope.showData;
+        $scope.editData.showData = paginator(deviceSysTypeList.filter, 10);
     }
 
     $scope.toggleRight = function(obj) {
@@ -23,9 +21,9 @@ function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator,
             category: $stateParams.category
         };
         if (obj) {
-            $rootScope.groupFieldName = angular.copy(obj);
             uri.id = obj[DeviceField.SYS_TYPE_ID];
             $state.go("ams.category.content.edit", uri);
+            $scope.editData.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
         }
@@ -38,7 +36,7 @@ function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator,
     $scope.deleteData = function(obj) {
         delDialogService(function() {
             console.log('delete...');
-            deviceSysTypeList.deleteOne(obj).then(function(data) { $scope.showData._load() })
+            deviceSysTypeList.deleteOne(obj).then(function(data) { $scope.editData.showData._load() })
         })
     };
 
@@ -65,17 +63,17 @@ function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator,
 }
 
 
-function DeviceSystypeRightCtrl($scope, deviceSysTypeList, toastService, $rootScope, $mdSidenav) {
+function DeviceSystypeRightCtrl($scope, deviceSysTypeList, toastService, $mdSidenav) {
     $scope.save = function(obj, type) {
         deviceSysTypeList.saveOne(obj, type, function() {
             toastService();
-            $rootScope.groupFieldName = null;
-            $rootScope.showData._load();
+            $scope.editData.groupFieldName = null;
+            $scope.editData.showData._load();
         });
     };
 
     $scope.cancel = function() {
-        $rootScope.groupFieldName = null;
+        $scope.editData.groupFieldName = null;
         $mdSidenav('right').close();
     };
 }

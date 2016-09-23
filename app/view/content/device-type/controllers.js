@@ -10,19 +10,18 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
         }
     });
 
-    var query = {};
+        var query = {};
 
     function load() {
-        $rootScope.query = null;
         //搜索条件    
+        $rootScope.query = null;
         $scope.selected = {
             searchDeviceType: null,
             deviceSysTypeData: null
         };
-        $scope.showData = paginator(deviceTypeList.filter, 10);
-        $rootScope.showData = $scope.showData;
+        $scope.editData.showData = paginator(deviceTypeList.filter, 10);
         deviceSysTypeList.filter(null, null, function(data) {
-            $scope.DeviceSysTypeList = data;
+            $scope.editData.DeviceSysTypeList = data;
         });
     }
 
@@ -33,7 +32,7 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
         if (obj) {
             uri.id = obj[DeviceField.TYPE_ID];
             $state.go("ams.category.content.edit", uri);
-            $rootScope.groupFieldName = angular.copy(obj);
+            $scope.editData.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
         }
@@ -44,13 +43,13 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
     };
 
     //数据列表中匹配父名称
-    $scope.$watch('DeviceSysTypeList', function() {
+    $scope.$watch('editData.DeviceSysTypeList', function() {
         var k, v;
         $scope.sysMap = {};
-        if ($scope.DeviceSysTypeList) {
-            for (var i in $scope.DeviceSysTypeList) {
-                k = $scope.DeviceSysTypeList[i][DeviceField.SYS_TYPE_ID];
-                v = $scope.DeviceSysTypeList[i][DeviceField.SYS_TYPE_NAME];
+        if ($scope.editData.DeviceSysTypeList) {
+            for (var i in $scope.editData.DeviceSysTypeList) {
+                k = $scope.editData.DeviceSysTypeList[i][DeviceField.SYS_TYPE_ID];
+                v = $scope.editData.DeviceSysTypeList[i][DeviceField.SYS_TYPE_NAME];
                 $scope.sysMap[k] = v;
             }
         }
@@ -62,7 +61,7 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
             console.log('delete...');
             deviceTypeList.deleteOne(obj).then(function(data) {
                 $rootScope.query = angular.copy(query);
-                $scope.showData._load(0);
+                $scope.editData.showData._load(0);
             })
         })
     };
@@ -86,8 +85,8 @@ function DeviceTypeCtrl($scope, deviceTypeList, deviceSysTypeList, deviceInfo, p
     });
     $scope.search = function() {
         $rootScope.query = angular.copy(query);
-        $rootScope.search = angular.copy(query);
-        $scope.showData._load(0);
+        $scope.editData.search = angular.copy(query);
+        $scope.editData.showData._load(0);
     }
 
     $scope._oldSelectedRowObj = [];
@@ -117,15 +116,15 @@ function DeviceTypeDetailCtrl($scope, deviceTypeList, toastService, $rootScope, 
     $scope.save = function(obj, type) {
         deviceTypeList.saveOne(obj, type, function() {
             toastService();
-            $rootScope.groupFieldName = null;
-            $rootScope.query = angular.copy($rootScope.search);
-            $rootScope.search = null;
-            $rootScope.showData._load();
+            $rootScope.query = angular.copy($scope.editData.search);
+            $scope.editData.groupFieldName = null;
+            $scope.editData.search = null;
+            $scope.editData.showData._load();
         });
     };
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
-        $rootScope.groupFieldName = null;
+        $scope.editData.groupFieldName = null;
     };
 }

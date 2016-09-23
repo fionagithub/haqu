@@ -3,12 +3,12 @@
         <label>设备类型</label>
         <md-select ng-model="selected.data">
             <md-optgroup>
-                <md-option ng-value="data" ng-repeat="data in DeviceTypeList">{{ data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
+                <md-option ng-value="data" ng-repeat="data in editData.DeviceTypeList">{{ data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
             </md-optgroup>
         </md-select>
     </md-input-container>
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
-        <!--    <md-button class="  md-raised demo-dialog-open-button" ng-click="showData._load()">搜索
+        <!--    <md-button class="  md-raised demo-dialog-open-button" ng-click="editData.showData._load()">搜索
      </md-button> -->
         <md-button class="  md-raised demo-dialog-open-button" ng-click="search()">搜索
         </md-button>
@@ -29,7 +29,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat='data in showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
+                <tr ng-repeat='data in editData.showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
                     <td>{{data[DeviceField.DEVICE_ID]}} </td>
                     <td> {{data[DeviceField.NAME]}}   </td>
                     <td>{{data[DeviceField.DEVICE_NO]}} </td> 

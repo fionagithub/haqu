@@ -2,6 +2,7 @@ angular.module('AMS', [
     'ui.router', 'ngMaterial',
     'category',
     'content',
+    'common.directives',
     'content.deviceSystype',
     'content.deviceType',
     'content.deviceMonitor',
@@ -71,17 +72,6 @@ function stateConfig($stateProvider, $urlRouterProvider) {
                     templateUrl: function(params) {
                         return 'view/content/' + params.category + '/edit/template.html'
                     }
-                }
-            }
-        })
-        .state('ams.category.content.child', {
-            url: '/:mapid',
-            views: {
-                '@ams.category.content': {
-                    templateUrl: function(param) {
-                        return 'view/content/' + param.category + '/device/template.html'
-                    }
-
                 }
             }
         });

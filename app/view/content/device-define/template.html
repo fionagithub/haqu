@@ -3,7 +3,7 @@
         <label> 设备类型</label>
         <md-select ng-model="selectedData">
             <md-optgroup>
-                <md-option ng-value="data[DeviceField.TYPE_ID]" ng-repeat="data in DeviceTypeList">{{data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
+                <md-option ng-value="data[DeviceField.TYPE_ID]" ng-repeat="data in editData.DeviceTypeList">{{data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
             </md-optgroup>
         </md-select>
     </md-input-container>
@@ -30,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat='data in showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
+                <tr ng-repeat='data in editData.showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
                     <td>{{deviceMap[data[DeviceField.TYPE_ID]]}} </td>
                     <td> {{monitorMap[data[DeviceField.MNT_TYPE_ID]]}} </td>
                     <td> {{data[DeviceField.STATUS_VAL]}} </td>

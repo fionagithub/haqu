@@ -1,6 +1,6 @@
 <a ng-click="selectedRow($index,data)" class="map-inline-tools">
     <span> {{data[DeviceField.MAP_NAME]}} </span>
-    <span ng-if="showData[data[DeviceField.MAP_ID]]" aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : data.open}"> <md-icon md-svg-icon="md-toggle-arrow" aria-hidden="true">
+    <span ng-if="editData.showData[data[DeviceField.MAP_ID]]" aria-hidden="true" class="md-toggle-icon" ng-class="{'toggled' : data.open}"> <md-icon md-svg-icon="md-toggle-arrow" aria-hidden="true">
       <svg version="1.1" x="0px" y="0px" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
   <path d="M24 16l-12 12 2.83 2.83 9.17-9.17 9.17 9.17 2.83-2.83z"></path>
   <path d="M0 0h48v48h-48z" fill="none"></path>
@@ -8,7 +8,7 @@
 </md-icon>
     </span>
 </a>
-<ul ng-if="showData[data[DeviceField.MAP_ID]]" data-slide-out-nav="data.open">
-    <li ng-repeat="data in showData[data[DeviceField.MAP_ID]]" ng-include="'view/content/map/floordata.html'">
+<ul ng-if="editData.showData[data[DeviceField.MAP_ID]]" data-slide-out-nav="data.open">
+    <li ng-repeat="data in editData.showData[data[DeviceField.MAP_ID]]" ng-include="'view/content/map/floordata.html'">
     </li>
 </ul>

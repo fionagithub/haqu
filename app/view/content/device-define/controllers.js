@@ -14,14 +14,13 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
 
     function load() {
         $rootScope.query = null;
-        $scope.showData = paginator(deviceDefines.filter, 10);
-        $rootScope.showData = $scope.showData;
+        $scope.editData.showData = paginator(deviceDefines.filter, 10);
 
         monitorType.filter(null, null, function(data) {
-            $scope.MonitorType = data;
+            $scope.editData.MonitorType = data;
         });
         deviceTypeList.filter(null, null, function(data) {
-            $scope.DeviceTypeList = data;
+            $scope.editData.DeviceTypeList = data;
         });
     }
 
@@ -33,7 +32,7 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
         if (obj) {
             uri.id = obj[DeviceField.ID];
             $state.go("ams.category.content.edit", uri);
-            $rootScope.groupFieldName = angular.copy(obj);
+            $scope.editData.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
         }
@@ -44,23 +43,23 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
     };
 
     var k, v;
-    $scope.$watch('MonitorType', function() {
+    $scope.$watch('editData.MonitorType', function() {
         $scope.monitorMap = {};
-        if ($scope.MonitorType) {
-            for (var i in $scope.MonitorType) {
-                k = $scope.MonitorType[i][DeviceField.MNT_TYPE_ID];
-                v = $scope.MonitorType[i][DeviceField.DESC];
+        if ($scope.editData.MonitorType) {
+            for (var i in $scope.editData.MonitorType) {
+                k = $scope.editData.MonitorType[i][DeviceField.MNT_TYPE_ID];
+                v = $scope.editData.MonitorType[i][DeviceField.DESC];
                 $scope.monitorMap[k] = v;
             }
         }
     });
 
-    $scope.$watch('DeviceTypeList', function() {
+    $scope.$watch('editData.DeviceTypeList', function() {
         $scope.deviceMap = {};
-        if ($scope.DeviceTypeList) {
-            for (var i in $scope.DeviceTypeList) {
-                k = $scope.DeviceTypeList[i][DeviceField.TYPE_ID];
-                v = $scope.DeviceTypeList[i][DeviceField.TYPE_NAME];
+        if ($scope.editData.DeviceTypeList) {
+            for (var i in $scope.editData.DeviceTypeList) {
+                k = $scope.editData.DeviceTypeList[i][DeviceField.TYPE_ID];
+                v = $scope.editData.DeviceTypeList[i][DeviceField.TYPE_NAME];
                 $scope.deviceMap[k] = v;
             }
         }
@@ -69,8 +68,8 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
 
     $scope.search = function() {
         $rootScope.query = angular.copy(query);
-        $rootScope.search = angular.copy(query);
-        $scope.showData._load(0);
+        $scope.editData.search = angular.copy(query);
+        $scope.editData.showData._load(0);
     }
 
     $scope.$watch('selectedData', function() {
@@ -99,7 +98,7 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
                     query[DeviceField.TYPE_ID] = angular.copy($scope.selectedData);
                     $rootScope.query = query;
                 }
-                $scope.showData._load()
+                $scope.editData.showData._load()
             })
         })
     };
@@ -113,15 +112,15 @@ function DeviceDefineDetailCtrl($scope, deviceDefines, toastService, $rootScope,
     $scope.save = function(obj, type) {
         deviceDefines.saveOne(obj, type, function() {
             toastService();
-            $rootScope.groupFieldName = null;
-            $rootScope.query = angular.copy($rootScope.search);
-            $rootScope.search = null;
-            $rootScope.showData._load();
+            $scope.editData.groupFieldName = null;
+            $rootScope.query = angular.copy($scope.editData.search);
+            $scope.editData.search = null;
+            $scope.editData.showData._load();
         });
     };
 
     $scope.cancel = function() {
         $mdSidenav('right').close();
-        $rootScope.groupFieldName = null;
+        $scope.editData.groupFieldName = null;
     };
 }

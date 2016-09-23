@@ -3,7 +3,7 @@
         <label>监控类</label>
         <md-select ng-model="selected.data">
             <md-optgroup>
-                <md-option ng-value="data[DeviceField.MNT_GROUP_ID] " ng-repeat="data in MonitorGroupList">{{data[DeviceField.MNT_GROUP_ID] + ':' + data[DeviceField.DESC]}}</md-option>
+                <md-option ng-value="data[DeviceField.MNT_GROUP_ID] " ng-repeat="data in editData.MonitorGroupList">{{data[DeviceField.MNT_GROUP_ID] + ':' + data[DeviceField.DESC]}}</md-option>
             </md-optgroup>
         </md-select>
     </md-input-container>
@@ -15,7 +15,7 @@
     <section layout-sm="column" flex layout-align="center center" layout-wrap="">
         <md-button class="md-raised demo-dialog-open-button" ng-click="search()">搜索
         </md-button>
-        <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
+        <md-button ng-click="toggleRight()" class="md-raised demo-dialog-open-button">新增
         </md-button>
     </section>
     <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat='data in showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
+                <tr ng-repeat='data in editData.showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1}" ng-click="selectedRow($index,data)">
                     <td>{{data[DeviceField.MNT_TYPE_ID]}} </td>
                     <td>{{deviceMap[data[DeviceField.TYPE_ID]]}} </td>
                     <td>{{data[DeviceField.CMD_NAME]}} </td>
@@ -44,6 +44,4 @@
         </table>
         <pagination-section> </pagination-section>
     </md-content>
-<!--     <ui-view>
-</ui-view> -->
 </div>

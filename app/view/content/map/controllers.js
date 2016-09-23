@@ -1,33 +1,7 @@
    angular.module('content.map', ['ams.factorys.services', 'ams.factorys'])
        .controller('MapCtrl', MapCtrl)
        .controller('MapDetailCtrl', MapDetailCtrl)
-       .directive('mapInlineTools', mapInlineTools)
        .directive('fileModel', fileModel)
-
-   function MapDetailCtrl($scope, map, uploadService, toastService, $rootScope, $mdSidenav) {
-       $scope.uploadFile = function() {
-           var file = $scope.myFile;
-           var fd = new FormData();
-           fd.append('file', file);
-           $scope.filename = 'maps/' + file.name;
-           fd.append('filename', $scope.filename);
-           uploadService.post(fd).then(function() {
-               console.log('-=--ok--=-')
-           })
-       };
-       $scope.save = function(obj, type) {
-           map.saveOne(obj, type, function() {
-               toastService();
-               $rootScope.groupFieldName = null;
-            /*   $rootScope.showData._load();*/
-           });
-       };
-
-       $scope.cancel = function() {
-           $mdSidenav('right').close();
-           $rootScope.groupFieldName = null;
-       };
-   }
 
    function MapCtrl($scope, map, fileService, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
        $scope.$on("loadFromParrent", load);
@@ -45,16 +19,69 @@
            map: null
        };
 
+       $scope.setSelectPage = setSelectPage;
+       $scope.isOpen = isOpen;
+       $scope.toggleOpen = toggleOpen;
+
+       var self = {};
+       $scope.focusMap = {
+           isContent: true,
+           name: null
+       };
+
+       function setSelectPage(obj) {
+           if (obj[DeviceField.SOURCE]) {
+               fileService.fileConfig().then(function(data) {
+                   $scope.showMapUri = data.data.img_path + obj[DeviceField.SOURCE];
+                   console.log('---' + data.data) // imgUir Config
+               })
+           }
+       };
+
+       function isOpen(section) {
+           return self.openedSection === section;
+       }
+
+       function toggleOpen(section) {
+           self.openedSection = (self.openedSection === section ? null : section);
+       }
+
        function load() {
            map.filter(null, null, function(data) {
                var _data = new treeMenu(data).init();
-               $scope.showData = _data;
-               $scope.showAreaData = _data[null];
-             /*  $rootScope.showData = angular.copy(_data);*/
-               $rootScope.showAreaData = angular.copy(_data[null]);
-           });
-       }
+               $scope.editData.showData = _data;
+               $scope.editData.showAreaData = _data[null];
 
+               $scope.toggelData = [];
+               angular.forEach($scope.editData.showAreaData, function(data) {
+                   var sections = {
+                       id: data[DeviceField.MAP_ID],
+                       name: data[DeviceField.MAP_NAME],
+                       source: data[DeviceField.SOURCE],
+                       maptype: data[DeviceField.MAP_TYPE],
+                       icon: "fa",
+                       type: 'toggle'
+                   };
+                   if ($scope.editData.showData[data.mapid]) {
+                       sections.pages = [];
+                       $scope.editData.showData[data.mapid].map(function(data) {
+                           var pages = [{
+                               id: data[DeviceField.MAP_ID],
+                               name: data[DeviceField.MAP_NAME],
+                               no: data[DeviceField.MAP_NO],
+                               source: data[DeviceField.SOURCE],
+                               maptype: data[DeviceField.MAP_TYPE],
+                               icon: "fa",
+                               type: 'link'
+                           }];
+                           sections.pages = sections.pages.concat(pages);
+                       })
+                   }
+                   $scope.toggelData = $scope.toggelData.concat(sections);
+               })
+           });
+           $scope.DeviceField = DeviceField;
+       }
 
        $scope.toggleRight = function(obj) {
            var uri = {
@@ -62,9 +89,14 @@
            };
 
            if (obj) {
-               uri.id = obj[DeviceField.MAP_ID];
+               var data = {};
+               data[DeviceField.MAP_ID] = obj.id;
+               data[DeviceField.MAP_NAME] = obj.name;
+               data[DeviceField.MAP_NO] = obj.no;
+               data[DeviceField.SOURCE] = obj.source;
+               uri.id = data[DeviceField.MAP_ID];
                $state.go("ams.category.content.edit", uri);
-               $rootScope.groupFieldName = angular.copy(obj);
+               $scope.editData.groupFieldName = angular.copy(data);
            } else {
                $state.go("ams.category.content.create");
            }
@@ -115,23 +147,29 @@
        };
    }
 
-   function mapInlineTools($templateRequest, $compile) {
-       return {
-           scope: true,
-           restrict: 'C',
-           link: function(scope, element) {
-               element.on("click", function(event) {
-                   angular.element(document.querySelector('.map .selected')).removeClass('selected');
-                   angular.element(element).addClass('selected');
-                   scope.$apply(function() {
-                       $templateRequest("../view/content/map/tool.html").then(function(html) {
-                           angular.element(document.querySelector('.tools')).remove($compile(html)(scope));
-                           angular.element(element).append($compile(html)(scope));
-                       });
-                   })
-               });
-           }
-       }
+   function MapDetailCtrl($scope, map, uploadService, toastService, $rootScope, $mdSidenav) {
+       $scope.uploadFile = function() {
+           var file = $scope.myFile;
+           var fd = new FormData();
+           fd.append('file', file);
+           $scope.filename = 'maps/' + file.name;
+           fd.append('filename', $scope.filename);
+           uploadService.post(fd).then(function() {
+               console.log('-=--ok--=-')
+           })
+       };
+       $scope.save = function(obj, type) {
+           map.saveOne(obj, type, function() {
+               toastService();
+               $scope.editData.groupFieldName = null;
+               /*   $rootScope.editData.showData._load();*/
+           });
+       };
+
+       $scope.cancel = function() {
+           $mdSidenav('right').close();
+           $scope.editData.groupFieldName = null;
+       };
    }
 
    function fileModel($parse) {

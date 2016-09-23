@@ -16,14 +16,38 @@ function topNavCtrl($scope, $mdSidenav) {
     };
 }
 
-function navCtrl($scope, category) { 
-    $scope.goCatory = function(obj) {
-        obj.open = obj.open === false;
-        if (obj.url) {
-            $scope.$emit('load');
-            $scope.$emit('selectedMenu', obj);
-        }
+function navCtrl($scope, category) {
 
-    };
     $scope.category = category;
+    $scope.isOpen = isOpen;
+    $scope.toggleOpen = toggleOpen;
+    $scope.isPageSelected = isPageSelected;
+    $scope.setSelectPage = setSelectPage;
+    $scope.autoFocusContent = false;
+    $scope.currentSection = {};
+    $scope.status = {
+        isFirstOpen: true,
+        isFirstDisabled: false
+    };
+    $scope.focusCategory = {
+        isContent: false,
+        name: null
+    };
+
+    function isOpen(section) {
+        return category.isSectionSelected(section);
+    }
+
+    function toggleOpen(section) {
+        category.toggleSelectSection(section);
+    }
+
+    function isPageSelected(page) {
+        return category.isPageSelected(page);
+    }
+
+    function setSelectPage(page) {
+        category.setSelectPage(page);
+    }
+
 }

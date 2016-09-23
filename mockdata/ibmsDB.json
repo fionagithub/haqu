@@ -82,7 +82,7 @@
       "102201": "{\"monitortypeid\":102201,\"monitortypegroupid\":35,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"红外探测器\\r\\n\"}",
       "102301": "{\"monitortypeid\":102301,\"monitortypegroupid\":35,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"紧急按钮\\r\\n\"}",
       "103001": "{\"monitortypeid\":103001,\"monitortypegroupid\":1,\"devicetypeid\":103,\"cmdname\":\"NUC-21012-F2\",\"description\":\"电梯摄像机\"}",
-      "103002": "{\"monitortypeid\":103002,\"monitortypegroupid\":1,\"cmdname\":\"-=99=-0-=\",\"devicetypeid\":202}",
+      "103002": "{\"monitortypeid\":103002,\"monitortypegroupid\":1,\"cmdname\":\"-=99=7788-0-=\",\"devicetypeid\":202}",
       "201001": "{\"monitortypeid\":201001,\"monitortypegroupid\":2,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"单门门禁推杠锁(T1-1)\"}",
       "201102": "{\"monitortypeid\":201102,\"monitortypegroupid\":2,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"单门门禁电扣锁(T1-2)\"}",
       "201103": "{\"monitortypeid\":201103,\"monitortypegroupid\":2,\"devicetypeid\":null,\"cmdname\":null,\"description\":\"单门门禁磁力锁(T1-3)\"}",
@@ -1156,7 +1156,7 @@
       "912": "{\"devicetypeid\":912,\"devicetypename\":\"312312\",\"devicesystemtypeid\":null}",
       "1101": "{\"devicetypeid\":1101,\"devicetypename\":\"---tes9999-==-\",\"devicesystemtypeid\":11}",
       "1106": "{\"devicetypeid\":1106,\"devicetypename\":\"--aaa-==\",\"devicesystemtypeid\":11}",
-      "1107": "{\"devicetypeid\":1107,\"devicetypename\":\"-=999=-\",\"devicesystemtypeid\":11}",
+      "1107": "{\"devicetypeid\":1107,\"devicetypename\":\"-=997879=-\",\"devicesystemtypeid\":11}",
       "1108": "{\"devicetypeid\":1108,\"devicetypename\":\"---ee=\",\"devicesystemtypeid\":11}",
       "1109": "{\"devicetypeid\":1109,\"devicetypename\":\"--test--\",\"devicesystemtypeid\":11}",
       "1110": "{\"devicetypeid\":1110,\"devicetypename\":\"---999====\",\"devicesystemtypeid\":11,\"iconsrc\":\"\"}",
@@ -1188,9 +1188,9 @@
     },
     "ts_devicesystype": {
       "0": "{\"devicesystemtypeid\":0,\"devicesystemtypename\":\"--请选择设备系统类型--\"}",
-      "1": "{\"devicesystemtypeid\":1,\"devicesystemtypename\":\"--test\"}",
+      "1": "{\"devicesystemtypeid\":1,\"devicesystemtypename\":\"--test---\"}",
       "2": "{\"devicesystemtypeid\":2,\"devicesystemtypename\":\"一卡通系统\"}",
-      "3": "{\"devicesystemtypeid\":3,\"devicesystemtypename\":\"--test---\"}",
+      "3": "{\"devicesystemtypeid\":3,\"devicesystemtypename\":\"--test00---\"}",
       "4": "{\"devicesystemtypeid\":4,\"devicesystemtypename\":\"多能源管理系统\"}",
       "5": "{\"devicesystemtypeid\":5,\"devicesystemtypename\":\"楼宇自控系统\"}",
       "6": "{\"devicesystemtypeid\":6,\"devicesystemtypename\":\"能源及环境管理\"}",
@@ -3796,7 +3796,7 @@
       "239921": "{\"autoid\":239921,\"deviceid\":\"030301010903025116\",\"devicename\":\"B3F2号坡道手报L25-116\",\"devicetypeid\":303,\"axisx\":null,\"axisy\":null,\"mapid\":346,\"deviceno\":\"L25-116\",\"monitor\":\"0057366B\",\"cmdname\":null}"
     },
     "ts_newmonitortypegroup": {
-      "1": "{\"monitortypegroupid\":1,\"description\":\"--==test-=\"}",
+      "1": "{\"monitortypegroupid\":1,\"description\":\"--==tes99t-=\"}",
       "2": "{\"monitortypegroupid\":2,\"description\":\"一卡通\"}",
       "3": "{\"monitortypegroupid\":3,\"description\":\"OP720-CN点型感烟火灾探测器\"}",
       "5": "{\"monitortypegroupid\":5,\"description\":\"BA\"}",

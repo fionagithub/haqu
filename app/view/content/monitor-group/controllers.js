@@ -14,8 +14,7 @@ function MonitorgroupCtrl($scope, monitorGroup, monitorType, paginator, delDialo
 
     function load() {
         $rootScope.query = null;
-        $scope.showData = paginator(monitorGroup.filter, 10);
-        $rootScope.showData = $scope.showData;
+        $scope.editData.showData = paginator(monitorGroup.filter, 10);
     }
 
     $scope.toggleRight = function(obj) {
@@ -25,7 +24,7 @@ function MonitorgroupCtrl($scope, monitorGroup, monitorType, paginator, delDialo
         if (obj) {
             uri.id = obj[DeviceField.MNT_GROUP_ID];
             $state.go("ams.category.content.edit", uri);
-            $rootScope.groupFieldName = angular.copy(obj);
+            $scope.editData.groupFieldName = angular.copy(obj);
         } else {
             $state.go("ams.category.content.create");
         }
@@ -40,7 +39,7 @@ function MonitorgroupCtrl($scope, monitorGroup, monitorType, paginator, delDialo
         delDialogService(function() {
             console.log('delete...');
             monitorGroup.deleteOne(obj).then(function(data) {
-                $scope.showData._load();
+                $scope.editData.showData._load();
 
             })
         })
@@ -68,17 +67,17 @@ function MonitorgroupCtrl($scope, monitorGroup, monitorType, paginator, delDialo
 }
 
 
-function MonitorGroupDetailCtrl($scope, monitorGroup, toastService, $rootScope, $mdSidenav) {
+function MonitorGroupDetailCtrl($scope, monitorGroup, toastService, $mdSidenav) {
     $scope.save = function(obj, type) {
         monitorGroup.saveOne(obj, type, function() {
             toastService();
-            $rootScope.groupFieldName = null;
-            $rootScope.showData._load();
+            $scope.editData.groupFieldName = null;
+            $scope.editData.showData._load();
         });
     };
 
     $scope.cancel = function() {
-        $rootScope.groupFieldName = null;
+        $scope.editData.groupFieldName = null;
         $mdSidenav('right').close();
     };
 }

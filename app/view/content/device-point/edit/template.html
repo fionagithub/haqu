@@ -5,6 +5,13 @@
     </md-toolbar>
     <md-content layout-padding="">
         <form name="editList">
+                <md-input-container flex class="md-block">
+                    <label>设备编号</label>
+                    <input name="deviceid" required type="number" ng-minlength="3" ng-model="editData.groupFieldName[DeviceField.DEVICE_ID]">
+                    <div ng-messages="editList.deviceid.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
             <md-input-container flex class="md-block">
                 <label> 监控类型</label>
                 <md-select name="monitorgroupname" required ng-model="editData.groupFieldName[DeviceField.MNT_TYPE_ID]">

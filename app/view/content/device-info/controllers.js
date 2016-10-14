@@ -33,13 +33,10 @@ function DeviceInfoCtrl($scope, deviceInfo, deviceTypeList, map, devicePoint, pa
             category: $stateParams.category
         };
 
-        if (obj) {
             uri.id = obj[DeviceField.DEVICE_ID];
             $state.go("ams.category.content.edit", uri);
             $scope.editData.groupFieldName = angular.copy(obj);
-        } else {
-            $state.go("ams.category.content.create");
-        }
+       
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
             it.toggle();

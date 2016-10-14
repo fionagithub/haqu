@@ -27,10 +27,6 @@
     "dataSource": "ibmsDB",
     "public": true
   },
-  "ts_devicetype": {
-    "dataSource": "ibmsDB",
-    "public": true
-  },
   "ts_map": {
     "dataSource": "ibmsDB",
     "public": true
@@ -39,7 +35,7 @@
     "dataSource": "ibmsDB",
     "public": true
   },
-  "ts_monitortypes": {
+  "ts_monitortype": {
     "dataSource": "ibmsDB",
     "public": true
   },
@@ -64,6 +60,10 @@
     "public": true
   },
   "ts_device_define": {
+    "dataSource": "ibmsDB",
+    "public": true
+  },
+  "ts_devicetype": {
     "dataSource": "ibmsDB",
     "public": true
   }

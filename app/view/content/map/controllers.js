@@ -46,7 +46,8 @@
            self.openedSection = (self.openedSection === section ? null : section);
        }
 
-       function load() {
+               $rootScope.showData =load;
+                 function load() {
            map.filter(null, null, function(data) {
                var _data = new treeMenu(data).init();
                $scope.editData.showData = _data;
@@ -80,7 +81,6 @@
                    $scope.toggelData = $scope.toggelData.concat(sections);
                })
            });
-           $scope.DeviceField = DeviceField;
        }
 
        $scope.toggleRight = function(obj) {
@@ -88,18 +88,16 @@
                category: $stateParams.category
            };
 
-           if (obj) {
-               var data = {};
+              var data = {};
                data[DeviceField.MAP_ID] = obj.id;
+               data[DeviceField.MAP_TYPE] = obj.maptype;
                data[DeviceField.MAP_NAME] = obj.name;
                data[DeviceField.MAP_NO] = obj.no;
                data[DeviceField.SOURCE] = obj.source;
                uri.id = data[DeviceField.MAP_ID];
                $state.go("ams.category.content.edit", uri);
                $scope.editData.groupFieldName = angular.copy(data);
-           } else {
-               $state.go("ams.category.content.create");
-           }
+        
            // 'No instance found for handle'
            $mdComponentRegistry.when('right').then(function(it) {
                it.toggle();
@@ -147,7 +145,7 @@
        };
    }
 
-   function MapDetailCtrl($scope, map, uploadService, toastService, $rootScope, $mdSidenav) {
+   function MapDetailCtrl($scope, map, uploadService, toastService, DeviceField, $rootScope, $mdSidenav) {
        $scope.uploadFile = function() {
            var file = $scope.myFile;
            var fd = new FormData();
@@ -159,10 +157,11 @@
            })
        };
        $scope.save = function(obj, type) {
+           if ($scope.filename) { obj[DeviceField.SOURCE] = $scope.filename; }
            map.saveOne(obj, type, function() {
                toastService();
                $scope.editData.groupFieldName = null;
-               /*   $rootScope.editData.showData._load();*/
+               $rootScope.showData();
            });
        };
 

@@ -28,14 +28,10 @@ function DeviceDefineCtrl($scope, monitorType, deviceTypeList, deviceDefines, pa
         var uri = {
             category: $stateParams.category
         };
+        uri.id = obj[DeviceField.ID];
+        $state.go("ams.category.content.edit", uri);
+        $scope.editData.groupFieldName = angular.copy(obj);
 
-        if (obj) {
-            uri.id = obj[DeviceField.ID];
-            $state.go("ams.category.content.edit", uri);
-            $scope.editData.groupFieldName = angular.copy(obj);
-        } else {
-            $state.go("ams.category.content.create");
-        }
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
             it.toggle();

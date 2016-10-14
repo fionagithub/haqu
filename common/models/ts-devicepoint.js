@@ -1,3 +1,3 @@
-module.exports = function(TsDevicepoint) {
+module.exports = function(TsDevicesystype) {
 
 };

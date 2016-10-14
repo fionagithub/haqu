@@ -1,22 +1,25 @@
 {
-    "name": "ts_devicetype",
+    "name": "ts_monitortype",
     "base": "PersistedModel",
     "options": {
         "validateUpsert": true
     },
     "properties": {
-        "devicetypeid": {
+        "monitortypeid": {
             "type": "number",
             "id": true,
             "generated": false
         },
-        "devicetypename": {
-            "type": "string"
-        },
-        "devicesystemtypeid": {
+        "monitortypegroupid": {
             "type": "number"
         },
-        "iconsrc": {
+        "devtypeid": {
+            "type": "string"
+        },
+        "cmdname": {
+            "type": "string"
+        },
+        "description": {
             "type": "string"
         }
     },

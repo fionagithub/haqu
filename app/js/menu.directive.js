@@ -5,7 +5,7 @@
          $templateCache.put('partials/menu-toggle.tmpl.html',
              '<md-button class="md-button-toggle"\n' +
              '  ng-click="toggle($index)"\n' +
-             '  ng-class="{\'md-selected\' :isToggled()}" \n' +
+             '  ng-class="{\'{{section.icon}}\' : true,\'md-selected\' :isToggled()}" \n' +
              '  aria-controls="docs-menu-{{section.name | nospace}}"\n' +
              '  flex layout="row"\n' +
              '  aria-expanded="{{isOpen()}}">\n' +
@@ -24,29 +24,29 @@
      .run(['$templateCache', function($templateCache) {
          $templateCache.put('partials/menu-link.tmpl.html',
              '<md-button ng-class="{\'{{section.icon}}\' : true,\'md-selected\' :isLinked()}" \n' +
-             '   ng-click="focusSection()">\n' +
+             '   ng-click="focusSection()">\n' + 
              '  {{section | humanizeDoc}}\n' +
              '  <map-inline-tools ng-if="isLinked()&& linkdata.isContent"></map-inline-tools>\n' +
              '</md-button>\n' +
              '');
      }])
-
- .directive("mapInlineTools", function() {
-     return {
-         restrict: "AE",
-         templateUrl: "../view/content/map/tool.html",
-         link: function(scope, element) {
-             element.on('click', function(e){ 
-                    e.stopPropagation()
-                });
-             var _scope = element.parent().scope();
-             scope.toggleRight = function() {
-                 _scope.toggleRight( scope.section);
-             };
-         }
-     };
- })
- .directive('menuToggle', function($timeout) {
+     /* module map tools  */
+     .directive("mapInlineTools", function() {
+         return {
+             restrict: "AE",
+             templateUrl: "../view/content/map/tool.html",
+             link: function(scope, element) {
+                 element.on('click', function(e) {
+                     e.stopPropagation()
+                 });
+                 var _scope = element.parent().scope();
+                 scope.toggleRight = function() {
+                     _scope.toggleRight(scope.section);
+                 };
+             }
+         };
+     })
+     .directive('menuToggle', function($timeout) {
          return {
              scope: {
                  section: '=',
@@ -63,7 +63,7 @@
                      _scope.toggleOpen(scope.section);
                  };
                  scope.isToggled = function() {
-                     if (scope.toggledata.name ) {
+                     if (scope.toggledata.name) {
                          return scope.toggledata.name == scope.section.name;
                      }
                  };

@@ -7,16 +7,13 @@
             <form name="editList">
                 <md-input-container flex class="md-block">
                     <label>区域</label>
-                    <md-select name="map" required ng-model="editData.groupFieldName[DeviceField.MAP_NO]">
+                    <md-select required ng-model="editData.groupFieldName[DeviceField.MAP_NO]">
                         <md-optgroup>
                             <md-option ng-value="item[DeviceField.MAP_ID]" ng-repeat="item in editData.showAreaData">
                                 {{item[DeviceField.MAP_ID]+ ':' + item[DeviceField.MAP_NAME]}}
                             </md-option>
                         </md-optgroup>
                     </md-select>
-                    <div ng-messages="editList.map.$error">
-                        <div ng-message="required">This is required.</div>
-                    </div>
                 </md-input-container>
                 <md-input-container flex class="md-block">
                     <label>地图名称 </label>
@@ -35,7 +32,7 @@
                     <input ng-model="editData.groupFieldName[DeviceField.MAP_TYPE]">
                 </md-input-container>
             </form>
-            <md-button class="  md-raised demo-dialog-open-button" ng-click="save(editData.groupFieldName,'save')" ng-disabled="editList.$invalid" ng-hide='myFile'>
+            <md-button class="md-raised demo-dialog-open-button" ng-click="save(editData.groupFieldName,'save')" >
                 保存
             </md-button>
             <md-button class="md-raised demo-dialog-close-button" ng-click="cancel()">

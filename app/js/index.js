@@ -37,7 +37,11 @@ function stateConfig($stateProvider, $urlRouterProvider) {
                 },
                 'content@': {
                     templateUrl: 'view/content/content.html'
+                },
+                'float@': {
+                    templateUrl: 'view/content/float.html'
                 }
+
             }
         })
         .state('ams.category.content', {

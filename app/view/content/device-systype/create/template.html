@@ -12,6 +12,10 @@
                         <div ng-message="required">This is required.</div>
                     </div>
                 </md-input-container>
+                <md-input-container flex class="md-block">
+                    <label>V_ID</label>
+                    <input type="number" ng-model="editData.groupFieldName[DeviceField.V_SYS_TYPE_ID]">
+                </md-input-container>
             </form>
             <md-button class="md-raised demo-dialog-open-button" ng-click="save(editData.groupFieldName,'save')" ng-disabled="editList.$invalid">
                 保存

@@ -1,18 +1,34 @@
 <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="DeviceMonitorCtrl">
-    <md-input-container flex class="md-block">
-        <label>监控组</label>
-        <md-select ng-model="selected.data">
-            <md-optgroup>
-                <md-option ng-value="data" ng-repeat="data in editData.MonitorGroupList">{{ data[DeviceField.MNT_GROUP_ID] + ':' + data[DeviceField.DESC]}}</md-option>
-            </md-optgroup>
-        </md-select>
-    </md-input-container>
-    <section layout-sm="column" flex layout-align="center center" layout-wrap="">
-        <md-button class="  md-raised demo-dialog-open-button" ng-click="search()">搜索
-        </md-button>
-        <md-button ng-click="toggleRight()" class="  md-raised demo-dialog-open-button">新增
-        </md-button>
-    </section>
+    <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
+        <div class="demo-md-panel-animation md-padding">
+            <div layout="row">
+                <div flex="33">
+                    <md-input-container flex class="md-block">
+                        <label>监控组</label>
+                        <md-select ng-model="selected.data">
+                            <md-optgroup>
+                                <md-option ng-value="data" ng-repeat="data in editData.MonitorGroupList">{{ data[DeviceField.MNT_GROUP_ID] + ':' + data[DeviceField.DESC]}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div flex="33">
+                    <md-input-container flex class="md-block">
+                        <label> 设备类型</label>
+                        <md-select ng-model="selectedData">
+                            <md-optgroup>
+                                <md-option ng-value="data[DeviceField.TYPE_ID]" ng-repeat="data in editData.DeviceTypeList">{{data[DeviceField.TYPE_ID] + ':' + data[DeviceField.TYPE_NAME]}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <div flex="33">
+                    <md-button class="md-raised demo-dialog-open-button" ng-click="search()">搜索
+                    </md-button>
+                </div>
+            </div>
+        </div>
+    </md-content>
     <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
         <table class="md-api-table">
             <thead>
@@ -33,6 +49,6 @@
         </table>
         <pagination-section> </pagination-section>
     </md-content>
-  <!--   <ui-view>
+    <!--   <ui-view>
   </ui-view> -->
 </div>

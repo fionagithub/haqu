@@ -1,19 +1,17 @@
 <div layout="column" tabindex="-1" role="main" flex="" class="layout-column flex" ng-controller="MapCtrl">
-    <section layout-sm="column" flex layout-align="center center" layout-wrap="">
-        <md-button ng-click="toggleRight()" class="md-raised demo-dialog-open-button">新增
-        </md-button>
-    </section>
     <md-content md-scroll-y="" layout-padding layout="column" flex="" class="_md layout-column flex">
         <div layout="row">
-            <ul class='map'>
-                <li ng-repeat="section in toggelData" class="parent-list-item">
-                    <menu-link section="section" linkdata="focusMap" ng-if="section.type === 'link'"></menu-link>
-                    <menu-toggle section="section" toggledata="focusMap" ng-if="section.type === 'toggle'"></menu-toggle>
-                </li>
-            </ul>
             <div flex="33">
+                <ul class='map'>
+                    <li ng-repeat="section in toggelData" class="parent-list-item">
+                        <menu-link section="section" linkdata="focusMap" ng-if="section.type === 'link'"></menu-link>
+                        <menu-toggle section="section" toggledata="focusMap" ng-if="section.type === 'toggle'"></menu-toggle>
+                    </li>
+                </ul>
+            </div>
+            <div flex="66">
                 <img style='height:600px;' ng-src="{{showMapUri}}">
             </div>
         </div>
-    </md-content> 
+    </md-content>
 </div>

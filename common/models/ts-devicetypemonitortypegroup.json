@@ -3,10 +3,13 @@
     "base": "PersistedModel",
     "properties": {
         "devicetypeid": {
-            "type": "number"
+            "type": "number",
+            "id": true,
+            "generated": false
         },
         "monitortypegroupid": {
-            "type": "number"
+            "type": "number", 
+            "generated": false
         }
     },
     "validations": [],

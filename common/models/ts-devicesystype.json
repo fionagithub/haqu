@@ -7,9 +7,10 @@
       "id": true
     },
     "devicesystemtypename": {
-      "type": "string",
-      "required": true,
-      "description": "设备大类名称"
+      "type": "string"
+    },
+    "vdevicesystemtypeid": {
+      "type": "number"
     }
   },
   "validations": [],

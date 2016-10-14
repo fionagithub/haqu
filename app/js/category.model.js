@@ -5,7 +5,7 @@ function category($location) {
     var sections = [{
         name: "系统类别",
         type: 'toggle',
-        icon: "fa",
+        icon: "fa fa-suitcase",
         pages: [{
             name: "大类",
             icon: "fa",
@@ -19,7 +19,7 @@ function category($location) {
         }]
     }, {
         name: "监控点位类型",
-        icon: "fa",
+        icon: "fa fa-eye",
         type: 'toggle',
         pages: [{
             name: "组类型",
@@ -27,27 +27,27 @@ function category($location) {
             type: 'link',
             state: "monitor-group"
         }, {
-            name: "关联设备与监控",
-            icon: "fa",
-            type: 'link',
-            state: "device-monitor"
-
-        }, {
             name: "常规类型",
             icon: "fa",
             type: 'link',
             state: "monitor-type"
 
+        }, {
+            name: "关联设备与监控",
+            icon: "fa",
+            type: 'link',
+            state: "device-monitor"
+
         }]
     }, {
         name: "电子地图",
-        icon: "fa",
+        icon: "fa fa-sitemap",
         type: 'link',
         state: "map"
     }, {
         name: "设备维护",
         type: 'toggle',
-        icon: "fa",
+        icon: "fa fa-edit",
         pages: [{
             name: "设备表",
             icon: "fa",

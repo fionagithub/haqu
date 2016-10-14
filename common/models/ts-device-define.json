@@ -1,44 +1,44 @@
 {
-    "name": "ts_device_define",
-    "base": "PersistedModel",
-    "options": {
-        "validateUpsert": true
+  "name": "ts_device_define",
+  "base": "PersistedModel",
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "autoid": {
+      "type": "number",
+      "id": true
     },
-    "properties": {
-        "autoid": {
-            "type": "number",
-            "id": true
-        },
-        "devicetypeid": {
-            "type": "number"
-        },
-        "monitortypeid": {
-            "type": "number"
-        },
-        "statusvalue": {
-            "type": "string"
-        },
-        "alarmflg": {
-            "type": "number"
-        },
-        "alarmlevel": {
-            "type": "number"
-        },
-        "isdefault": {
-            "type": "number"
-        },
-        "isanalogio": {
-            "type": "number"
-        },
-        "valuecompareoprator": {
-            "type": "string"
-        },
-        "description": {
-            "type": "string"
-        }
+    "devicetypeid": {
+      "type": "number"
     },
-    "validations": [],
-    "relations": {},
-    "acls": [],
-    "methods": {}
+    "monitortypeid": {
+      "type": "number"
+    },
+    "statusvalue": {
+      "type": "string"
+    },
+    "alarmflg": {
+      "type": "number"
+    },
+    "alarmlevel": {
+      "type": "number"
+    },
+    "isdefault": {
+      "type": "number"
+    },
+    "isanalogio": {
+      "type": "number"
+    },
+    "valuecompareoprator": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
 }

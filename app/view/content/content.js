@@ -1,7 +1,7 @@
 angular.module('content', ['ams.factorys'])
     .controller('AmsCtr', AmsCtr)
 
-function AmsCtr($scope, $rootScope, DeviceField, $mdSidenav, $mdComponentRegistry) {
+function AmsCtr($scope, $rootScope, DeviceField, $state,$mdSidenav, $mdComponentRegistry) {
     $rootScope.DeviceField = DeviceField;
 
     $scope.$on("load", function(event, msg) {
@@ -27,4 +27,11 @@ function AmsCtr($scope, $rootScope, DeviceField, $mdSidenav, $mdComponentRegistr
             $rootScope.groupFieldName = null;
         }
     });
+    $scope.toggleRight = function() {
+        $state.go("ams.category.content.create");
+        // 'No instance found for handle'
+        $mdComponentRegistry.when('right').then(function(it) {
+            it.toggle();
+        });
+    };
 }

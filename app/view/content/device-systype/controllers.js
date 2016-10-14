@@ -20,13 +20,10 @@ function DeviceSystypeCtrl($scope, deviceSysTypeList, deviceTypeList, paginator,
         var uri = {
             category: $stateParams.category
         };
-        if (obj) {
             uri.id = obj[DeviceField.SYS_TYPE_ID];
             $state.go("ams.category.content.edit", uri);
             $scope.editData.groupFieldName = angular.copy(obj);
-        } else {
-            $state.go("ams.category.content.create");
-        }
+       
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
             it.toggle();

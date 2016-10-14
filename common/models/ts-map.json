@@ -10,13 +10,13 @@
       "type": "string"
     },
     "mapno": {
-      "type": "string"
+      "type": "number"
     },
     "maplocation": {
       "type": "string"
     },
     "maptype": {
-      "type": "number"
+      "type": "string"
     },
     "source": {
       "type": "string"

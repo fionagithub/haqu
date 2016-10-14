@@ -6,6 +6,23 @@
         <md-content layout-padding="">
             <form name="editList">
                 <md-input-container flex class="md-block">
+                    <label>设备类型ID </label>
+                    <md-select multiple required ng-model="editData.groupFieldName[DeviceField.TYPE_ID]">
+                        <md-optgroup>
+                            <md-option ng-value="item[DeviceField.TYPE_ID]" ng-repeat="item in editData.DeviceTypeList">
+                                {{item[DeviceField.TYPE_ID]+ ':' + item[DeviceField.TYPE_NAME]}}
+                            </md-option>
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+                <md-input-container flex class="md-block">
+                    <label>监控组ID</label>
+                    <input name="monitorid" required type="number" ng-minlength="3" ng-model="editData.groupFieldName[DeviceField.MNT_GROUP_ID]">
+                    <div ng-messages="editList.monitorid.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex class="md-block">
                     <label> 描述</label>
                     <input type="text" name="systypename" required ng-minlength="2" ng-model="editData.groupFieldName[DeviceField.DESC]">
                     <div ng-messages="editList.monitorgroupname.$error">

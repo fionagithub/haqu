@@ -9,6 +9,7 @@ function Resources($http, DeviceField, $rootScope) {
             exists: null,
             maxID: null,
             paramsSysId: null, //最大ID号或者是
+            v_paramsSysId: null,
             fileConfig: function() {
                 return $http.get(options.uri).success(function(result) {
                     console.log("图片路径", result);
@@ -55,33 +56,22 @@ function Resources($http, DeviceField, $rootScope) {
             },
             getMaxID: function() {
                 var _obj = {},
-                    _where = {},
                     _params = {};
-                if ($rootScope.query) {
-                    for (var i in $rootScope.query) {
-                        if ($rootScope.query[i]) {
-                            _where[i] = $rootScope.query[i];
-                            dataInfo.paramsSysId = _where[i];
-                        }
-                    }
-                    _params.where = _where;
-                }
-                _params.order = options.paramId + ' DESC';
                 _params.limit = 1;
-                if (options.paramId) {
-                    _obj = { params: { filter: _params } };
-                }
+                _params.order = options.paramId + ' DESC';
+                var obj = {};
+                obj[options.paramId] = parseInt(dataInfo.paramsSysId);
+                _params.where = obj;
+                _obj = { params: { filter: _params } };
                 return $http.get(options.uri, _obj).success(function(data) {
-                    var autoId = parseInt(dataInfo.paramsSysId);
+                    var _paramsSysId = parseInt(dataInfo.v_paramsSysId);
                     if (data[0]) {
-                        var _data = data[0][options.paramId];
-                        if (autoId && parseInt(_data / Math.pow(10, 2)) / autoId === 1) {
-                            dataInfo.maxID = parseInt(_data) + 1;
-                        } else {
-                            dataInfo.maxID = parseInt(_data) + 1;
+                        var _maxID = data[0][options.paramId];
+                        if (_paramsSysId && parseInt(_maxID / _paramsSysId) === 1) {
+                            dataInfo.maxID = parseInt(_maxID) + 1;
                         }
                     } else {
-                        dataInfo.maxID = Math.pow(10, 2) * autoId + 1;
+                        dataInfo.maxID = _paramsSysId + 1;
                     }
                 });
             },
@@ -90,17 +80,7 @@ function Resources($http, DeviceField, $rootScope) {
                     'save': options.uri,
                     'resave': options.uri + '/' + obj[options.param]
                 };
-                /*    var saveUri = options.uri;*/
-                this.getMaxID().then(function() {
-                    if (options.paramId) {
-                        if (obj[options.paramId] && type === 'resave') {
-                            obj[options.paramId] = obj[options.paramId];
-                        } else {
-                            obj[options.paramId] = dataInfo.maxID;
-                        }
-                    }
-                    $http.put(saveUri[type], obj).success(callback);
-                });
+                type === 'save' ? $http.post(saveUri[type], obj).success(callback) : $http.put(saveUri[type], obj).success(callback);
             },
             deleteOne: function(obj) {
                 return $http.delete(options.uri + '/' + obj[options.param]).success(function(_data) {

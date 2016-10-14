@@ -17,14 +17,11 @@ function DeviceGroupDefineCtrl($scope, deviceGroupDefine, paginator, delDialogSe
         var uri = {
             category: $stateParams.category
         };
-        if (obj) {
-            uri.id =obj[DeviceField.DEVICE_ID];
+         uri.id =obj[DeviceField.DEVICE_ID];
             console.log('---', uri.id);
             $scope.editData.groupFieldName = angular.copy(obj);
             $state.go("ams.category.content.edit", uri);
-        } else {
-            $state.go("ams.category.content.create");
-        }
+      
         // 'No instance found for handle'
         $mdComponentRegistry.when('right').then(function(it) {
             it.toggle();

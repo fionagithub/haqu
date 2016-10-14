@@ -1,7 +1,7 @@
 /*
- *win set 
+ *win set develop
  * */
-process.env.NODE_ENV = 'develop';
+process.env.NODE_ENV = 'production';
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 var app = module.exports = loopback();

@@ -3,15 +3,19 @@
         <md-button ng-click="toggleLeft()" class="md-icon-button" hide-gt-md="">
             <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
         </md-button>
-        <h5 style="color: black;" ng-if='currentMenu && parentMenu.children.indexOf(currentMenu)!==-1 '>
+        <div layout="row" flex="" class="fill-height layout-row flex">
+            <h2 class="md-toolbar-item md-breadcrumb md-headline">  
+          </h2>
+            <span flex="" class="flex"></span>
+            <div class="md-toolbar-item docs-tools layout-row" layout="row">
+                <h5 style="color: black;" ng-if='currentMenu && parentMenu.children.indexOf(currentMenu)!==-1 '>
           {{currentMenu.label}} </h5>
-        <span flex=""></span>
+                <div class="header-search header-chunk" id="header-search" role="search">
+                    <a href="#0" class="header-search-button" id="header-search-button">
+                        <i class="fa fa-search">    </i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </md-toolbar>
-<!--
-        <md-button class="md-icon-button" aria-label="Favorite">
-            <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
-        </md-button>
-        <md-button class="md-icon-button" aria-label="More">
-            <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
-        </md-button>-->

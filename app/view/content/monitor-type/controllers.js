@@ -12,6 +12,7 @@
 
        var query = {};
 
+         $scope.parseInt = parseInt;
        function load() {
            $rootScope.query = null;
            $scope.selected = {
@@ -26,6 +27,18 @@
                $scope.editData.MonitorGroupList = data;
            });
        }
+
+       $scope.$watch('editData.showData', function() {
+           $scope.monitorMap = {};
+           if ($scope.editData.MonitorGroupList) {
+               for (var i in $scope.editData.MonitorGroupList) {
+                   k = $scope.editData.MonitorGroupList[i][DeviceField.MNT_GROUP_ID];
+                   v = $scope.editData.MonitorGroupList[i][DeviceField.DESC];
+                   $scope.monitorMap[k] = v;
+               }
+           }
+       });
+
        $scope.$watch('selected.data', function() {
            if ($scope.selected.data) {
                query[DeviceField.MNT_GROUP_ID] = $scope.selected.data;
@@ -48,13 +61,10 @@
                category: $stateParams.category
            };
 
-           if (obj) {
-               uri.id = obj[DeviceField.MNT_TYPE_ID];
+              uri.id = obj[DeviceField.MNT_TYPE_ID];
                $state.go("ams.category.content.edit", uri);
                $scope.editData.groupFieldName = angular.copy(obj);
-           } else {
-               $state.go("ams.category.content.create");
-           }
+         
            // 'No instance found for handle'
            $mdComponentRegistry.when('right').then(function(it) {
                it.toggle();
@@ -77,6 +87,7 @@
                    $scope.deviceMap[k] = v;
                }
            }
+           console.log('--',$scope.deviceMap)
        });
 
        $scope.$watch('editData.MonitorGroupList', function() {
@@ -116,13 +127,13 @@
 
    }
 
-   function MonitorTypeDetailCtrl($scope, monitorType, toastService, $rootScope, $mdSidenav) {
+   function MonitorTypeDetailCtrl($scope, monitorType, toastService, DeviceField, $rootScope, $mdSidenav) {
        $scope.save = function(obj, type) {
            monitorType.saveOne(obj, type, function() {
                toastService();
-               $scope.editData.groupFieldName = null;
                $rootScope.query = angular.copy($scope.editData.search);
                $scope.editData.search = null;
+               $scope.editData.groupFieldName = null;
                $scope.editData.showData._load();
            });
        };

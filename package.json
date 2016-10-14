@@ -22,8 +22,10 @@
     "loopback": "^2.8.0",
     "loopback-boot": "^2.4.0",
     "loopback-component-explorer": "^2.5.0",
-    "loopback-connector-mssql": "^1.5.1",
+    "loopback-connector-mssql": "^2.8.0",
+    "loopback-context": "^1.0.0",
     "loopback-datasource-juggler": "^2.7.0",
+    "loopback-explorer": "^1.8.0",
     "multer": "^1.1.0",
     "serve-favicon": "^2.0.1"
   },

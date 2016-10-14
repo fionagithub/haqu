@@ -1,0 +1,47 @@
+<div class="my-links">
+    <div class="my-links-btn" ng-click='toggleRight()'><i class="fa fa-edit"></i></div>
+    <div class="">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#my-links" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="true">我的链接</a></li>
+            <li role="presentation" class=""><a href="#my-history" aria-controls="my-history" role="tab" data-toggle="tab" aria-expanded="false">最近访问</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="my-links">
+                <a href="javascript:;" class="fa fa-plus"></a>
+                <div class="my-links-box ps-container ps-active-x">
+                    <div class="my-links-content">
+                        <form class="my-link-form form-group" action="javascript:;" style="display: none;">
+                            <input type="text" class="fm-add-name form-control" placeholder="网站名称" required="">
+                            <input type="url" class="fm-add-url form-control" value="http://" required="">
+                            <button type="submit" class="btn btn-success btn-xs">添加</button>
+                            <button type="button" class="btn-close-fm btn btn-default btn-xs">取消</button>
+                        </form>
+                        <ul class="my-link-list"></ul>
+                    </div>
+                    <div class="ps-scrollbar-x-rail" style="display: inherit; width: 180px; left: 0px; bottom: 3px;">
+                        <div class="ps-scrollbar-x" style="left: 0px; width: 162px;"></div>
+                    </div>
+                    <div class="ps-scrollbar-y-rail" style="top: 0px; height: 324px; right: 3px; display: block;">
+                        <div class="ps-scrollbar-y" style="top: 0px; height: 0px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="my-history">
+                <div class="my-links-box ps-container ps-active-x">
+                    <div class="my-links-content">
+                        <ul class="my-link-list recent-items"></ul>
+                        <div class="text-center pd-v"><small>显示最近 15 个访问记录</small></div>
+                    </div>
+                    <div class="ps-scrollbar-x-rail" style="display: inherit; width: 0px; left: 0px; bottom: 3px;">
+                        <div class="ps-scrollbar-x" style="left: -20px; width: 0px;"></div>
+                    </div>
+                    <div class="ps-scrollbar-y-rail" style="top: 0px; height: 324px; right: 3px; display: block;">
+                        <div class="ps-scrollbar-y" style="top: 0px; height: 0px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,6 +6,13 @@
         <md-content layout-padding="">
             <form name="editList">
                 <md-input-container flex class="md-block">
+                    <label>设备编号</label>
+                    <input name="deviceno" required type="number" ng-minlength="3" ng-model="editData.groupFieldName[DeviceField.TYPE_ID]">
+                    <div ng-messages="editList.deviceno.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container flex class="md-block">
                     <label>系统</label>
                     <md-select name="systype" required ng-model="editData.groupFieldName[DeviceField.SYS_TYPE_ID]">
                         <md-optgroup>

@@ -5,7 +5,6 @@
     "file": "mockdata/db.json"
   },
   "ibmsDB": {
-    "url": "mssql://sa:123qwe!@#@192.168.123.101:1433",
-    "name": "ibmsDB"
+    "url": "mssql://ibmsInner:1234@192.168.123.101:1433"
   }
 }

@@ -7,11 +7,11 @@
   "ibmsDB": {
     "host": "192.168.123.101",
     "port": 1433,
-    "url": "mssql://sa:123qwe!@#@192.168.123.101:1433",
+    "url": "mssql://ibmsInner:1234@192.168.123.101:1433",
     "database": "ibms_inner",
-    "password": "123qwe!@#",
+    "password": "1234",
     "name": "ibmsDB",
-    "user": "sa",
+    "user": "ibmsInner",
     "connector": "mssql"
   }
 }

@@ -19,10 +19,8 @@ function AmsCtr($scope, $rootScope, DeviceField, $state,$mdSidenav, $mdComponent
 */
     $rootScope.$watch(function() {
         var isOpen = $mdComponentRegistry.get('right') ? $mdSidenav('right').isOpen() : false;
-        console.log('---', isOpen);
         return String(isOpen);
     }, function(data) {
-        console.log('-===--', data);
         if (String(data) === 'false') {
             $rootScope.groupFieldName = null;
         }

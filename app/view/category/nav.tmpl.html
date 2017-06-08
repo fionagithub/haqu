@@ -8,7 +8,7 @@
 <md-content role="navigation">
     <ul class="docs-menu">
         <li ng-repeat="section in category.sections" class="parent-list-item">
-            <h2 class="menu-heading" ng-if="section.type === 'heading'" id="heading_{{ section.name | nospace }}">
+            <h2 class="menu-heading" ng-if="section.type === 'heading'" id="heading_{{ section.name  }}">
             {{section}}
           </h2>
             <menu-link section="section" linkdata="focusCategory" ng-if="section.type === 'link'"></menu-link>

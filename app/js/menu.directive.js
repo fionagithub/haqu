@@ -1,74 +1,49 @@
  angular.module('common.directives', [])
-
-
- .run(['$templateCache', function($templateCache) {
-         $templateCache.put('partials/menu-toggle.tmpl.html',
-             '<md-button class="md-button-toggle"\n' +
-             '  ng-click="toggle($index)"\n' +
-             '  ng-class="{\'{{section.icon}}\' : true,\'md-selected\' :isToggled()}" \n' +
-             '  aria-controls="docs-menu-{{section.name | nospace}}"\n' +
-             '  flex layout="row"\n' +
-             '  aria-expanded="{{isOpen()}}">\n' +
-             '  {{section.name}}\n' +
-             '  <map-inline-tools ng-if="isToggled()&& toggledata.isContent"></map-inline-tools>\n' +
-             '  <span aria-hidden="true" class=" pull-right fa fa-chevron-down md-toggle-icon"\n' +
-             '  ng-class="{\'toggled\' : isOpen()}"></span>\n' +
-             '</md-button>\n' +
-             '<ul ng-if="isOpen()" id="docs-menu-{{section.name | nospace}}" class="menu-toggle-list">\n' +
-             '  <li ng-repeat="page in section.pages">\n' +
-             '    <menu-link section="page" linkdata="toggledata"> </menu-link>\n' +
-             '  </li>\n' +
-             '</ul>\n' +
-             '');
-     }])
-     .run(['$templateCache', function($templateCache) {
-         $templateCache.put('partials/menu-link.tmpl.html',
-             '<md-button ng-class="{\'{{section.icon}}\' : true,\'md-selected\' :isLinked()}" \n' +
-             '   ng-click="focusSection()">\n' + 
-             '  {{section | humanizeDoc}}\n' +
-             '  <map-inline-tools ng-if="isLinked()&& linkdata.isContent"></map-inline-tools>\n' +
-             '</md-button>\n' +
-             '');
-     }])
+ .factory('togglefunc',function(){
+     return {
+         getdata:{},
+         getNav:function(o){
+         console.log('---');
+         this.getdata=o;
+         }
+     }
+ })
      /* module map tools  */
-     .directive("mapInlineTools", function() {
-         return {
-             restrict: "AE",
-             templateUrl: "../view/content/map/tool.html",
-             link: function(scope, element) {
-                 element.on('click', function(e) {
-                     e.stopPropagation()
-                 });
-                 var _scope = element.parent().scope();
-                 scope.toggleRight = function() {
-                     _scope.toggleRight(scope.section);
-                 };
-             }
-         };
-     })
-     .directive('menuToggle', function($timeout) {
+     .directive('menuToggle', function() {
          return {
              scope: {
                  section: '=',
+                 delete: '&',
+                 action: '&',
                  toggledata: '='
              },
-             templateUrl: 'partials/menu-toggle.tmpl.html',
+             templateUrl: '../view/patch/menu-toggle.tmpl.html',
              link: function(scope, element) {
                  var _scope = element.parent().scope();
                  scope.isOpen = function(obj) {
                      return _scope.isOpen(obj || scope.section);
                  };
+                scope.checkMap = function(o) {
+                    _scope.selectedRow(o, function(data) {
+                        if (data.length > 0) {
+                            scope.section.isDel = false;
+                            console.log('存在子数据...');
+                        } else {
+                            scope.section.isDel = true;
+                        }
+                    });
+                };
                  scope.toggle = function(o) {
                      scope.toggledata.name = scope.section.name;
+                    if (scope.toggledata.isContent) {
+                        scope.checkMap(scope.section);
+                    }
                      _scope.toggleOpen(scope.section);
                  };
                  scope.isToggled = function() {
                      if (scope.toggledata.name) {
-                         return scope.toggledata.name == scope.section.name;
+                        scope.section.isDel =scope.toggledata.name == scope.section.name;
                      }
-                 };
-                 scope.toggleRight = function(obj) {
-                     _scope.toggleRight(obj);
                  };
                  scope.setSelectPage = function(i, page) {
                      _scope.setSelectPage(i, page);
@@ -82,49 +57,31 @@
              }
          };
      })
-     .directive('menuLink', function() {
+     .directive('menuLink', function(togglefunc) {
          return {
              scope: {
+                 delete: '&',
                  section: '=',
-                 linkdata: '='
+                 action: '&',
+                  linkdata: '='
              },
-             templateUrl: 'partials/menu-link.tmpl.html',
+             templateUrl: '../view/patch/menu-link.tmpl.html',
              link: function(scope, element) {
                  var _scope = element.parent().scope();
                  scope.mouseActived = true;
                  scope.isLinked = function() {
-                     if (scope.linkdata.name) {
-                         return scope.linkdata.name == scope.section.name;
-                     }
+                    if (scope.linkdata.name) {
+                        return scope.linkdata.name == scope.section.name;
+                    }
                  };
-                 scope.toggleRight = function(obj) {
-                     _scope.toggleRight(obj);
-                 };
-                 scope.focusSection = function() {
-                     scope.linkdata.name = scope.section.name;
-                     _scope.setSelectPage(scope.section);
-                     _scope.autoFocusContent = true;
-                 };
+          
+                scope.focusSection = function() {
+                    scope.linkdata.name = scope.section.name;
+                    _scope.setSelectPage(scope.section);
+                    if (scope.linkdata.isContent) {
+                        _scope.checkMap( scope.section);
+                    }
+                };
              }
-         };
-     })
-
- //take all whitespace out of string
- .filter('nospace', function() {
-         return function(value) {
-             return (!value) ? '' : value.replace(/ /g, '');
-         };
-     })
-     //replace uppercase to regular case
-     .filter('humanizeDoc', function() {
-         return function(doc) {
-             if (!doc) return;
-             if (doc.type === 'directive') {
-                 return doc.name.replace(/([A-Z])/g, function($1) {
-                     return '-' + $1.toLowerCase();
-                 });
-             }
-
-             return doc.label || doc.name;
          };
      })

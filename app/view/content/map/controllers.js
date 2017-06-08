@@ -3,7 +3,7 @@
        .controller('MapDetailCtrl', MapDetailCtrl)
        .directive('fileModel', fileModel)
 
-   function MapCtrl($scope, map, fileService, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
+   function MapCtrl($scope, deviceInfo, map, fileService, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
        $scope.$on("loadFromParrent", load);
        $scope.$on('$stateChangeSuccess', function() {
            if ($state.current.name == "ams.category.content") {
@@ -11,6 +11,25 @@
            }
        });
 
+       $scope.toggleRight = function(device) {
+           var uri = {
+               category: $stateParams.category
+           };
+              var data = {};
+               data[DeviceField.MAP_ID] = device.id;
+               data[DeviceField.MAP_TYPE] = device.maptype;
+               data[DeviceField.MAP_NAME] = device.name;
+               data[DeviceField.MAP_NO] = device.no;
+               data[DeviceField.SOURCE] = device.source;
+               uri.id = data[DeviceField.MAP_ID];
+               $state.go("ams.category.content.edit", uri);
+               $scope.editData.groupFieldName = angular.copy(data);
+        
+           // 'No instance found for handle'
+           $mdComponentRegistry.when('right').then(function(it) {
+               it.toggle();
+           });
+       };
 
        $scope.map = {
            file: null
@@ -46,8 +65,8 @@
            self.openedSection = (self.openedSection === section ? null : section);
        }
 
-               $rootScope.showData =load;
-                 function load() {
+    $rootScope.showData =load;
+    function load() {
            map.filter(null, null, function(data) {
                var _data = new treeMenu(data).init();
                $scope.editData.showData = _data;
@@ -82,39 +101,21 @@
                })
            });
        }
-
-       $scope.toggleRight = function(obj) {
-           var uri = {
-               category: $stateParams.category
-           };
-
-              var data = {};
-               data[DeviceField.MAP_ID] = obj.id;
-               data[DeviceField.MAP_TYPE] = obj.maptype;
-               data[DeviceField.MAP_NAME] = obj.name;
-               data[DeviceField.MAP_NO] = obj.no;
-               data[DeviceField.SOURCE] = obj.source;
-               uri.id = data[DeviceField.MAP_ID];
-               $state.go("ams.category.content.edit", uri);
-               $scope.editData.groupFieldName = angular.copy(data);
-        
-           // 'No instance found for handle'
-           $mdComponentRegistry.when('right').then(function(it) {
-               it.toggle();
-           });
-       };
-
+    
        // 自定义设备 查看列表数据 remove
-       $scope.selectedRow = function(index, obj) {
-           obj.open = obj.open === false;
-           if (obj[DeviceField.SOURCE]) {
-               fileService.fileConfig().then(function(data) {
-                   $scope.showMapUri = data.data.img_path + obj[DeviceField.SOURCE];
-                   console.log('---' + data.data) // imgUir Config
-               })
+       $scope.selectedRow = function(obj, callback) {
+           query = {};
+           if (obj.no) {
+               query[DeviceField.MAP_ID] = obj.no;
+           $rootScope.query = query;
+               deviceInfo.filter(null, null, callback)
+           } else {
+               query[DeviceField.MAP_NO] = obj.id;
+               $rootScope.query = query;
+               map.filter(null, null, callback)
            }
+           $rootScope.query = query = {};
        };
-
        $scope.deleteData = function(obj) {
            delDialogService(function() {
                console.log('delete...');

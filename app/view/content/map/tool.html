@@ -1,4 +1,4 @@
 <span class='tools'>
-   <a ng-click="toggleRight(data)" class="btn btn-white btn-sm"><i class="glyphicon glyphicon-pencil" ></i>  </a>
-    <a ng-click="delete($event,data)" ng-show='isDel' class="btn btn-white btn-sm"><i class="glyphicon glyphicon-remove" ></i>  </a>
+   <a ng-click="action({device:section})" class="btn btn-white btn-sm"><i class="glyphicon glyphicon-pencil" ></i>  </a>
+    <a ng-click="delete({device:section})" ng-show='section.isDel' class="btn btn-white btn-sm"><i class="glyphicon glyphicon-remove" ></i>  </a>
 </span>

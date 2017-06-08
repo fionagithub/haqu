@@ -21,9 +21,7 @@ function navCtrl($scope, category) {
     $scope.category = category;
     $scope.isOpen = isOpen;
     $scope.toggleOpen = toggleOpen;
-    $scope.isPageSelected = isPageSelected;
     $scope.setSelectPage = setSelectPage;
-    $scope.autoFocusContent = false;
     $scope.currentSection = {};
     $scope.status = {
         isFirstOpen: true,
@@ -42,9 +40,6 @@ function navCtrl($scope, category) {
         category.toggleSelectSection(section);
     }
 
-    function isPageSelected(page) {
-        return category.isPageSelected(page);
-    }
 
     function setSelectPage(page) {
         category.setSelectPage(page);

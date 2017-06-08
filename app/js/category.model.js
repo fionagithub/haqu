@@ -87,14 +87,6 @@ function category($location) {
         setSelectPage: function(page) {
             page && page.state && $location.path('/' + page.state);
             self.currentPage = (self.currentPage === page ? null : page);
-        },
-        isPageSelected: function(page) {
-            return page && self.currentPage === page;
         }
-    };
-
-    function sortByHumanName(a, b) {
-        return (a.humanName < b.humanName) ? -1 :
-            (a.humanName > b.humanName) ? 1 : 0;
-    }
+    }; 
 }

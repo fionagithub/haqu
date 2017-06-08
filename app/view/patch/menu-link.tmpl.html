@@ -1,0 +1,5 @@
+  <md-button ng-class="{'{{section.icon}}' : true,'md-selected':isLinked()}" 
+             ng-click="focusSection()"> 
+            {{section.name}}
+               <span ng-if="isLinked()&& linkdata.isContent" ng-include="'view/content/map/tool.html'"> </span>
+    </md-button>

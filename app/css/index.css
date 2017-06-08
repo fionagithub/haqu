@@ -4,7 +4,9 @@
      background: #fafff9;
      color: #c5d0de;
  }
- 
+ .content{
+     overflow: auto;
+ }
  .md-sidenav-left {
      overflow: hidden;
      background: #343434;

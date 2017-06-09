@@ -2,18 +2,15 @@ angular.module('content.deviceMonitor', ['ams.factorys', 'ams.factorys.services'
     .controller('DeviceMonitorCtrl', DeviceMonitorCtrl)
     .controller('DeviceMonitorDetailCtrl', DeviceMonitorDetailCtrl)
 
-function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
-    $scope.$on("loadFromParrent", load);
-    $scope.$on('$stateChangeSuccess', function() {
-        if ($state.current.name == "ams.category.content") {
-            load();
-        }
-    });
-
+function DeviceMonitorCtrl($scope, $location, deviceMonitor, monitorGroup, deviceTypeList, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
+   $scope.$on('$stateChangeSuccess', load);
+   $scope.$on("loadFromParrent", load);
+   
     var query = {};
 
     function load() {
-        $scope.selected = {
+         if ($location.$$path == "/device-monitor") {
+   $scope.selected = {
             data: null
         };
         $rootScope.query = null;
@@ -24,6 +21,7 @@ function DeviceMonitorCtrl($scope, deviceMonitor, monitorGroup, deviceTypeList, 
         monitorGroup.filter(null, null, function(data) {
             $scope.editData.MonitorGroupList = data;
         });
+    }
     }
     $scope.toggleRight = function(obj) {
         var uri = {

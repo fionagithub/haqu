@@ -6,6 +6,6 @@
 </md-button>
 <ul ng-if="isOpen()" id="docs-menu-{{section.name }}" class="menu-toggle-list">
   <li ng-repeat="page in section.pages">
-    <menu-link action='action({device:page})'  delete='delete({device:page})' section="page" linkdata="toggledata"> </menu-link>
+    <menu-link action='action({device:page})'  section="page" linkdata="toggledata" parentdata='section.pages' > </menu-link>
   </li>
 </ul>

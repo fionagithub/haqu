@@ -3,7 +3,7 @@
      var selectedRow = function (obj, callback) {
        var func,
          query = {};
-       if (obj.hasOwnProperty('pages') ) {
+       if (obj.hasOwnProperty('pages')) {
          func = map;
          query[DeviceField.MAP_NO] = obj.id;
        } else {
@@ -14,10 +14,12 @@
        func.filter(null, null, callback)
        $rootScope.query = query = {};
      };
-     var deleteData = function (obj) {
-       delDialogService(function () {
-         console.log('delete...');
-         map.deleteOne(obj).then(function (data) {})
+     var deleteData = function (obj, source) {
+       return map.deleteOne(obj).then(function () {
+         var _this = ['_this'];
+        return source.filter(function (v, i) {
+           return obj.id !== v.id;
+         }, _this);
        })
      };
 
@@ -31,7 +33,6 @@
      return {
        scope: {
          section: '=',
-         delete: '&',
          action: '&',
          toggledata: '='
        },
@@ -69,11 +70,11 @@
        }
      };
    })
-   .directive('menuLink', function (commonOpera) {
+   .directive('menuLink', function (delDialogService, commonOpera) {
      return {
        scope: {
-         delete: '&',
          section: '=',
+         parentdata: '=',
          action: '&',
          linkdata: '='
        },
@@ -81,6 +82,15 @@
        link: function (scope, element) {
          var _scope = element.parent().scope();
          scope.flag = {};
+         scope.delete = function () {
+           scope.section.mapid = scope.section.id;
+           delDialogService(function () {
+              commonOpera.delete(scope.section, scope.parentdata).then(function(data){
+                   scope.parentdata = data;
+           })
+           })
+
+         }
          scope.mouseActived = true;
          scope.isLinked = function () {
            if (scope.linkdata.name) {

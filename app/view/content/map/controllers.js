@@ -101,28 +101,6 @@
                })
            });
        }
-    
-       // 自定义设备 查看列表数据 remove
-       $scope.selectedRow = function(obj, callback) {
-           query = {};
-           if (obj.no) {
-               query[DeviceField.MAP_ID] = obj.no;
-           $rootScope.query = query;
-               deviceInfo.filter(null, null, callback)
-           } else {
-               query[DeviceField.MAP_NO] = obj.id;
-               $rootScope.query = query;
-               map.filter(null, null, callback)
-           }
-           $rootScope.query = query = {};
-       };
-       $scope.deleteData = function(obj) {
-           delDialogService(function() {
-               console.log('delete...');
-               map.deleteOne(obj).then(function(data) {})
-           })
-       };
-
 
        function treeMenu(o) {
            this.tree = o || [];

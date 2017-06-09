@@ -16,10 +16,9 @@
      };
      var deleteData = function (obj, source) {
        return map.deleteOne(obj).then(function () {
-         var _this = ['_this'];
-        return source.filter(function (v, i) {
+         return source.filter(function (v, i) {
            return obj.id !== v.id;
-         }, _this);
+         });
        })
      };
 
@@ -85,9 +84,9 @@
          scope.delete = function () {
            scope.section.mapid = scope.section.id;
            delDialogService(function () {
-              commonOpera.delete(scope.section, scope.parentdata).then(function(data){
-                   scope.parentdata = data;
-           })
+             commonOpera.delete(scope.section, scope.parentdata).then(function (data) {
+               scope.parentdata = data;
+             })
            })
 
          }

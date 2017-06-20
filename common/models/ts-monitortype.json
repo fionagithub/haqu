@@ -7,7 +7,8 @@
     "properties": {
         "monitortypeid": {
             "type": "number",
-            "id": true
+            "id": true,
+            "generated": false
         },
         "monitortypegroupid": {
             "type": "number"

@@ -5,6 +5,12 @@
     "file": "mockdata/db.json"
   },
   "ibmsDB": {
-    "url": "mssql://ibmsInner:1234@192.168.123.101:1433"
+    "host": "192.168.123.101",
+    "port": 1433,
+    "database": "ibms_inner",
+    "password": "1234",
+    "name": "ibmsDB",
+    "user": "ibmsInner",
+    "connector": "mssql"
   }
 }

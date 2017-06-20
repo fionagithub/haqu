@@ -17,10 +17,7 @@
                 </md-input-container>
                 <md-input-container flex class="md-block">
                     <label>监控组ID</label>
-                    <input name="monitorid" required type="number" ng-minlength="3" ng-model="editData.groupFieldName[DeviceField.MNT_GROUP_ID]">
-                    <div ng-messages="editList.monitorid.$error">
-                        <div ng-message="required">This is required.</div>
-                    </div>
+                    <input name="monitorid" disabled  ng-model="editData.groupFieldName[DeviceField.MNT_GROUP_ID]">
                 </md-input-container>
                 <md-input-container flex class="md-block">
                     <label> 描述</label>

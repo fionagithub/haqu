@@ -2,25 +2,17 @@ angular.module('content.devicePoint', ['ams.factorys', 'ams.factorys.services'])
   .controller('DevicePointCtrl', DevicePointCtrl)
   .controller('DevicePointDetailCtrl', DevicePointDetailCtrl)
 
-function DevicePointCtrl($scope, $location, devicePoint, monitorType, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
-  $scope.$on('$stateChangeSuccess', load);
-  $scope.$on("loadFromParrent", load);
-
-
+function DevicePointCtrl($scope ,devicePoint, monitorType, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
   var query = {};
-
-  function load() {
-    if ($location.$$path == "/device-point") {
       $scope.selected = {
         data: null
       };
       $rootScope.query = null;
       $scope.editData.showData = paginator(devicePoint.filter, 10);
       monitorType.filter(null, null, function (data) {
+                  data=data.data;
         $scope.editData.MonitorType = data;
       });
-    }
-  }
 
   $scope.toggleRight = function (obj) {
     var uri = {

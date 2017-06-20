@@ -11,21 +11,18 @@ function Resources($http, DeviceField, $rootScope) {
             paramsSysId: null, //最大ID号或者是
             v_paramsSysId: null,
             fileConfig: function() {
-                return $http.get(options.uri).success(function(result) {
-                    console.log("图片路径", result);
-                })
+                return $http.get(options.uri)
             },
             post: function(obj) {
                 return $http.post(options.uri, obj, {
                         transformRequest: angular.identity,
                         headers: { 'Content-Type': undefined }
                     })
-                    .success(function() {
+                    .then(function() {
                         console.log("上传成功!!");
-                    })
-                    .error(function() {
+                    },function() {
                         console.log("上传失败!!");
-                    });
+                    })
             },
             filter: function(offset, limit, callback) {
                 var _obj = {},
@@ -41,7 +38,7 @@ function Resources($http, DeviceField, $rootScope) {
                 _params.limit = limit;
 
                 _obj = { params: { filter: _params } };
-                $http.get(options.uri, _obj).success(callback);
+                $http.get(options.uri, _obj).then(callback);
             },
             isExists: function(obj, type) {
                 var uri = options.uri;
@@ -50,7 +47,7 @@ function Resources($http, DeviceField, $rootScope) {
                         uri += '/' + obj[i] + '/exists';
                     }
                 }
-                return $http.get(uri).success(function(data) {
+                return $http.get(uri).then(function(data) {
                     dataInfo.exists = data.exists;
                 });
             },
@@ -63,7 +60,7 @@ function Resources($http, DeviceField, $rootScope) {
                 obj[options.paramId] = parseInt(dataInfo.paramsSysId);
                 _params.where = obj;
                 _obj = { params: { filter: _params } };
-                return $http.get(options.uri, _obj).success(function(data) {
+                return $http.get(options.uri, _obj).then(function(data) {
                     var _paramsSysId = parseInt(dataInfo.v_paramsSysId);
                     if (data[0]) {
                         var _maxID = data[0][options.paramId];
@@ -80,10 +77,10 @@ function Resources($http, DeviceField, $rootScope) {
                     'save': options.uri,
                     'resave': options.uri + '/' + obj[options.param]
                 };
-                type === 'save' ? $http.post(saveUri[type], obj).success(callback) : $http.put(saveUri[type], obj).success(callback);
+                type === 'save' ? $http.post(saveUri[type], obj).then(callback) : $http.put(saveUri[type], obj).then(callback);
             },
             deleteOne: function(obj) {
-                return $http.delete(options.uri + '/' + obj[options.param]).success(function(_data) {
+                return $http.delete(options.uri + '/' + obj[options.param]).then(function(_data) {
                     console.log('delete one success!');
                 });
             }

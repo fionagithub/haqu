@@ -2,14 +2,9 @@ angular.module('content.deviceInfo', ['ams.factorys', 'ams.factorys.services'])
   .controller('DeviceInfoCtrl', DeviceInfoCtrl)
   .controller('DeviceInfoDetailCtrl', DeviceInfoDetailCtrl)
 
-function DeviceInfoCtrl($scope, $location, deviceInfo, deviceTypeList, map, devicePoint, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
-  $scope.$on("loadFromParrent", load);
-  $scope.$on('$stateChangeSuccess', load);
-
+function DeviceInfoCtrl($scope ,deviceInfo, deviceTypeList, map, devicePoint, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
   var query = {};
 
-  function load() {
-    if ($location.$$path == "/device-info") {
       $scope.selected = {
         data: null
       };
@@ -17,14 +12,13 @@ function DeviceInfoCtrl($scope, $location, deviceInfo, deviceTypeList, map, devi
       $scope.editData.showData = paginator(deviceInfo.filter, 10);
 
       map.filter(null, null, function (data) {
+        data=data.data;
         $scope.editData.mapData = data;
       });
       deviceTypeList.filter(null, null, function (data) {
+        data=data.data;
         $scope.editData.DeviceTypeList = data;
       });
-    }
-  }
-
 
   $scope.toggleRight = function (obj) {
     var uri = {
@@ -99,6 +93,7 @@ function DeviceInfoCtrl($scope, $location, deviceInfo, deviceTypeList, map, devi
     query[DeviceField.DEVICE_ID] = obj[DeviceField.DEVICE_ID];
     $rootScope.query = query;
     devicePoint.filter(null, null, function (data) {
+        data=data.data;
       if (data.length > 0) {
         $scope.isDel = false;
         console.log('存在子数据...');

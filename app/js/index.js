@@ -108,6 +108,7 @@ function paginator() {
                     self.currentPage = 1;
                 }
                 func(self.offset, self.size, function(data) {
+                    data=data.data;
                     self.data = data.slice(0, obj);
                     self.isLoadEnd = data.length < self.size;
                     self.isLoadTop = self.currentPage <= 1;

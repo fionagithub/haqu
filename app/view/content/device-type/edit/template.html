@@ -7,10 +7,7 @@
             <form name="editList">
                 <md-input-container flex class="md-block">
                     <label>设备编号</label>
-                    <input name="deviceno" required type="number" ng-minlength="3" ng-model="editData.groupFieldName[DeviceField.TYPE_ID]">
-                    <div ng-messages="editList.deviceno.$error">
-                        <div ng-message="required">This is required.</div>
-                    </div>
+                    <input name="deviceno" disabled type="number" ng-model="editData.groupFieldName[DeviceField.TYPE_ID]">
                 </md-input-container>
                 <md-input-container flex class="md-block">
                     <label>系统

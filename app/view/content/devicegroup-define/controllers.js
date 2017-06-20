@@ -6,7 +6,7 @@ angular.module('content.deviceGroupDefine', ['ams.factorys', 'ams.factorys.servi
   .directive("focusMe", focusMe)
   .directive("smartySuggestionsBox", smartySuggestionsBox)
 
-function DeviceGroupDefineCtrl($scope, $location, deviceGroupDefine, paginator, delDialogService, toastService, DeviceField, $state, $stateParams, $document, $mdSidenav, $mdComponentRegistry) {
+function DeviceGroupDefineCtrl($scope ,deviceGroupDefine, paginator, delDialogService, toastService, DeviceField, $state, $stateParams, $document, $mdSidenav, $mdComponentRegistry) {
   var _this = this;
   _this.selectedRow = selectedRow;
   /*   _this.getSelectedText = getSelectedText;*/
@@ -28,16 +28,8 @@ function DeviceGroupDefineCtrl($scope, $location, deviceGroupDefine, paginator, 
     });
   };
 
-  $scope.$on('$stateChangeSuccess', load);
-
-  $scope.$on("loadFromParrent", load);
-
-  function load() {
-    if ($location.$$path == "/devicegroup-define") {
       _this.showData = paginator(deviceGroupDefine.filter, 10);
       $scope.editData.showData = _this.showData;
-    }
-  }
 
   _this._oldSelectedRowObj = [];
 
@@ -109,6 +101,7 @@ function DeviceGroupDefineDetailCtrl($scope, deviceGroupDefine, deviceInfo, toas
         $scope.mapParams.suggestions = [];
         deviceInfo.filter(null, null, function (data) {
           delete query[DeviceField.DEVICE_ID];
+          data=data.data;
           data.map(function (_data) {
             $scope.mapParams.suggestions = $scope.mapParams.suggestions.concat(_data[DeviceField.DEVICE_ID]);
           });
@@ -154,6 +147,7 @@ function DeviceGroupDefineDetailCtrl($scope, deviceGroupDefine, deviceInfo, toas
       $rootScope.query = query;
       $scope.mapParams.subData = [];
       deviceInfo.filter(null, null, function (data) {
+          data=data.data;
         delete query[DeviceField.DEVICE_ID];
         data.map(function (_data) {
           $scope.mapParams.subData = $scope.mapParams.subData.concat(_data[DeviceField.DEVICE_ID]);

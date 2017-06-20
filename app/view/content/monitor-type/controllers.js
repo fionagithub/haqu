@@ -2,30 +2,23 @@
      .controller('MonitortypeCtrl', MonitortypeCtrl)
      .controller('MonitorTypeDetailCtrl', MonitorTypeDetailCtrl)
 
-   function MonitortypeCtrl($scope, $location, monitorGroup, monitorType, devicePoint, deviceTypeList, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
-     $scope.$on('$stateChangeSuccess', load);
-     $scope.$on("loadFromParrent", load);
-
+   function MonitortypeCtrl($scope ,monitorGroup, monitorType, devicePoint, deviceTypeList, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
      var query = {};
-
      $scope.parseInt = parseInt;
-
-     function load() {
-       if ($location.$$path == "/monitor-type") {
-         $rootScope.query = null;
-         $scope.selected = {
-           data: null,
-           keyword: null
-         };
-         $scope.editData.showData = paginator(monitorType.filter, 10);
-         deviceTypeList.filter(null, null, function (data) {
-           $scope.editData.DeviceTypeList = data;
-         });
-         monitorGroup.filter(null, null, function (data) {
-           $scope.editData.MonitorGroupList = data;
-         });
-       }
-     }
+     $rootScope.query = null;
+     $scope.selected = {
+       data: null,
+       keyword: null
+     };
+     $scope.editData.showData = paginator(monitorType.filter, 10);
+     deviceTypeList.filter(null, null, function (data) {
+       data = data.data;
+       $scope.editData.DeviceTypeList = data;
+     });
+     monitorGroup.filter(null, null, function (data) {
+       data = data.data;
+       $scope.editData.MonitorGroupList = data;
+     });
 
      $scope.$watch('editData.showData', function () {
        $scope.monitorMap = {};

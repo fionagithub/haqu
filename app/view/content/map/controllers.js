@@ -3,10 +3,7 @@
      .controller('MapDetailCtrl', MapDetailCtrl)
      .directive('fileModel', fileModel)
 
-   function MapCtrl($scope, $location, deviceInfo, map, fileService, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
-     $scope.$on('$stateChangeSuccess', load);
-     $scope.$on("loadFromParrent", load);
-
+   function MapCtrl($scope ,deviceInfo, map, fileService, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
      $scope.toggleRight = function (device) {
        var uri = {
          category: $stateParams.category
@@ -64,8 +61,8 @@
      $rootScope.showData = load;
 
      function load() {
-       if ($location.$$path == "/map") {
          map.filter(null, null, function (data) {
+           data=data.data;
            var _data = new treeMenu(data).init();
            $scope.editData.showData = _data;
            $scope.editData.showAreaData = _data[null];
@@ -98,8 +95,8 @@
              $scope.toggelData = $scope.toggelData.concat(sections);
            })
          });
-       }
      }
+     load();
 
      function treeMenu(o) {
        this.tree = o || [];

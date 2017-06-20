@@ -2,18 +2,14 @@ angular.module('content.monitorgroup', ['ams.factorys', 'ams.factorys.services']
   .controller('MonitorgroupCtrl', MonitorgroupCtrl)
   .controller('MonitorGroupDetailCtrl', MonitorGroupDetailCtrl)
 
-function MonitorgroupCtrl($scope, $location, monitorGroup, monitorType, deviceTypeList, deviceMonitor, paginator, delDialogService, DeviceField, $rootScope, $stateParams, $state, $mdSidenav, $mdComponentRegistry) {
-  $scope.$on('$stateChangeSuccess', load);
-  $scope.$on("loadFromParrent", load);
+function MonitorgroupCtrl($scope ,monitorGroup, monitorType, deviceTypeList, deviceMonitor, paginator, delDialogService, DeviceField, $rootScope, $stateParams, $state, $mdSidenav, $mdComponentRegistry) {
   var query = {};
-
-  function load() {
-    if ($location.$$path == "/monitor-group") {
       $scope.editData.showData = paginator(monitorGroup.filter, 10);
       $rootScope.query = null;
 
       $scope.editData.monitorId = null;
       deviceMonitor.filter(null, null, function (data) {
+        data=data.data;
         $scope.DeviceMonitor = data;
         $scope._deviceMonitor = {};
         for (var i in $scope.DeviceMonitor) {
@@ -25,6 +21,7 @@ function MonitorgroupCtrl($scope, $location, monitorGroup, monitorType, deviceTy
           $scope._deviceMonitor[m].push(d);
         }
         deviceTypeList.filter(null, null, function (data) {
+        data=data.data;
           $scope.editData.DeviceTypeList = data;
           for (var d in $scope._deviceMonitor) {
             for (var m in $scope._deviceMonitor[d]) {
@@ -36,12 +33,8 @@ function MonitorgroupCtrl($scope, $location, monitorGroup, monitorType, deviceTy
               }
             }
           }
-
         });
       });
-    }
-  }
-
   $scope.toggleRight = function (obj) {
     var uri = {
       category: $stateParams.category
@@ -87,6 +80,7 @@ function MonitorgroupCtrl($scope, $location, monitorGroup, monitorType, deviceTy
     query[DeviceField.MNT_GROUP_ID] = obj[DeviceField.MNT_GROUP_ID];
     $rootScope.query = query;
     monitorType.filter(null, null, function (data) {
+        data=data.data;
       if (data.length > 0) {
         $scope.isDel = false;
         console.log('存在子数据...');

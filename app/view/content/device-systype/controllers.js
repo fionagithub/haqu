@@ -2,19 +2,12 @@ angular.module('content.deviceSystype', ['ams.factorys', 'ams.factorys.services'
   .controller('DeviceSystypeCtrl', DeviceSystypeCtrl)
   .controller('DeviceSystypeRightCtrl', DeviceSystypeRightCtrl)
 
-function DeviceSystypeCtrl($scope, $location, deviceSysTypeList, deviceTypeList, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
-  $scope.$on("loadFromParrent", load);
-  $scope.$on('$stateChangeSuccess', load);
+function DeviceSystypeCtrl($scope ,deviceSysTypeList, deviceTypeList, paginator, delDialogService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
   var query = {};
-
-  function load() {
-    if ($location.$$path == "/device-systype") {
       $rootScope.query = null;
       $scope.editData.showData = null;
       $scope.editData.showData = paginator(deviceSysTypeList.filter, 10);
-      console.log('---', $scope.editData)
-    }
-  }
+
 
   $scope.toggleRight = function (obj) {
     var uri = {
@@ -49,6 +42,7 @@ function DeviceSystypeCtrl($scope, $location, deviceSysTypeList, deviceTypeList,
     query[DeviceField.SYS_TYPE_ID] = obj[DeviceField.SYS_TYPE_ID];
     $rootScope.query = query;
     deviceTypeList.filter(null, null, function (data) {
+      data=data.data;
       if (data.length > 0) {
         $scope.isDel = false;
         console.log('存在子数据...');

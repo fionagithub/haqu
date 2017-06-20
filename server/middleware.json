@@ -8,13 +8,7 @@
     "session": {},
     "auth": {},
     "parse": {},
-    "routes": {
-        "loopback#rest": {
-            "paths": [
-                "${restApiRoot}"
-            ]
-        }
-    },
+    "routes": {},
     "files": {
         "loopback#static": {
             "params": "$!../app"

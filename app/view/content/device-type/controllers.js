@@ -2,13 +2,9 @@ angular.module('content.deviceType', ['ams.factorys', 'ams.factorys.services'])
   .controller('DeviceTypeCtrl', DeviceTypeCtrl)
   .controller('DeviceTypeDetailCtrl', DeviceTypeDetailCtrl)
 
-function DeviceTypeCtrl($scope, $location, deviceTypeList, deviceSysTypeList, deviceInfo, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
-  $scope.$on('$stateChangeSuccess', load);
-  $scope.$on("loadFromParrent", load);
-  var query = {};
+function DeviceTypeCtrl($scope ,deviceTypeList, deviceSysTypeList, deviceInfo, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
 
-  function load() {
-    if ($location.$$path == "/device-type") {
+  var query = {};
       //搜索条件    
       $rootScope.query = null;
       $scope.selected = {
@@ -17,10 +13,9 @@ function DeviceTypeCtrl($scope, $location, deviceTypeList, deviceSysTypeList, de
       };
       $scope.editData.showData = paginator(deviceTypeList.filter, 10);
       deviceSysTypeList.filter(null, null, function (data) {
+       data=data.data;
         $scope.editData.DeviceSysTypeList = data;
       });
-    }
-  }
 
   $scope.toggleRight = function (obj) {
     var uri = {
@@ -96,6 +91,7 @@ function DeviceTypeCtrl($scope, $location, deviceTypeList, deviceSysTypeList, de
     query[DeviceField.TYPE_ID] = obj[DeviceField.TYPE_ID];
     $rootScope.query = angular.copy(query);
     deviceInfo.filter(null, null, function (data) {
+     data=data.data;
       if (data.length > 0) {
         $scope.isDel = false;
         console.log('存在子数据...');

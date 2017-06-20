@@ -3,24 +3,18 @@ angular.module('content.deviceDefine', ['ams.factorys', 'ams.factorys.services']
   .controller('DeviceDefineDetailCtrl', DeviceDefineDetailCtrl)
 
 function DeviceDefineCtrl($location, $scope, monitorType, deviceTypeList, deviceDefines, paginator, delDialogService, toastService, DeviceField, $rootScope, $state, $stateParams, $mdSidenav, $mdComponentRegistry) {
-  $scope.$on("loadFromParrent", load);
-  $scope.$on('$stateChangeSuccess', load);
-
   var query = {};
-
-  function load() {
-    if ($location.$$path == "/device-define") {
       $rootScope.query = null;
       $scope.editData.showData = paginator(deviceDefines.filter, 10);
 
       monitorType.filter(null, null, function (data) {
+       data=data.data;
         $scope.editData.MonitorType = data;
       });
       deviceTypeList.filter(null, null, function (data) {
+       data=data.data;
         $scope.editData.DeviceTypeList = data;
       });
-    }
-  }
 
   $scope.toggleRight = function (obj) {
     var uri = {

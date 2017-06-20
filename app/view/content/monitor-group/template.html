@@ -13,7 +13,7 @@
                 <tr ng-repeat='data in editData.showData.data' ng-class="{'selected':_oldSelectedRowObj.indexOf(data)!==-1 }" ng-click="selectedRow($index,data)">
                     <td>{{data[DeviceField.MNT_GROUP_ID]}} </td>
                     <td>
-                        <span ng-repeat="device in _deviceMonitor[data[DeviceField.MNT_GROUP_ID]]">
+                        <span ng-repeat="device in _deviceMonitor[data[DeviceField.MNT_GROUP_ID]] track by $index">
                        {{device[DeviceField.TYPE_NAME]}} 
                      </span>
                     </td>

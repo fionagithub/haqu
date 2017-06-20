@@ -116,8 +116,8 @@ function MonitorGroupDetailCtrl($scope, monitorGroup, deviceMonitor, DeviceField
   }
 
   function save(obj, type) {
-    monitorGroup.saveOne(obj, type, function () {
       obj[DeviceField.TYPE_ID] = $scope.editData.typeId;
+    monitorGroup.saveOne(obj, type, function () {
       delete obj[DeviceField.DESC];
       if (obj[DeviceField.TYPE_ID].length > 0) {
         for (var i in obj[DeviceField.TYPE_ID]) {

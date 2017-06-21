@@ -21,9 +21,14 @@
 最快捷的方式是使用 slc (StrongLoop Controller) 命令来快速配置数据对象，`slc loopback:model`
 [详细教程](https://docs.strongloop.com/display/public/LB/Tutorial%3A+model+relations#Tutorial:modelrelations-Createmodels)
 
-
 ### 如何使用本地模拟数据开发？
-在项目启动文件中，将环境变量 `NODE_ENV` 设置成 `develop`（ process.env.NODE_ENV = 'develop'; ）;或者使用命令设置临时变量 `SET NODE_ENV=develop` ，然后启动 AMS项目 `node .`。loopback根据配置的环境变量调用common文件夹对应的数据源文件。数据源文件的命名规则为：`datasources.{NODE_ENV}.json`。
+在项目启动文件中，将环境变量 `NODE_ENV` 设置成 `develop`（ process.env.NODE_ENV = 'develop'; ）;或者使用windoew命令设置临时变量 `SET NODE_ENV=develop` ，然后启动 AMS项目 `node .`。loopback根据配置的环境变量调用common文件夹对应的数据源文件。数据源文件的命名规则为：`datasources.{NODE_ENV}.json`。
+
+### 数据模型model常用属性
+数据模型与表结构设计结构相关,主要介绍以下属性：
++ type:数据模型的值类型；
++ id:true:数据模型中该字段为唯一标识ID,默认值为false；
++ generated：字段将由数据库(true)或应用（false）处理，默认值为true; 
 
 ### 如何将真实数据导入到模拟库？
 按以下步骤操作：

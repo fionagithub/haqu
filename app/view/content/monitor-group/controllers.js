@@ -116,15 +116,18 @@ function MonitorGroupDetailCtrl($scope, monitorGroup, deviceMonitor, DeviceField
   }
 
   function save(obj, type) {
-      obj[DeviceField.TYPE_ID] = $scope.editData.typeId;
     monitorGroup.saveOne(obj, type, function () {
+      obj[DeviceField.TYPE_ID] = $scope.editData.typeId;
+      type = 'save';
       delete obj[DeviceField.DESC];
       if (obj[DeviceField.TYPE_ID].length > 0) {
         for (var i in obj[DeviceField.TYPE_ID]) {
           var _obj = {};
           _obj[DeviceField.TYPE_ID] = obj[DeviceField.TYPE_ID][i];
           _obj[DeviceField.MNT_GROUP_ID] = obj[DeviceField.MNT_GROUP_ID];
-          deviceMonitor.saveOne(_obj, type, function () {});
+          deviceMonitor.saveOne(_obj, type, function () {
+            console.log('---save--success--')
+          });
         }
       }
       toastService();

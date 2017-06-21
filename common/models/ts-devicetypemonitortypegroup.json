@@ -4,11 +4,12 @@
     "properties": {
         "devicetypeid": {
             "type": "number",
-            "id": true,
+            "id": 1,
             "generated": false
         },
         "monitortypegroupid": {
             "type": "number", 
+            "id": 2,
             "generated": false
         }
     },
